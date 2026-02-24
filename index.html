@@ -1,0 +1,2852 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shashwat Kashyap — Developer · Builder · Creator</title>
+<link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="shortcut icon" href="favicon.ico">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Bebas+Neue&family=Crimson+Pro:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --void: #020408;
+  --cosmos: #050d1a;
+  --gold: #c9a84c;
+  --gold-light: #f0d080;
+  --crimson: #8b1a1a;
+  --electric: #00d4ff;
+  --sage: #4a7c59;
+  --parchment: #f5ead8;
+  --ink: #1a0f00;
+  --silver: #a8b8c8;
+  --plasma: #7c3aed;
+  --emerald: #10b981;
+  --amber: #f59e0b;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--void);
+  color: var(--parchment);
+  font-family: 'Cormorant Garamond', serif;
+  overflow-x: hidden;
+  cursor: none;
+}
+
+/* CURSOR */
+.cursor {
+  position: fixed; width: 12px; height: 12px;
+  background: var(--gold); border-radius: 50%;
+  pointer-events: none; z-index: 9999;
+  transition: transform 0.1s ease; mix-blend-mode: screen;
+}
+.cursor-trail {
+  position: fixed; width: 36px; height: 36px;
+  border: 1px solid rgba(201,168,76,0.4); border-radius: 50%;
+  pointer-events: none; z-index: 9998;
+  transition: all 0.15s ease; mix-blend-mode: screen;
+}
+
+/* LOADER */
+#loader {
+  position: fixed; inset: 0; background: var(--void);
+  z-index: 10000; display: flex; align-items: center;
+  justify-content: center; flex-direction: column; gap: 24px;
+}
+.loader-text {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(2rem, 8vw, 6rem);
+  color: var(--gold); letter-spacing: 0.3em;
+  opacity: 0; animation: fadeLoader 0.8s ease forwards;
+}
+.loader-sub {
+  font-family: 'Space Mono', monospace; font-size: 0.7rem;
+  color: var(--silver); letter-spacing: 0.5em;
+  opacity: 0; animation: fadeLoader 0.8s ease 0.4s forwards;
+}
+.loader-bar {
+  width: 200px; height: 1px; background: rgba(201,168,76,0.2);
+  position: relative; overflow: hidden;
+  opacity: 0; animation: fadeLoader 0.5s ease 0.6s forwards;
+}
+.loader-bar::after {
+  content: ''; position: absolute; left: -100%; top: 0;
+  width: 100%; height: 100%; background: var(--gold);
+  animation: loadBar 1.8s ease 0.8s forwards;
+}
+@keyframes loadBar { to { left: 0; } }
+@keyframes fadeLoader { to { opacity: 1; } }
+
+/* THREE.JS CANVAS */
+#galaxy-canvas {
+  position: fixed; top: 0; left: 0;
+  width: 100%; height: 100%; z-index: 0; pointer-events: none;
+}
+
+/* NAVIGATION */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 24px 48px;
+  background: linear-gradient(to bottom, rgba(2,4,8,0.9) 0%, transparent 100%);
+  transition: backdrop-filter 0.3s ease;
+}
+nav.scrolled { backdrop-filter: blur(12px); background: rgba(2,4,8,0.85); }
+.nav-logo {
+  font-family: 'Bebas Neue', sans-serif; font-size: 1.6rem;
+  color: var(--gold); letter-spacing: 0.2em; text-decoration: none;
+}
+.nav-links { display: flex; gap: 32px; list-style: none; }
+.nav-links a {
+  font-family: 'Space Mono', monospace; font-size: 0.62rem;
+  color: var(--silver); text-decoration: none;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  transition: color 0.3s ease; position: relative;
+}
+.nav-links a::after {
+  content: ''; position: absolute; bottom: -4px; left: 0;
+  width: 0; height: 1px; background: var(--gold); transition: width 0.3s ease;
+}
+.nav-links a:hover, .nav-links a.active { color: var(--gold); }
+.nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+
+/* HERO */
+#hero {
+  position: relative; height: 100vh; display: flex;
+  align-items: center; justify-content: center;
+  flex-direction: column; text-align: center; z-index: 1; padding: 20px;
+}
+.hero-eyebrow {
+  font-family: 'Space Mono', monospace; font-size: 0.65rem;
+  letter-spacing: 0.6em; color: var(--gold); text-transform: uppercase;
+  margin-bottom: 32px; opacity: 0; transform: translateY(20px);
+  animation: heroReveal 1s ease 2.6s forwards;
+}
+.hero-name {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(4rem, 14vw, 14rem); line-height: 0.85;
+  color: transparent; -webkit-text-stroke: 1px var(--gold);
+  letter-spacing: -0.02em; opacity: 0; transform: translateY(40px);
+  animation: heroReveal 1.2s ease 2.8s forwards; position: relative;
+}
+.hero-name .filled { -webkit-text-stroke: 0; color: var(--gold); }
+.hero-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.2rem, 3vw, 2rem); font-style: italic;
+  color: var(--parchment); margin-top: 24px; opacity: 0;
+  transform: translateY(20px); animation: heroReveal 1s ease 3.1s forwards; font-weight: 300;
+}
+.hero-desc {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(0.95rem, 2vw, 1.2rem); color: var(--silver);
+  max-width: 640px; line-height: 1.8; margin-top: 16px;
+  opacity: 0; animation: heroReveal 1s ease 3.4s forwards;
+}
+.hero-cta {
+  display: flex; gap: 16px; margin-top: 36px;
+  opacity: 0; animation: heroReveal 1s ease 3.6s forwards; flex-wrap: wrap; justify-content: center;
+}
+.hero-btn {
+  font-family: 'Space Mono', monospace; font-size: 0.62rem;
+  letter-spacing: 0.2em; text-transform: uppercase; text-decoration: none;
+  padding: 14px 28px; border: 1px solid;
+  transition: all 0.3s ease; cursor: none;
+}
+.hero-btn.primary { border-color: var(--gold); color: var(--gold); background: rgba(201,168,76,0.07); }
+.hero-btn.primary:hover { background: rgba(201,168,76,0.18); }
+.hero-btn.secondary { border-color: rgba(0,212,255,0.4); color: var(--electric); background: rgba(0,212,255,0.05); }
+.hero-btn.secondary:hover { background: rgba(0,212,255,0.12); }
+.hero-btn.tertiary { border-color: rgba(16,185,129,0.4); color: var(--emerald); background: rgba(16,185,129,0.05); }
+.hero-btn.tertiary:hover { background: rgba(16,185,129,0.12); }
+@keyframes heroReveal { to { opacity: 1; transform: translateY(0); } }
+.hero-scroll {
+  position: absolute; bottom: 40px;
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+  opacity: 0; animation: heroReveal 1s ease 3.9s forwards;
+}
+.hero-scroll span {
+  font-family: 'Space Mono', monospace; font-size: 0.55rem;
+  letter-spacing: 0.4em; color: var(--silver); text-transform: uppercase;
+}
+.scroll-line {
+  width: 1px; height: 60px;
+  background: linear-gradient(to bottom, var(--gold), transparent);
+  animation: scrollPulse 2s ease infinite;
+}
+@keyframes scrollPulse {
+  0%, 100% { opacity: 1; transform: scaleY(1); }
+  50% { opacity: 0.4; transform: scaleY(0.6); }
+}
+
+/* PORTALS */
+#portals {
+  position: relative; z-index: 1;
+  min-height: 100vh; display: flex;
+  align-items: center; justify-content: center; padding: 100px 40px;
+}
+.portals-container { text-align: center; max-width: 1200px; width: 100%; }
+.section-eyebrow {
+  font-family: 'Space Mono', monospace; font-size: 0.65rem;
+  letter-spacing: 0.5em; color: var(--gold); text-transform: uppercase; margin-bottom: 16px;
+}
+.section-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(3rem, 8vw, 7rem); color: var(--parchment);
+  line-height: 0.9; margin-bottom: 60px; letter-spacing: 0.05em;
+}
+.portals-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 2px; max-width: 1100px; margin: 0 auto;
+}
+.portal-card {
+  position: relative; aspect-ratio: 3/4; overflow: hidden;
+  cursor: none; transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+}
+.portal-card:hover { transform: scale(1.02) translateY(-4px); z-index: 10; }
+.portal-bg { position: absolute; inset: 0; transition: transform 0.8s cubic-bezier(0.23, 1, 0.32, 1); }
+.portal-card:hover .portal-bg { transform: scale(1.08); }
+.portal-card:nth-child(1) .portal-bg { background: linear-gradient(135deg, #0a1628 0%, #1a3a6b 40%, #0d2044 100%); }
+.portal-card:nth-child(2) .portal-bg { background: linear-gradient(135deg, #0a1a12 0%, #0a2e1a 40%, #051508 100%); }
+.portal-card:nth-child(3) .portal-bg { background: linear-gradient(135deg, #1a0a00 0%, #3a1800 40%, #200a00 100%); }
+.portal-card:nth-child(4) .portal-bg { background: linear-gradient(135deg, #0a001a 0%, #1a003a 40%, #0d0020 100%); }
+.portal-card:nth-child(5) .portal-bg { background: linear-gradient(135deg, #1a1a00 0%, #3a3a00 40%, #252500 100%); }
+.portal-card:nth-child(6) .portal-bg { background: linear-gradient(135deg, #00101a 0%, #00283a 40%, #001520 100%); }
+.portal-symbol {
+  position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%, -60%);
+  opacity: 0.12; transition: all 0.5s ease;
+  filter: blur(1px); line-height: 1;
+}
+.portal-symbol svg { width: 72px; height: 72px; }
+.portal-card:hover .portal-symbol { opacity: 0.28; filter: blur(0); transform: translate(-50%, -62%) scale(1.1); }
+.portal-content {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  padding: 32px 28px;
+  background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, transparent 100%);
+}
+.portal-num {
+  font-family: 'Space Mono', monospace; font-size: 0.6rem;
+  color: rgba(201,168,76,0.5); letter-spacing: 0.3em; margin-bottom: 8px; display: block;
+}
+.portal-name {
+  font-family: 'Bebas Neue', sans-serif; font-size: 2rem;
+  letter-spacing: 0.1em; color: var(--parchment); display: block; margin-bottom: 8px;
+}
+.portal-desc {
+  font-family: 'Cormorant Garamond', serif; font-size: 0.95rem;
+  color: var(--silver); font-style: italic; line-height: 1.5;
+  opacity: 0; transform: translateY(10px);
+  transition: all 0.4s ease 0.1s; max-height: 0; overflow: hidden;
+}
+.portal-card:hover .portal-desc { opacity: 1; transform: translateY(0); max-height: 100px; }
+.portal-btn {
+  display: inline-block; margin-top: 16px;
+  font-family: 'Space Mono', monospace; font-size: 0.6rem;
+  color: var(--gold); letter-spacing: 0.3em; text-transform: uppercase;
+  text-decoration: none; border-bottom: 1px solid rgba(201,168,76,0.3);
+  padding-bottom: 2px; opacity: 0; transition: all 0.3s ease 0.2s;
+}
+.portal-card:hover .portal-btn { opacity: 1; }
+
+/* COMMON SECTION STYLES */
+.section-label {
+  font-family: 'Space Mono', monospace; font-size: 0.65rem;
+  letter-spacing: 0.4em; text-transform: uppercase; margin-bottom: 32px;
+}
+.reveal { opacity: 0; transform: translateY(40px); }
+.reveal-left { opacity: 0; transform: translateX(-40px); }
+.reveal-right { opacity: 0; transform: translateX(40px); }
+
+/* TECH */
+#tech {
+  position: relative; z-index: 1; min-height: 100vh; padding: 120px 40px;
+}
+.tech-header {
+  display: flex; align-items: flex-end; gap: 40px;
+  margin-bottom: 80px; max-width: 1200px; margin-left: auto; margin-right: auto;
+}
+.tech-big-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(4rem, 10vw, 9rem); color: transparent;
+  -webkit-text-stroke: 1px rgba(0,212,255,0.4); line-height: 0.85; letter-spacing: 0.05em;
+}
+.tech-big-title .accent { color: var(--electric); -webkit-text-stroke: 0; }
+.tech-tagline {
+  font-family: 'Cormorant Garamond', serif; font-style: italic;
+  font-size: 1.3rem; color: var(--silver); margin-top: 16px; max-width: 400px;
+}
+.skills-section { max-width: 1200px; margin: 0 auto 80px; }
+.skills-label {
+  font-family: 'Space Mono', monospace; font-size: 0.65rem;
+  color: var(--electric); letter-spacing: 0.4em; text-transform: uppercase; margin-bottom: 32px;
+}
+.skills-grid { display: flex; flex-wrap: wrap; gap: 12px; }
+.skill-tag {
+  font-family: 'Space Mono', monospace; font-size: 0.7rem;
+  padding: 8px 18px; border: 1px solid rgba(0,212,255,0.2);
+  color: var(--electric); background: rgba(0,212,255,0.04);
+  letter-spacing: 0.1em; transition: all 0.3s ease;
+  position: relative; overflow: hidden;
+}
+.skill-tag::before {
+  content: ''; position: absolute; inset: 0;
+  background: rgba(0,212,255,0.08); transform: translateX(-100%); transition: transform 0.3s ease;
+}
+.skill-tag:hover::before { transform: translateX(0); }
+.skill-tag:hover { border-color: var(--electric); color: #fff; }
+.projects-grid {
+  max-width: 1200px; margin: 0 auto;
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 2px;
+}
+.project-card {
+  background: rgba(0,212,255,0.02); border: 1px solid rgba(0,212,255,0.08);
+  padding: 36px 32px; position: relative; overflow: hidden;
+  transition: all 0.4s ease; cursor: none;
+}
+.project-card::before {
+  content: ''; position: absolute; top: 0; left: 0;
+  width: 100%; height: 2px;
+  background: linear-gradient(to right, transparent, var(--electric), transparent);
+  transform: translateX(-100%); transition: transform 0.5s ease;
+}
+.project-card:hover::before { transform: translateX(100%); }
+.project-card:hover {
+  background: rgba(0,212,255,0.05); border-color: rgba(0,212,255,0.25); transform: translateY(-4px);
+}
+.project-year {
+  font-family: 'Space Mono', monospace; font-size: 0.6rem;
+  color: rgba(0,212,255,0.5); letter-spacing: 0.3em; margin-bottom: 16px;
+}
+.project-title {
+  font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem;
+  color: var(--parchment); letter-spacing: 0.05em; margin-bottom: 12px; line-height: 1.1;
+}
+.project-desc {
+  font-family: 'Cormorant Garamond', serif; font-size: 1rem;
+  color: var(--silver); line-height: 1.7; margin-bottom: 20px;
+}
+.project-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.project-tag {
+  font-family: 'Space Mono', monospace; font-size: 0.55rem;
+  padding: 3px 10px; background: rgba(0,212,255,0.08);
+  color: rgba(0,212,255,0.7); border: 1px solid rgba(0,212,255,0.1); letter-spacing: 0.1em;
+}
+.featured-badge {
+  position: absolute; top: 20px; right: 20px;
+  font-family: 'Space Mono', monospace; font-size: 0.5rem;
+  color: var(--gold); border: 1px solid rgba(201,168,76,0.3);
+  padding: 3px 8px; letter-spacing: 0.2em;
+}
+.exp-section { max-width: 1200px; margin: 80px auto 0; }
+.exp-timeline { position: relative; padding-left: 40px; }
+.exp-timeline::before {
+  content: ''; position: absolute; left: 0; top: 0; bottom: 0;
+  width: 1px; background: linear-gradient(to bottom, var(--electric), rgba(0,212,255,0));
+}
+.exp-item { position: relative; padding: 0 0 50px 40px; cursor: none; }
+.exp-item::before {
+  content: ''; position: absolute; left: -5px; top: 6px;
+  width: 10px; height: 10px; border: 1px solid var(--electric);
+  background: var(--void); transform: rotate(45deg); transition: all 0.3s ease;
+}
+.exp-item:hover::before { background: var(--electric); box-shadow: 0 0 20px rgba(0,212,255,0.5); }
+.exp-period {
+  font-family: 'Space Mono', monospace; font-size: 0.6rem;
+  color: rgba(0,212,255,0.5); letter-spacing: 0.2em; margin-bottom: 8px;
+}
+.exp-role {
+  font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem;
+  color: var(--parchment); letter-spacing: 0.08em;
+}
+.exp-company {
+  font-family: 'Cormorant Garamond', serif; font-style: italic;
+  font-size: 1.1rem; color: var(--electric); margin-bottom: 12px;
+}
+.exp-desc {
+  font-family: 'Cormorant Garamond', serif; font-size: 1rem;
+  color: var(--silver); line-height: 1.7;
+}
+.salesforce-section {
+  max-width: 1200px; margin: 80px auto 0; padding: 60px;
+  border: 1px solid rgba(201,168,76,0.15);
+  background: linear-gradient(135deg, rgba(201,168,76,0.03) 0%, transparent 100%);
+  position: relative; overflow: hidden;
+}
+.salesforce-section::before {
+  content: ''; position: absolute; top: -50%; right: -50%;
+  width: 200%; height: 200%;
+  background: radial-gradient(circle, rgba(201,168,76,0.05) 0%, transparent 60%);
+}
+.sf-badges { display: flex; gap: 40px; flex-wrap: wrap; margin-top: 32px; }
+.sf-badge { text-align: center; }
+.sf-badge-num {
+  font-family: 'Bebas Neue', sans-serif; font-size: 4rem;
+  color: var(--gold); line-height: 1; display: block;
+}
+.sf-badge-label {
+  font-family: 'Space Mono', monospace; font-size: 0.6rem;
+  color: var(--silver); letter-spacing: 0.2em; text-transform: uppercase;
+}
+.edu-section {
+  max-width: 1200px; margin: 80px auto 0;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 2px;
+}
+.edu-card {
+  padding: 48px; border: 1px solid rgba(0,212,255,0.08);
+  background: rgba(0,212,255,0.02); position: relative; overflow: hidden;
+}
+.edu-card::after {
+  content: attr(data-degree); position: absolute;
+  right: -20px; top: 50%; transform: translateY(-50%) rotate(90deg);
+  font-family: 'Bebas Neue', sans-serif; font-size: 6rem;
+  color: rgba(0,212,255,0.04); letter-spacing: 0.1em;
+  white-space: nowrap; pointer-events: none;
+}
+.edu-degree {
+  font-family: 'Bebas Neue', sans-serif; font-size: 2.5rem;
+  color: var(--electric); letter-spacing: 0.1em; margin-bottom: 8px; line-height: 1;
+}
+.edu-inst {
+  font-family: 'Cormorant Garamond', serif; font-size: 1.2rem;
+  color: var(--parchment); font-style: italic; margin-bottom: 16px;
+}
+.edu-meta {
+  font-family: 'Space Mono', monospace; font-size: 0.65rem;
+  color: var(--silver); letter-spacing: 0.1em; line-height: 1.8;
+}
+.edu-cgpa {
+  font-family: 'Bebas Neue', sans-serif; font-size: 3rem;
+  color: var(--gold); margin-top: 16px; display: block; line-height: 1;
+}
+
+/* LITERARY */
+#literary {
+  position: relative; z-index: 1; min-height: 100vh; padding: 120px 40px;
+  background: radial-gradient(ellipse at center, rgba(26,15,0,0.8) 0%, transparent 70%);
+}
+.lit-header { max-width: 900px; margin: 0 auto 80px; text-align: center; }
+.lit-big-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(3rem, 10vw, 9rem); font-weight: 300; font-style: italic;
+  color: transparent; -webkit-text-stroke: 1px var(--gold); line-height: 0.9;
+}
+.lit-subtitle {
+  font-family: 'Cormorant Garamond', serif; font-size: 1.3rem;
+  color: var(--silver); font-style: italic; margin-top: 20px; line-height: 1.6;
+}
+.poem-showcase {
+  max-width: 1200px; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr 1.2fr; gap: 80px; align-items: start;
+}
+.poem-card {
+  border-left: 1px solid rgba(201,168,76,0.2); padding: 24px 28px;
+  margin-bottom: 4px; cursor: none; transition: all 0.4s ease; background: transparent;
+}
+.poem-card:hover, .poem-card.active {
+  border-left-color: var(--gold); background: rgba(201,168,76,0.04);
+}
+.poem-card-title {
+  font-family: 'Cormorant Garamond', serif; font-style: italic;
+  font-size: 1.4rem; color: var(--parchment); margin-bottom: 4px; font-weight: 300;
+}
+.poem-card-venue {
+  font-family: 'Space Mono', monospace; font-size: 0.58rem;
+  color: rgba(201,168,76,0.6); letter-spacing: 0.2em;
+}
+.poem-preview {
+  position: sticky; top: 120px; padding: 48px;
+  border: 1px solid rgba(201,168,76,0.1); background: rgba(201,168,76,0.02);
+  min-height: 500px; display: flex; flex-direction: column; justify-content: center;
+}
+.poem-preview-title {
+  font-family: 'Cormorant Garamond', serif; font-style: italic;
+  font-size: 2.4rem; color: var(--gold); margin-bottom: 32px; font-weight: 300;
+}
+.poem-text {
+  font-family: 'Crimson Pro', serif; font-size: 1.15rem;
+  color: var(--parchment); line-height: 2.2; font-style: italic;
+  font-weight: 300; white-space: pre-line;
+}
+.poem-ornament { font-size: 2rem; color: rgba(201,168,76,0.3); margin: 24px 0 0; text-align: right; }
+.articles-grid { max-width: 1200px; margin: 80px auto 0; }
+.article-row {
+  display: grid; grid-template-columns: 120px 1fr 200px;
+  gap: 32px; align-items: center; padding: 28px 0;
+  border-bottom: 1px solid rgba(201,168,76,0.08);
+  cursor: none; transition: all 0.3s ease;
+}
+.article-row:hover { border-bottom-color: rgba(201,168,76,0.3); }
+.article-row:hover .article-title { color: var(--gold); }
+.article-num {
+  font-family: 'Bebas Neue', sans-serif; font-size: 3rem;
+  color: rgba(201,168,76,0.15); line-height: 1;
+}
+.article-title {
+  font-family: 'Cormorant Garamond', serif; font-size: 1.3rem;
+  color: var(--parchment); font-weight: 300; transition: color 0.3s ease; line-height: 1.4;
+}
+.article-pub {
+  font-family: 'Space Mono', monospace; font-size: 0.58rem;
+  color: var(--gold); letter-spacing: 0.2em; text-align: right;
+}
+.anthologies-section {
+  max-width: 1200px; margin: 80px auto 0;
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px;
+}
+.anthology-card {
+  padding: 48px 36px; background: rgba(201,168,76,0.02);
+  border: 1px solid rgba(201,168,76,0.08); position: relative; overflow: hidden;
+  cursor: none; transition: all 0.4s ease;
+}
+.anthology-card:hover { background: rgba(201,168,76,0.06); border-color: rgba(201,168,76,0.25); }
+.anthology-icon { margin-bottom: 24px; display: block; opacity: 0.5; }
+.anthology-icon svg { width: 48px; height: 48px; }
+.anthology-name {
+  font-family: 'Cormorant Garamond', serif; font-size: 1.8rem;
+  color: var(--gold); font-weight: 300; font-style: italic; margin-bottom: 8px; line-height: 1.2;
+}
+.anthology-venue {
+  font-family: 'Space Mono', monospace; font-size: 0.6rem;
+  color: var(--silver); letter-spacing: 0.2em;
+}
+
+/* HUMAN */
+#human {
+  position: relative; z-index: 1; min-height: 100vh; padding: 120px 40px;
+}
+.human-layout {
+  max-width: 1200px; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start;
+}
+.human-narrative { position: sticky; top: 120px; }
+.human-big-title {
+  font-family: 'Bebas Neue', sans-serif; font-size: clamp(4rem, 8vw, 8rem);
+  color: transparent; -webkit-text-stroke: 1px rgba(74,124,89,0.5);
+  line-height: 0.85; letter-spacing: 0.05em; margin-bottom: 32px;
+}
+.human-big-title .accent { color: var(--sage); -webkit-text-stroke: 0; }
+.human-quote {
+  font-family: 'Cormorant Garamond', serif; font-size: 1.4rem;
+  color: var(--parchment); font-style: italic; line-height: 1.8;
+  border-left: 2px solid var(--sage); padding-left: 24px; margin-bottom: 40px; font-weight: 300;
+}
+.human-body-text {
+  font-family: 'Cormorant Garamond', serif; font-size: 1.05rem;
+  color: var(--silver); line-height: 1.9;
+}
+.human-achievements { display: flex; flex-direction: column; gap: 2px; }
+.achieve-card {
+  padding: 28px 32px; border: 1px solid rgba(74,124,89,0.12);
+  background: rgba(74,124,89,0.02); cursor: none; transition: all 0.4s ease;
+  position: relative; overflow: hidden;
+}
+.achieve-card:hover {
+  border-color: rgba(74,124,89,0.35); background: rgba(74,124,89,0.06); transform: translateX(8px);
+}
+.achieve-icon { margin-bottom: 8px; display: block; }
+.achieve-icon svg { width: 28px; height: 28px; }
+.achieve-title {
+  font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem;
+  color: var(--parchment); letter-spacing: 0.06em; margin-bottom: 4px;
+}
+.achieve-sub { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 0.95rem; color: var(--sage); }
+.achieve-detail {
+  font-family: 'Space Mono', monospace; font-size: 0.6rem;
+  color: var(--silver); margin-top: 8px; letter-spacing: 0.1em; line-height: 1.6;
+}
+.sports-section { max-width: 1200px; margin: 80px auto 0; }
+.sports-medals { display: flex; gap: 24px; flex-wrap: wrap; margin-top: 32px; }
+.medal {
+  display: flex; align-items: center; gap: 12px; padding: 16px 24px;
+  border: 1px solid rgba(201,168,76,0.15); background: rgba(201,168,76,0.03);
+  transition: all 0.3s ease;
+}
+.medal:hover { border-color: rgba(201,168,76,0.4); transform: translateY(-2px); }
+.medal-icon { display: flex; align-items: center; }
+.medal-icon svg { width: 32px; height: 32px; }
+.medal-type { font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem; line-height: 1; display: block; }
+.medal.gold .medal-type { color: var(--gold); }
+.medal.silver .medal-type { color: var(--silver); }
+.medal-sport {
+  font-family: 'Space Mono', monospace; font-size: 0.58rem;
+  color: rgba(255,255,255,0.5); letter-spacing: 0.15em;
+}
+.scholarships-section {
+  max-width: 1200px; margin: 60px auto 0; padding: 48px;
+  background: linear-gradient(135deg, rgba(201,168,76,0.04) 0%, rgba(74,124,89,0.04) 100%);
+  border: 1px solid rgba(201,168,76,0.1);
+}
+.scholarship-item {
+  display: flex; align-items: center; gap: 24px; padding: 16px 0;
+  border-bottom: 1px solid rgba(201,168,76,0.06);
+}
+.scholarship-item:last-child { border-bottom: none; }
+.scholarship-star { color: var(--gold); font-size: 1.2rem; }
+.scholarship-name {
+  font-family: 'Cormorant Garamond', serif; font-size: 1.1rem;
+  color: var(--parchment); font-style: italic;
+}
+
+/* =================== OPPORTUNITY SECTION =================== */
+#opportunity {
+  position: relative; z-index: 1; min-height: 100vh; padding: 120px 40px;
+  background: radial-gradient(ellipse at 80% 50%, rgba(16,185,129,0.05) 0%, transparent 60%),
+              radial-gradient(ellipse at 20% 80%, rgba(245,158,11,0.05) 0%, transparent 60%);
+}
+.opp-header {
+  max-width: 1200px; margin: 0 auto 80px;
+}
+.opp-big-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(4rem, 10vw, 9rem); line-height: 0.85; letter-spacing: 0.05em;
+}
+.opp-big-title .accent-green { color: var(--emerald); -webkit-text-stroke: 0; }
+.opp-big-title .accent-amber { color: var(--amber); -webkit-text-stroke: 0; }
+.opp-big-title .outline {
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(16,185,129,0.3);
+}
+.opp-tagline {
+  font-family: 'Cormorant Garamond', serif; font-style: italic;
+  font-size: 1.3rem; color: var(--silver); margin-top: 20px; max-width: 700px; line-height: 1.7;
+}
+.opp-tabs {
+  max-width: 1200px; margin: 0 auto;
+}
+.tab-buttons {
+  display: flex; gap: 2px; margin-bottom: 2px;
+}
+.tab-btn {
+  font-family: 'Space Mono', monospace; font-size: 0.65rem;
+  letter-spacing: 0.2em; text-transform: uppercase; padding: 16px 32px;
+  border: none; background: rgba(255,255,255,0.04); color: var(--silver);
+  cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; gap: 10px;
+}
+.tab-btn:hover { background: rgba(255,255,255,0.08); color: var(--parchment); }
+.tab-btn.active.jobs { background: rgba(0,212,255,0.12); color: var(--electric); }
+.tab-btn.active.startup { background: rgba(16,185,129,0.12); color: var(--emerald); }
+.tab-btn.active.freelance { background: rgba(245,158,11,0.12); color: var(--amber); }
+.tab-btn svg { width: 16px; height: 16px; }
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+
+/* JOBS TAB */
+.jobs-panel {
+  padding: 60px; background: rgba(0,212,255,0.02); border: 1px solid rgba(0,212,255,0.1);
+}
+.jobs-intro {
+  font-family: 'Cormorant Garamond', serif; font-size: 1.15rem;
+  color: var(--silver); line-height: 1.8; max-width: 800px; margin-bottom: 48px;
+  font-style: italic;
+}
+.jobs-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 2px; margin-bottom: 48px; }
+.job-card {
+  padding: 32px; background: rgba(0,212,255,0.03); border: 1px solid rgba(0,212,255,0.1);
+  transition: all 0.4s ease; position: relative;
+}
+.job-card:hover { background: rgba(0,212,255,0.07); border-color: rgba(0,212,255,0.3); transform: translateY(-2px); }
+.job-card-type {
+  font-family: 'Space Mono', monospace; font-size: 0.55rem;
+  color: rgba(0,212,255,0.5); letter-spacing: 0.3em; margin-bottom: 12px;
+}
+.job-card-role {
+  font-family: 'Bebas Neue', sans-serif; font-size: 1.6rem;
+  color: var(--parchment); letter-spacing: 0.05em; margin-bottom: 10px; line-height: 1;
+}
+.job-card-detail {
+  font-family: 'Cormorant Garamond', serif; font-size: 0.95rem;
+  color: var(--silver); line-height: 1.6; margin-bottom: 16px;
+}
+.job-card-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.job-card-tag {
+  font-family: 'Space Mono', monospace; font-size: 0.5rem;
+  padding: 3px 10px; border: 1px solid rgba(0,212,255,0.15);
+  color: rgba(0,212,255,0.7); letter-spacing: 0.1em;
+}
+.jobs-cta {
+  border: 1px solid rgba(0,212,255,0.2); padding: 40px;
+  background: rgba(0,212,255,0.03); display: flex; align-items: center;
+  justify-content: space-between; gap: 32px; flex-wrap: wrap;
+}
+.jobs-cta-text {
+  font-family: 'Cormorant Garamond', serif; font-size: 1.2rem;
+  color: var(--parchment); line-height: 1.6; max-width: 500px;
+}
+.jobs-cta-text strong { color: var(--electric); font-weight: 400; font-style: italic; }
+.cta-action-btn {
+  font-family: 'Space Mono', monospace; font-size: 0.65rem;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  padding: 16px 32px; border: 1px solid; cursor: pointer;
+  text-decoration: none; display: inline-flex; align-items: center; gap: 10px;
+  transition: all 0.3s ease; white-space: nowrap;
+}
+.cta-action-btn.electric {
+  border-color: var(--electric); color: var(--electric); background: rgba(0,212,255,0.05);
+}
+.cta-action-btn.electric:hover { background: rgba(0,212,255,0.15); }
+.cta-action-btn svg { width: 14px; height: 14px; }
+
+/* STARTUP TAB */
+.startup-panel {
+  padding: 60px; background: rgba(16,185,129,0.02); border: 1px solid rgba(16,185,129,0.1);
+}
+.startup-intro {
+  font-family: 'Cormorant Garamond', serif; font-size: 1.15rem;
+  color: var(--silver); line-height: 1.8; max-width: 800px; margin-bottom: 48px; font-style: italic;
+}
+.startup-offerings {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 2px; margin-bottom: 48px;
+}
+.startup-card {
+  padding: 36px 28px; background: rgba(16,185,129,0.03); border: 1px solid rgba(16,185,129,0.1);
+  transition: all 0.4s ease;
+}
+.startup-card:hover { background: rgba(16,185,129,0.07); border-color: rgba(16,185,129,0.3); transform: translateY(-2px); }
+.startup-card-icon { margin-bottom: 20px; }
+.startup-card-icon svg { width: 32px; height: 32px; color: var(--emerald); }
+.startup-card-title {
+  font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem;
+  color: var(--parchment); letter-spacing: 0.05em; margin-bottom: 8px;
+}
+.startup-card-desc {
+  font-family: 'Cormorant Garamond', serif; font-size: 0.95rem;
+  color: var(--silver); line-height: 1.7; font-style: italic;
+}
+.startup-pitch {
+  border: 1px solid rgba(16,185,129,0.2); padding: 48px;
+  background: rgba(16,185,129,0.03); margin-bottom: 32px;
+}
+.startup-pitch-label {
+  font-family: 'Space Mono', monospace; font-size: 0.62rem;
+  color: var(--emerald); letter-spacing: 0.4em; text-transform: uppercase; margin-bottom: 16px;
+}
+.startup-pitch-text {
+  font-family: 'Cormorant Garamond', serif; font-size: 1.4rem;
+  color: var(--parchment); line-height: 1.7; max-width: 700px;
+}
+.startup-pitch-text em { color: var(--emerald); font-style: italic; }
+.startup-metrics { display: flex; gap: 48px; flex-wrap: wrap; margin-top: 36px; }
+.startup-metric { text-align: left; }
+.startup-metric-num {
+  font-family: 'Bebas Neue', sans-serif; font-size: 3.5rem;
+  color: var(--emerald); line-height: 1; display: block;
+}
+.startup-metric-label {
+  font-family: 'Space Mono', monospace; font-size: 0.58rem;
+  color: var(--silver); letter-spacing: 0.2em; text-transform: uppercase;
+}
+.startup-cta { display: flex; gap: 16px; flex-wrap: wrap; }
+.cta-action-btn.emerald {
+  border-color: var(--emerald); color: var(--emerald); background: rgba(16,185,129,0.05);
+}
+.cta-action-btn.emerald:hover { background: rgba(16,185,129,0.15); }
+
+/* FREELANCE TAB */
+.freelance-panel {
+  padding: 60px; background: rgba(245,158,11,0.02); border: 1px solid rgba(245,158,11,0.1);
+}
+.freelance-intro {
+  font-family: 'Cormorant Garamond', serif; font-size: 1.15rem;
+  color: var(--silver); line-height: 1.8; max-width: 800px; margin-bottom: 48px; font-style: italic;
+}
+.freelance-services {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 2px; margin-bottom: 48px;
+}
+.freelance-card {
+  padding: 36px 28px; background: rgba(245,158,11,0.03); border: 1px solid rgba(245,158,11,0.1);
+  transition: all 0.4s ease; position: relative; overflow: hidden;
+}
+.freelance-card:hover { background: rgba(245,158,11,0.07); border-color: rgba(245,158,11,0.3); transform: translateY(-2px); }
+.freelance-card-icon { margin-bottom: 20px; }
+.freelance-card-icon svg { width: 32px; height: 32px; color: var(--amber); }
+.freelance-card-title {
+  font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem;
+  color: var(--parchment); letter-spacing: 0.05em; margin-bottom: 8px;
+}
+.freelance-card-desc {
+  font-family: 'Cormorant Garamond', serif; font-size: 0.95rem;
+  color: var(--silver); line-height: 1.7; margin-bottom: 16px; font-style: italic;
+}
+.freelance-card-price {
+  font-family: 'Space Mono', monospace; font-size: 0.62rem;
+  color: var(--amber); letter-spacing: 0.15em;
+}
+.freelance-process {
+  border: 1px solid rgba(245,158,11,0.2); padding: 48px; margin-bottom: 32px;
+}
+.freelance-process-label {
+  font-family: 'Space Mono', monospace; font-size: 0.62rem;
+  color: var(--amber); letter-spacing: 0.4em; text-transform: uppercase; margin-bottom: 32px;
+}
+.process-steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; }
+.process-step { text-align: center; }
+.process-step-num {
+  font-family: 'Bebas Neue', sans-serif; font-size: 3rem; color: rgba(245,158,11,0.2); line-height: 1;
+}
+.process-step-title {
+  font-family: 'Space Mono', monospace; font-size: 0.62rem;
+  color: var(--amber); letter-spacing: 0.1em; text-transform: uppercase; margin: 8px 0;
+}
+.process-step-desc {
+  font-family: 'Cormorant Garamond', serif; font-size: 0.9rem;
+  color: var(--silver); line-height: 1.5; font-style: italic;
+}
+.freelance-cta { display: flex; gap: 16px; flex-wrap: wrap; }
+.cta-action-btn.amber {
+  border-color: var(--amber); color: var(--amber); background: rgba(245,158,11,0.05);
+}
+.cta-action-btn.amber:hover { background: rgba(245,158,11,0.15); }
+
+/* ABOUT / CONTACT */
+#about {
+  position: relative; z-index: 1; padding: 120px 40px; text-align: center;
+}
+.about-inner { max-width: 800px; margin: 0 auto; }
+.about-title {
+  font-family: 'Bebas Neue', sans-serif; font-size: clamp(3rem, 8vw, 8rem);
+  color: var(--parchment); letter-spacing: 0.05em; line-height: 0.85; margin-bottom: 48px;
+}
+.about-text {
+  font-family: 'Cormorant Garamond', serif; font-size: 1.3rem;
+  color: var(--silver); line-height: 1.9; font-style: italic; font-weight: 300; margin-bottom: 60px;
+}
+.contact-links { display: flex; gap: 32px; justify-content: center; flex-wrap: wrap; }
+.contact-link {
+  display: flex; flex-direction: column; align-items: center; gap: 10px;
+  text-decoration: none; padding: 28px 40px;
+  border: 1px solid rgba(201,168,76,0.12); background: transparent;
+  transition: all 0.4s ease; cursor: none;
+}
+.contact-link:hover {
+  border-color: var(--gold); background: rgba(201,168,76,0.06); transform: translateY(-4px);
+}
+.contact-link-icon svg { width: 28px; height: 28px; }
+.contact-link-label {
+  font-family: 'Space Mono', monospace; font-size: 0.58rem;
+  color: var(--silver); letter-spacing: 0.3em; text-transform: uppercase;
+}
+.contact-link-value {
+  font-family: 'Cormorant Garamond', serif; font-size: 0.9rem;
+  color: var(--gold); font-style: italic;
+}
+
+/* FOOTER */
+footer {
+  position: relative; z-index: 1;
+  border-top: 1px solid rgba(201,168,76,0.08); padding: 40px;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.footer-left {
+  font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem;
+  color: rgba(201,168,76,0.4); letter-spacing: 0.2em;
+}
+.footer-right {
+  font-family: 'Space Mono', monospace; font-size: 0.55rem;
+  color: rgba(255,255,255,0.2); letter-spacing: 0.2em; text-align: right; line-height: 1.8;
+}
+
+/* ORNAMENT DIVIDER */
+.ornament-divider {
+  text-align: center; padding: 60px 0; position: relative; z-index: 1;
+}
+.ornament-divider::before, .ornament-divider::after {
+  content: ''; display: inline-block; width: 120px; height: 1px;
+  background: linear-gradient(to right, transparent, rgba(201,168,76,0.3));
+  vertical-align: middle; margin: 0 24px;
+}
+.ornament-divider::after { background: linear-gradient(to left, transparent, rgba(201,168,76,0.3)); }
+.ornament-sym {
+  font-family: 'Cormorant Garamond', serif; font-size: 1.5rem;
+  color: rgba(201,168,76,0.4); vertical-align: middle;
+}
+.section-divider {
+  max-width: 1200px; margin: 0 auto; height: 1px;
+  background: linear-gradient(to right, transparent, rgba(201,168,76,0.2), transparent);
+}
+.glow-text { text-shadow: 0 0 40px rgba(201,168,76,0.4), 0 0 80px rgba(201,168,76,0.1); }
+
+/* PARTICLE */
+.particle-overlay {
+  position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden;
+}
+.dust {
+  position: absolute; width: 1px; height: 1px;
+  background: rgba(201,168,76,0.4); border-radius: 50%;
+  animation: dustFloat linear infinite;
+}
+@keyframes dustFloat {
+  0% { transform: translateY(100vh) translateX(0); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 0.5; }
+  100% { transform: translateY(-100px) translateX(40px); opacity: 0; }
+}
+body::after {
+  content: ''; position: fixed; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none; z-index: 0; opacity: 0.5;
+}
+
+/* =================== CHATBOT =================== */
+#chatbot-toggle {
+  position: fixed; bottom: 32px; right: 32px; z-index: 1000;
+  width: 60px; height: 60px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--gold) 0%, #a07830 100%);
+  border: none; cursor: pointer; display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 8px 32px rgba(201,168,76,0.4);
+  transition: all 0.3s ease;
+}
+#chatbot-toggle:hover { transform: scale(1.08); box-shadow: 0 12px 40px rgba(201,168,76,0.6); }
+#chatbot-toggle svg { width: 26px; height: 26px; color: var(--void); }
+#chatbot-toggle.open svg.chat-icon { display: none; }
+#chatbot-toggle.open svg.close-icon { display: block !important; }
+#chatbot-toggle svg.close-icon { display: none; }
+
+#chatbot-window {
+  position: fixed; bottom: 108px; right: 32px; z-index: 1000;
+  width: 380px; max-height: 560px;
+  background: rgba(5,13,26,0.97); border: 1px solid rgba(201,168,76,0.2);
+  display: flex; flex-direction: column;
+  backdrop-filter: blur(20px);
+  box-shadow: 0 24px 60px rgba(0,0,0,0.6);
+  transform: translateY(20px) scale(0.95); opacity: 0;
+  pointer-events: none; transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+}
+#chatbot-window.open {
+  transform: translateY(0) scale(1); opacity: 1; pointer-events: all;
+}
+.chatbot-header {
+  padding: 20px 24px; border-bottom: 1px solid rgba(201,168,76,0.1);
+  display: flex; align-items: center; gap: 12px; flex-shrink: 0;
+}
+.chatbot-avatar {
+  width: 38px; height: 38px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--gold) 0%, #a07830 100%);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.chatbot-avatar svg { width: 18px; height: 18px; color: var(--void); }
+.chatbot-header-info {}
+.chatbot-name {
+  font-family: 'Bebas Neue', sans-serif; font-size: 1.1rem;
+  color: var(--gold); letter-spacing: 0.1em;
+}
+.chatbot-status {
+  font-family: 'Space Mono', monospace; font-size: 0.5rem;
+  color: var(--emerald); letter-spacing: 0.15em; display: flex; align-items: center; gap: 5px;
+}
+.chatbot-status::before {
+  content: ''; width: 6px; height: 6px; background: var(--emerald);
+  border-radius: 50%; display: inline-block; animation: pulse-dot 2s infinite;
+}
+@keyframes pulse-dot { 0%,100%{opacity:1} 50%{opacity:0.4} }
+.chatbot-messages {
+  flex: 1; overflow-y: auto; padding: 20px; display: flex;
+  flex-direction: column; gap: 14px; min-height: 0;
+}
+.chatbot-messages::-webkit-scrollbar { width: 4px; }
+.chatbot-messages::-webkit-scrollbar-track { background: transparent; }
+.chatbot-messages::-webkit-scrollbar-thumb { background: rgba(201,168,76,0.2); }
+.msg {
+  display: flex; gap: 10px; max-width: 88%;
+}
+.msg.bot { align-self: flex-start; }
+.msg.user { align-self: flex-end; flex-direction: row-reverse; }
+.msg-bubble {
+  font-family: 'Cormorant Garamond', serif; font-size: 0.95rem;
+  line-height: 1.6; padding: 12px 16px;
+}
+.msg.bot .msg-bubble {
+  background: rgba(201,168,76,0.07); border: 1px solid rgba(201,168,76,0.15);
+  color: var(--parchment); border-radius: 0 12px 12px 12px;
+}
+.msg.user .msg-bubble {
+  background: rgba(0,212,255,0.1); border: 1px solid rgba(0,212,255,0.2);
+  color: var(--parchment); border-radius: 12px 0 12px 12px;
+}
+.chatbot-suggestions {
+  padding: 0 20px 12px; display: flex; flex-wrap: wrap; gap: 6px;
+}
+.suggestion-chip {
+  font-family: 'Space Mono', monospace; font-size: 0.5rem;
+  letter-spacing: 0.1em; padding: 6px 12px;
+  border: 1px solid rgba(201,168,76,0.25); background: rgba(201,168,76,0.05);
+  color: rgba(201,168,76,0.8); cursor: pointer; transition: all 0.2s ease;
+  text-align: left;
+}
+.suggestion-chip:hover { background: rgba(201,168,76,0.14); color: var(--gold); border-color: rgba(201,168,76,0.5); }
+.chatbot-input-area {
+  padding: 16px 20px; border-top: 1px solid rgba(201,168,76,0.1);
+  display: flex; gap: 10px; align-items: center; flex-shrink: 0;
+}
+#chatbot-input {
+  flex: 1; background: rgba(255,255,255,0.04); border: 1px solid rgba(201,168,76,0.15);
+  padding: 10px 14px; font-family: 'Cormorant Garamond', serif; font-size: 0.9rem;
+  color: var(--parchment); outline: none; transition: border-color 0.2s ease;
+}
+#chatbot-input::placeholder { color: rgba(168,184,200,0.4); font-style: italic; }
+#chatbot-input:focus { border-color: rgba(201,168,76,0.4); }
+#chatbot-send {
+  width: 40px; height: 40px; background: rgba(201,168,76,0.15);
+  border: 1px solid rgba(201,168,76,0.3); cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s ease; color: var(--gold); flex-shrink: 0;
+}
+#chatbot-send:hover { background: rgba(201,168,76,0.3); }
+#chatbot-send svg { width: 16px; height: 16px; }
+
+/* MOBILE */
+@media (max-width: 768px) {
+  nav { padding: 16px 24px; }
+  .nav-links { gap: 16px; }
+  .portals-grid { grid-template-columns: 1fr 1fr; }
+  .poem-showcase { grid-template-columns: 1fr; gap: 40px; }
+  .poem-preview { position: static; }
+  .human-layout { grid-template-columns: 1fr; gap: 40px; }
+  .human-narrative { position: static; }
+  .anthologies-section { grid-template-columns: 1fr; }
+  .edu-section { grid-template-columns: 1fr; }
+  .article-row { grid-template-columns: 60px 1fr; }
+  .article-pub { display: none; }
+  footer { flex-direction: column; gap: 16px; text-align: center; }
+  #chatbot-window { width: calc(100vw - 32px); right: 16px; }
+  .process-steps { grid-template-columns: 1fr 1fr; }
+  .tab-btn span { display: none; }
+}
+
+/* LOGO STYLES */
+.nav-logo img {
+  transition: transform 0.3s ease;
+  filter: brightness(1) drop-shadow(0 0 5px rgba(201,168,76,0.3));
+}
+
+.nav-logo img:hover {
+  transform: scale(1.05);
+  filter: brightness(1.2) drop-shadow(0 0 8px rgba(201,168,76,0.5));
+}
+
+.footer-left img {
+  filter: brightness(0.8);
+  transition: filter 0.3s ease;
+}
+
+.footer-left:hover img {
+  filter: brightness(1);
+}
+
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-trail" id="cursorTrail"></div>
+
+<div id="loader">
+  <div class="loader-text">SHASHWAT</div>
+  <div class="loader-sub">Initializing Portfolio</div>
+  <div class="loader-bar"></div>
+</div>
+
+<canvas id="galaxy-canvas"></canvas>
+<div class="particle-overlay" id="particles"></div>
+
+<!-- NAV -->
+<nav id="main-nav">
+  <a href="#hero" class="nav-logo">
+  <img src="logo.png" alt="Shashwat Kashyap" style="height: 40px; width: auto; vertical-align: middle;">
+</a>
+  <ul class="nav-links">
+    <li><a href="#portals">Overview</a></li>
+    <li><a href="#tech">Tech</a></li>
+    <li><a href="#literary">Literary</a></li>
+    <li><a href="#opportunity">Hire Me</a></li>
+    <li><a href="#about">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-eyebrow">Full-Stack Developer · Writer · Entrepreneur · BIT Mesra</div>
+  <h1 class="hero-name">
+    <span class="filled">SHASH</span>WAT<br><span class="filled">KASH</span>YAP
+  </h1>
+  <div class="hero-title">I build systems that think, write words that breathe, and lead people that matter.</div>
+  <p class="hero-desc">
+    Delhi NCR, India — currently pursuing MCA at BIT Mesra.<br>
+    I'm open to full-time roles, startup collaborations, and freelance projects.
+  </p>
+  <div class="hero-cta">
+    <a href="#opportunity" class="hero-btn primary">
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:inline;margin-right:6px;vertical-align:middle"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+      Available to Hire
+    </a>
+    <a href="#tech" class="hero-btn secondary">
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:inline;margin-right:6px;vertical-align:middle"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+      View Projects
+    </a>
+    <a href="#opportunity" onclick="setTimeout(()=>document.querySelectorAll('.tab-btn')[2].click(),400)" class="hero-btn tertiary">
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:inline;margin-right:6px;vertical-align:middle"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      Freelance Work
+    </a>
+  </div>
+  <div class="hero-scroll">
+    <span>Scroll to Begin</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- PORTALS -->
+<section id="portals">
+  <div class="portals-container">
+    <div class="section-eyebrow reveal">What I Do</div>
+    <h2 class="section-title reveal">MY DOMAINS</h2>
+    <div class="portals-grid">
+      <div class="portal-card reveal" onclick="document.getElementById('tech').scrollIntoView({behavior:'smooth'})">
+        <div class="portal-bg"></div>
+        <div class="portal-symbol">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#00d4ff" stroke-width="1.2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+        </div>
+        <div class="portal-content">
+          <span class="portal-num">01</span>
+          <span class="portal-name">Engineering</span>
+          <div class="portal-desc">MERN Stack, Python, ML. I build full-stack systems that actually scale.</div>
+          <a class="portal-btn" href="#tech">Explore ↓</a>
+        </div>
+      </div>
+      <div class="portal-card reveal" onclick="document.getElementById('opportunity').scrollIntoView({behavior:'smooth'})">
+        <div class="portal-bg"></div>
+        <div class="portal-symbol">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="1.2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        </div>
+        <div class="portal-content">
+          <span class="portal-num">02</span>
+          <span class="portal-name">Startups</span>
+          <div class="portal-desc">I co-found, consult, and build MVPs. From ideation to launch — I've done it.</div>
+          <a class="portal-btn" href="#opportunity">Partner ↓</a>
+        </div>
+      </div>
+      <div class="portal-card reveal" onclick="document.getElementById('literary').scrollIntoView({behavior:'smooth'})">
+        <div class="portal-bg"></div>
+        <div class="portal-symbol">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#c9a84c" stroke-width="1.2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+        </div>
+        <div class="portal-content">
+          <span class="portal-num">03</span>
+          <span class="portal-name">Writing</span>
+          <div class="portal-desc">Published poet, author, and technical writer. Words are my second language of code.</div>
+          <a class="portal-btn" href="#literary">Read ↓</a>
+        </div>
+      </div>
+      <div class="portal-card reveal" onclick="document.getElementById('opportunity').scrollIntoView({behavior:'smooth'})">
+        <div class="portal-bg"></div>
+        <div class="portal-symbol">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="1.2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </div>
+        <div class="portal-content">
+          <span class="portal-num">04</span>
+          <span class="portal-name">Freelance</span>
+          <div class="portal-desc">Need a site, an ML model, or a CRM? I take on focused freelance work that matters.</div>
+          <a class="portal-btn" href="#opportunity">Hire ↓</a>
+        </div>
+      </div>
+      <div class="portal-card reveal">
+        <div class="portal-bg"></div>
+        <div class="portal-symbol">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#c9a84c" stroke-width="1.2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 11.5a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 0.87h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.5a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        </div>
+        <div class="portal-content">
+          <span class="portal-num">05</span>
+          <span class="portal-name">Salesforce</span>
+          <div class="portal-desc">Certified Agentforce Specialist. 73 badges, 38k+ points. I'm your CRM architect.</div>
+          <a class="portal-btn" href="#tech">Learn ↓</a>
+        </div>
+      </div>
+      <div class="portal-card reveal">
+        <div class="portal-bg"></div>
+        <div class="portal-symbol">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#00d4ff" stroke-width="1.2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+        </div>
+        <div class="portal-content">
+          <span class="portal-num">06</span>
+          <span class="portal-name">Research & AI</span>
+          <div class="portal-desc">Published on quantum computing, AI, and time. I think at the edge of what's known.</div>
+          <a class="portal-btn" href="#literary">Read ↓</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="ornament-divider"><span class="ornament-sym">✦</span></div>
+
+<!-- TECH -->
+<section id="tech">
+  <div class="tech-header reveal-left">
+    <div class="tech-title-block">
+      <div class="tech-big-title"><span class="accent">TECH</span><br>STACK</div>
+      <p class="tech-tagline">I don't just write code — I architect systems. Here's my arsenal.</p>
+    </div>
+  </div>
+
+  <!-- Education -->
+  <div class="edu-section">
+    <div class="edu-card reveal" data-degree="MCA">
+      <div class="edu-degree">MCA</div>
+      <div class="edu-inst">Birla Institute of Technology, Mesra</div>
+      <div class="edu-meta">2024 – 2026 · Master of Computer Applications<br>SGPA: 8.14 (Last Semester)</div>
+      <span class="edu-cgpa">7.85</span>
+    </div>
+    <div class="edu-card reveal" data-degree="BCA">
+      <div class="edu-degree">BCA</div>
+      <div class="edu-inst">Birla Institute of Technology, Mesra</div>
+      <div class="edu-meta">2021 – 2024 · Bachelor of Computer Applications<br>BIT Mesra, Jharkhand, India</div>
+      <span class="edu-cgpa">7.76</span>
+    </div>
+  </div>
+
+  <!-- Skills -->
+  <div class="skills-section" style="margin-top:80px;">
+    <div class="skills-label reveal">My Technical Arsenal</div>
+    <div class="skills-grid">
+      <span class="skill-tag reveal">Python</span>
+      <span class="skill-tag reveal">JavaScript</span>
+      <span class="skill-tag reveal">Java</span>
+      <span class="skill-tag reveal">React.js</span>
+      <span class="skill-tag reveal">Node.js</span>
+      <span class="skill-tag reveal">Express.js</span>
+      <span class="skill-tag reveal">MongoDB</span>
+      <span class="skill-tag reveal">MySQL</span>
+      <span class="skill-tag reveal">MERN Stack</span>
+      <span class="skill-tag reveal">Machine Learning</span>
+      <span class="skill-tag reveal">Sentiment Analysis</span>
+      <span class="skill-tag reveal">REST APIs</span>
+      <span class="skill-tag reveal">Git / GitHub</span>
+      <span class="skill-tag reveal">Figma</span>
+      <span class="skill-tag reveal">Streamlit</span>
+      <span class="skill-tag reveal">Flask</span>
+      <span class="skill-tag reveal">FastAPI</span>
+      <span class="skill-tag reveal">SEO Optimization</span>
+      <span class="skill-tag reveal">Salesforce CRM</span>
+      <span class="skill-tag reveal">Google AppScript</span>
+    </div>
+  </div>
+
+  <!-- Projects -->
+  <div class="skills-section">
+    <div class="skills-label reveal" style="margin-top:80px;">Things I've Built</div>
+  </div>
+  <div class="projects-grid">
+    <div class="project-card reveal">
+      <div class="featured-badge">FEATURED</div>
+      <div class="project-year">2025</div>
+      <div class="project-title">F1 Oracle</div>
+      <div class="project-desc">A Formula 1 race prediction engine I built using Random Forest models and historical telemetry data. Interactive charts, responsive UI, real-time simulation.</div>
+      <div class="project-tags"><span class="project-tag">Python</span><span class="project-tag">Streamlit</span><span class="project-tag">Machine Learning</span></div>
+    </div>
+    <div class="project-card reveal">
+      <div class="project-year">2024</div>
+      <div class="project-title">SkyVault</div>
+      <div class="project-desc">An encrypted file-sharing platform I designed with role-based permissions and analytics dashboards. Built on MERN with advanced security architecture.</div>
+      <div class="project-tags"><span class="project-tag">MERN Stack</span><span class="project-tag">Security</span></div>
+    </div>
+    <div class="project-card reveal">
+      <div class="featured-badge">FEATURED</div>
+      <div class="project-year">2023</div>
+      <div class="project-title">GradLink</div>
+      <div class="project-desc">Alumni networking portal I built connecting 5,000+ BIT alumni and students. Authentication, real-time chat, intelligent search. My first large-scale platform.</div>
+      <div class="project-tags"><span class="project-tag">MERN Stack</span><span class="project-tag">Render</span></div>
+    </div>
+    <div class="project-card reveal">
+      <div class="project-year">2023</div>
+      <div class="project-title">Alfred</div>
+      <div class="project-desc">My AI-powered voice assistant for desktop automation. Achieved 90% command recognition accuracy. Natural language desktop control with NLP at its core.</div>
+      <div class="project-tags"><span class="project-tag">Python</span><span class="project-tag">NLP</span><span class="project-tag">Voice AI</span></div>
+    </div>
+    <div class="project-card reveal">
+      <div class="project-year">2025</div>
+      <div class="project-title">EV Anomaly Detector</div>
+      <div class="project-desc">Live anomaly detection for electric vehicle batteries — a project I'm proud of. Visualized voltage and temperature anomalies with predictive dashboards.</div>
+      <div class="project-tags"><span class="project-tag">Python</span><span class="project-tag">ML</span><span class="project-tag">Streamlit</span></div>
+    </div>
+    <div class="project-card reveal">
+      <div class="project-year">2025</div>
+      <div class="project-title">ClarifAI</div>
+      <div class="project-desc">I built a prompt structuring engine that converts natural language into structured JSON queries using OpenAI API integration. Precision meets simplicity.</div>
+      <div class="project-tags"><span class="project-tag">Python</span><span class="project-tag">OpenAI API</span><span class="project-tag">Streamlit</span></div>
+    </div>
+    <div class="project-card reveal">
+      <div class="project-year">2025</div>
+      <div class="project-title">PlantGuard AI</div>
+      <div class="project-desc">My AI model to identify plant leaf diseases via uploaded images and recommend treatments. Real-world impact for agriculture that I'm genuinely proud of.</div>
+      <div class="project-tags"><span class="project-tag">Python</span><span class="project-tag">Flask</span><span class="project-tag">Computer Vision</span></div>
+    </div>
+    <div class="project-card reveal">
+      <div class="project-year">2025</div>
+      <div class="project-title">CineMatch AI</div>
+      <div class="project-desc">Hybrid movie recommendation system I engineered with search history, trending lists, and personalized watchlists powered by TMDB API.</div>
+      <div class="project-tags"><span class="project-tag">Python</span><span class="project-tag">Flask</span><span class="project-tag">TMDB API</span></div>
+    </div>
+    <div class="project-card reveal">
+      <div class="featured-badge">LIVE</div>
+      <div class="project-year">2025</div>
+      <div class="project-title">TEDx BIT Mesra</div>
+      <div class="project-desc">I built the official TEDx website with automated registration and payment validation via Google Sheets & Drive integration — for the event I also organized.</div>
+      <div class="project-tags"><span class="project-tag">HTML/CSS/JS</span><span class="project-tag">AppScript</span></div>
+    </div>
+    <div class="project-card reveal">
+      <div class="featured-badge">LIVE</div>
+      <div class="project-year">2025</div>
+      <div class="project-title">ICIEM 2026</div>
+      <div class="project-desc">International conference portal I developed end-to-end — automated paper submission, review workflows, and participant acknowledgment systems.</div>
+      <div class="project-tags"><span class="project-tag">Full Stack</span><span class="project-tag">Automation</span></div>
+    </div>
+    <div class="project-card reveal">
+      <div class="project-year">2025</div>
+      <div class="project-title">LifeCompass</div>
+      <div class="project-desc">A multi-output ML model I designed for personalized life-recommendation scores. Clean API + UI with interpretable outputs and local-first processing.</div>
+      <div class="project-tags"><span class="project-tag">Python</span><span class="project-tag">ML</span><span class="project-tag">FastAPI</span></div>
+    </div>
+    <div class="project-card reveal">
+      <div class="project-year">2024</div>
+      <div class="project-title">Timetable Generator</div>
+      <div class="project-desc">Constraints-based timetable generator I built with clash-free scheduling, admin panel, REST APIs, and exportable schedules — deployed for BIT Noida.</div>
+      <div class="project-tags"><span class="project-tag">MERN Stack</span><span class="project-tag">REST APIs</span></div>
+    </div>
+  </div>
+
+  <!-- Experience -->
+  <div class="exp-section">
+    <div class="skills-label reveal">Where I've Worked</div>
+    <div class="exp-timeline">
+      <div class="exp-item reveal">
+        <div class="exp-period">DEC 2025 – PRESENT</div>
+        <div class="exp-role">Salesforce Developer Intern</div>
+        <div class="exp-company">AA2IT India Pvt. Ltd. · New Delhi</div>
+        <div class="exp-desc">Selected for a 6-month Salesforce Developer internship. I work under the Salesforce Delivery Head — hands-on configuration, automation, data modelling, and supporting live project delivery.</div>
+      </div>
+      <div class="exp-item reveal">
+        <div class="exp-period">DEC 2025 – FEB 2026</div>
+        <div class="exp-role">Software Developer Intern</div>
+        <div class="exp-company">Prustaz Technologies · Bengaluru / Remote</div>
+        <div class="exp-desc">Contributing to innovation-driven software projects within engineering workflows. Flexible on-site/remote contribution based on project needs.</div>
+      </div>
+      <div class="exp-item reveal">
+        <div class="exp-period">MAY – AUG 2025</div>
+        <div class="exp-role">Full Stack Developer Intern</div>
+        <div class="exp-company">Pinaqtech</div>
+        <div class="exp-desc">I developed and deployed the company's official MERN website — boosted SEO ranking by 40% and reduced bounce rate significantly with advanced security measures.</div>
+      </div>
+      <div class="exp-item reveal">
+        <div class="exp-period">MAY – JUL 2025</div>
+        <div class="exp-role">Software Engineering Intern</div>
+        <div class="exp-company">Oohr Innovations</div>
+        <div class="exp-desc">I built a custom ERP system for educational institutions, automating academic workflows and reducing manual effort by 60%. I led QA and resolved 20+ critical bugs.</div>
+      </div>
+      <div class="exp-item reveal">
+        <div class="exp-period">JUL 2023 – APR 2024</div>
+        <div class="exp-role">Senior Developer Intern – Govt. Project</div>
+        <div class="exp-company">DST Menstrual Hygiene App</div>
+        <div class="exp-desc">I developed scalable features for a public health application serving 5,000+ users. Collaborated with health professionals to translate medical requirements into technical modules.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Salesforce -->
+  <div class="salesforce-section reveal">
+    <div class="skills-label">My Salesforce Journey</div>
+    <h3 style="font-family:'Bebas Neue',sans-serif;font-size:3rem;color:var(--gold);margin-top:8px;letter-spacing:0.1em;">MOUNTAINEER RANK</h3>
+    <div class="sf-badges">
+      <div class="sf-badge"><span class="sf-badge-num">73</span><span class="sf-badge-label">Badges</span></div>
+      <div class="sf-badge"><span class="sf-badge-num">38450</span><span class="sf-badge-label">Points</span></div>
+      <div class="sf-badge"><span class="sf-badge-num">12</span><span class="sf-badge-label">Trails</span></div>
+      <div class="sf-badge"><span class="sf-badge-num">3</span><span class="sf-badge-label">Superbadges</span></div>
+    </div>
+    <div style="margin-top:24px;font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--silver);font-size:1.05rem;">
+      Certified: <span style="color:var(--gold);">Salesforce Certified Agentforce Specialist (Active)</span><br>
+      Superbadge: <span style="color:var(--parchment);">Agentblazer Innovator</span>
+    </div>
+  </div>
+</section>
+
+<div class="ornament-divider"><span class="ornament-sym">❧</span></div>
+
+<!-- LITERARY -->
+<section id="literary">
+  <div class="lit-header">
+    <div class="lit-big-title reveal">My Written<br>Soul</div>
+    <p class="lit-subtitle reveal">Poetry is not what I write — it's how I breathe. Words are my second codebase.</p>
+  </div>
+
+  <div class="poem-showcase">
+    <div class="poems-list">
+      <div class="poem-card active reveal" onclick="showPoem(0)">
+        <div class="poem-card-title">"Alone"</div>
+        <div class="poem-card-venue">BIT Newsletter · Published</div>
+      </div>
+      <div class="poem-card reveal" onclick="showPoem(1)">
+        <div class="poem-card-title">"Symphony of Despair"</div>
+        <div class="poem-card-venue">WhyNot Australia · Published</div>
+      </div>
+      <div class="poem-card reveal" onclick="showPoem(2)">
+        <div class="poem-card-title">"Echoes in the Abyss"</div>
+        <div class="poem-card-venue">WhyNot Australia · Published</div>
+      </div>
+      <div class="poem-card reveal" onclick="showPoem(3)">
+        <div class="poem-card-title">"The Greyness of Man"</div>
+        <div class="poem-card-venue">WhyNot Australia · Published</div>
+      </div>
+    </div>
+    <div class="poem-preview reveal">
+      <div class="poem-preview-title" id="poemTitle">"Alone"</div>
+      <div class="poem-text" id="poemText">In the cathedral of silence,
+Alone in the darkness, I reside
+Hearing your words, as you try to hide
+Your true feelings, and your true intent
+But I still care for you, in the end
+
+Your secrets and sins, I know them well
+But I won't judge, or break the spell
+Of my love for you, that will always be
+A guiding light, to set you free
+
+I'll be there for you, through thick and thin
+In the shadows, where I always win
+Against the pain, that I try to hide
+And the memories, that I can't subside
+
+I'll pretend to be normal, with a mask on tight
+But inside, I know what's right
+For in the darkness, I find my peace
+And all of my thoughts, start to release
+
+So don't be afraid, to come to me
+For I'll be your friend, and I'll always be
+In the shadows, where I find my strength
+To be there for you, at any length
+
+Alone in the darkness, I may reside
+But with you, I'll stand by your side
+For my love for you, will never end
+Even in the shadows, I'll be your friend.</div>
+      <div class="poem-ornament">— SK</div>
+    </div>
+  </div>
+
+  <div class="articles-grid">
+    <div class="skills-label reveal" style="margin-bottom:8px;">Articles I've Published</div>
+    <div class="article-row reveal">
+      <div class="article-num">01</div>
+      <div class="article-title">"The Potential Impact of Quantum Computing, AI & Unified Theory on Our Understanding of Time"</div>
+      <div class="article-pub">Bits &amp; Bytes Magazine</div>
+    </div>
+    <div class="article-row reveal">
+      <div class="article-num">02</div>
+      <div class="article-title">"The Age of the Forgotten Mind"</div>
+      <div class="article-pub">BIT Newsletter</div>
+    </div>
+    <div class="article-row reveal">
+      <div class="article-num">03</div>
+      <div class="article-title">"A Bittersweet Farewell"</div>
+      <div class="article-pub">WhyNot Australia</div>
+    </div>
+  </div>
+
+  <div class="skills-label reveal" style="max-width:1200px;margin:80px auto 24px;">Anthologies I'm Featured In</div>
+  <div class="anthologies-section">
+    <div class="anthology-card reveal">
+      <span class="anthology-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#c9a84c" stroke-width="1.5"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+      </span>
+      <div class="anthology-name">Be Limitless</div>
+      <div class="anthology-venue">World Book Fair 2025 · National Publication</div>
+    </div>
+    <div class="anthology-card reveal">
+      <span class="anthology-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#c9a84c" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M8.56 2.75c4.37 6.03 6.02 9.42 8.03 17.72m2.54-15.38c-3.72 4.35-8.94 5.66-16.88 5.85m19.5 1.9c-3.5-.93-6.63-.82-8.94 0-2.58.92-5.01 2.86-7.44 6.32"/></svg>
+      </span>
+      <div class="anthology-name">Chromatic Currents V3</div>
+      <div class="anthology-venue">Literary Anthology · Contributor</div>
+    </div>
+    <div class="anthology-card reveal">
+      <span class="anthology-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#c9a84c" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+      </span>
+      <div class="anthology-name">Golden Realms V4</div>
+      <div class="anthology-venue">Literary Anthology · Contributor</div>
+    </div>
+  </div>
+</section>
+
+<div class="ornament-divider"><span class="ornament-sym">✦</span></div>
+
+<!-- HUMAN -->
+<section id="human">
+  <div class="human-layout">
+    <div class="human-narrative">
+      <div class="human-big-title">THE<br><span class="accent">HUMAN</span><br>SIDE</div>
+      <div class="human-quote">
+        "I don't just occupy rooms — I transform them. I'm a leader, athlete, writer, and builder. All at once. Always."
+      </div>
+      <div class="human-body-text">
+        I'm not a single story. I'm a library — stacked floor to ceiling with contradictions made beautiful. A computer scientist who writes poetry. A developer who organizes conferences. An introvert who captains sports teams and leads cultural festivals.<br><br>
+        From BIT Mesra to the national stage — scholarship recipient, Gold medalist, published author, TEDx pioneer, MCA scholar. I inhabit multiplicity with intention.
+      </div>
+    </div>
+
+    <div class="human-achievements">
+      <div class="achieve-card reveal">
+        <span class="achieve-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#4a7c59" stroke-width="1.5"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+        </span>
+        <div class="achieve-title">TEDx BIT Mesra</div>
+        <div class="achieve-sub">Head of Web Development — First Ever TEDx at BIT Mesra</div>
+        <div class="achieve-detail">I managed logistics, built the website, and automated registration systems for a landmark campus event that connected thinkers, dreamers, and innovators.</div>
+      </div>
+      <div class="achieve-card reveal">
+        <span class="achieve-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#4a7c59" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        </span>
+        <div class="achieve-title">ICIEM 2025/26</div>
+        <div class="achieve-sub">Head of Web Development — International Conference on Innovation, Engineering & Management</div>
+        <div class="achieve-detail">I'm spearheading an international conference — end-to-end management of 100+ delegates, paper submissions, and all digital systems.</div>
+      </div>
+      <div class="achieve-card reveal">
+        <span class="achieve-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#4a7c59" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+        </span>
+        <div class="achieve-title">IT Club Coordinator</div>
+        <div class="achieve-sub">BIT Mesra — Workshops & Technical Quizzes</div>
+        <div class="achieve-detail">I led hands-on workshops bringing technical skills to campus peers.</div>
+      </div>
+      <div class="achieve-card reveal">
+        <span class="achieve-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#4a7c59" stroke-width="1.5"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+        </span>
+        <div class="achieve-title">Literature Society</div>
+        <div class="achieve-sub">Coordinator — Writing, Editing & Publication Drives</div>
+        <div class="achieve-detail">I guided fellow writers and shaped the literary voice of the institution.</div>
+      </div>
+      <div class="achieve-card reveal">
+        <span class="achieve-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#4a7c59" stroke-width="1.5"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/></svg>
+        </span>
+        <div class="achieve-title">Entrepreneurship Club</div>
+        <div class="achieve-sub">Core Team — Startup Initiatives & Internship Drives</div>
+        <div class="achieve-detail">I fostered startup culture and helped students find transformative internship opportunities.</div>
+      </div>
+      <div class="achieve-card reveal">
+        <span class="achieve-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#4a7c59" stroke-width="1.5"><path d="M14.5 10c-.83 0-1.5-.67-1.5-1.5v-5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5v5c0 .83-.67 1.5-1.5 1.5z"/><path d="M20.5 10H19V8.5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/><path d="M9.5 14c.83 0 1.5.67 1.5 1.5v5c0 .83-.67 1.5-1.5 1.5S8 21.33 8 20.5v-5c0-.83.67-1.5 1.5-1.5z"/><path d="M3.5 14H5v1.5c0 .83-.67 1.5-1.5 1.5S2 16.33 2 15.5 2.67 14 3.5 14z"/><path d="M14 14.5c0-.83.67-1.5 1.5-1.5h5c.83 0 1.5.67 1.5 1.5s-.67 1.5-1.5 1.5h-5c-.83 0-1.5-.67-1.5-1.5z"/><path d="M15.5 19H14v1.5c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5-.67-1.5-1.5-1.5z"/><path d="M10 9.5C10 8.67 9.33 8 8.5 8h-5C2.67 8 2 8.67 2 9.5S2.67 11 3.5 11h5c.83 0 1.5-.67 1.5-1.5z"/><path d="M8.5 5H10V3.5C10 2.67 9.33 2 8.5 2S7 2.67 7 3.5 7.67 5 8.5 5z"/></svg>
+        </span>
+        <div class="achieve-title">News & Publication Society</div>
+        <div class="achieve-sub">Member — Official Newsletter</div>
+        <div class="achieve-detail">I authored and edited official institutional newsletters reaching the entire campus community.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sports -->
+  <div class="sports-section">
+    <div class="skills-label reveal">My Sports Record</div>
+    <div class="sports-medals">
+      <div class="medal gold reveal">
+        <div class="medal-icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#c9a84c" stroke-width="1.5"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg></div>
+        <div class="medal-info"><span class="medal-type">Gold</span><span class="medal-sport">Volleyball · BIT Noida</span></div>
+      </div>
+      <div class="medal gold reveal">
+        <div class="medal-icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#c9a84c" stroke-width="1.5"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg></div>
+        <div class="medal-info"><span class="medal-type">Gold</span><span class="medal-sport">Kho-Kho · BIT Noida</span></div>
+      </div>
+      <div class="medal gold reveal">
+        <div class="medal-icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#c9a84c" stroke-width="1.5"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg></div>
+        <div class="medal-info"><span class="medal-type">Gold</span><span class="medal-sport">Basketball · BIT Noida</span></div>
+      </div>
+      <div class="medal silver reveal">
+        <div class="medal-icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#a8b8c8" stroke-width="1.5"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg></div>
+        <div class="medal-info"><span class="medal-type">Silver</span><span class="medal-sport">Table Tennis · BIT Noida</span></div>
+      </div>
+    </div>
+    <div style="margin-top:16px;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:0.95rem;color:var(--silver);max-width:1200px;">
+      Sports Club Coordinator (Badminton) · I organized campus tournaments and kept the competitive spirit alive.
+    </div>
+  </div>
+
+  <!-- Scholarships -->
+  <div class="scholarships-section reveal">
+    <div class="skills-label" style="color:var(--gold);">Scholarships & Honours</div>
+    <div class="scholarship-item">
+      <span class="scholarship-star">★</span>
+      <span class="scholarship-name">GP Birla Foundation Scholarship</span>
+    </div>
+    <div class="scholarship-item">
+      <span class="scholarship-star">★</span>
+      <span class="scholarship-name">Dr. Usha Aggarwal Trust Scholarship</span>
+    </div>
+    <div class="scholarship-item">
+      <span class="scholarship-star">★</span>
+      <span class="scholarship-name">HBMK Foundation Scholarship</span>
+    </div>
+  </div>
+</section>
+
+<div class="ornament-divider"><span class="ornament-sym">✦</span></div>
+
+<!-- OPPORTUNITY SECTION -->
+<section id="opportunity">
+  <div class="opp-header">
+    <div class="opp-big-title reveal">
+      <span class="outline">OPEN</span><br>
+      <span class="accent-green">FOR</span><br>
+      <span class="accent-amber">WORK</span>
+    </div>
+    <p class="opp-tagline reveal">
+      I'm actively looking for full-time roles, startup co-founding opportunities, and select freelance projects. If you're building something worth building — let's talk.
+    </p>
+  </div>
+
+  <div class="opp-tabs reveal">
+    <div class="tab-buttons">
+      <button class="tab-btn jobs active" onclick="switchTab('jobs')">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+        <span>Full-Time Jobs</span>
+      </button>
+      <button class="tab-btn startup" onclick="switchTab('startup')">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><path d="M9 22V12h6v10M9 7h.01M15 7h.01"/></svg>
+        <span>Startups & Funding</span>
+      </button>
+      <button class="tab-btn freelance" onclick="switchTab('freelance')">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+        <span>Freelance Projects</span>
+      </button>
+    </div>
+
+    <!-- JOBS TAB -->
+    <div class="tab-content jobs-tab active" id="tab-jobs">
+      <div class="jobs-panel">
+        <p class="jobs-intro">
+          I'm a full-stack developer and Salesforce specialist actively seeking full-time roles where I can architect, build, and ship. I'm based in Delhi NCR and open to remote or hybrid opportunities across India.
+        </p>
+        <div class="jobs-grid">
+          <div class="job-card">
+            <div class="job-card-type">ROLE I'M SEEKING</div>
+            <div class="job-card-role">Full-Stack Developer</div>
+            <div class="job-card-detail">MERN, Python, REST APIs, cloud-ready architectures. I build things that scale and don't break at 3am.</div>
+            <div class="job-card-tags"><span class="job-card-tag">React</span><span class="job-card-tag">Node.js</span><span class="job-card-tag">MongoDB</span></div>
+          </div>
+          <div class="job-card">
+            <div class="job-card-type">ROLE I'M SEEKING</div>
+            <div class="job-card-role">Salesforce Developer</div>
+            <div class="job-card-detail">Certified Agentforce Specialist with live internship experience. Config, automation, data modelling, Apex basics.</div>
+            <div class="job-card-tags"><span class="job-card-tag">Salesforce</span><span class="job-card-tag">CRM</span><span class="job-card-tag">Automation</span></div>
+          </div>
+          <div class="job-card">
+            <div class="job-card-type">ROLE I'M SEEKING</div>
+            <div class="job-card-role">ML / AI Engineer</div>
+            <div class="job-card-detail">I've shipped real ML products — plant disease detection, EV anomaly detection, race prediction. Not toy projects.</div>
+            <div class="job-card-tags"><span class="job-card-tag">Python</span><span class="job-card-tag">Scikit-learn</span><span class="job-card-tag">OpenAI API</span></div>
+          </div>
+          <div class="job-card">
+            <div class="job-card-type">ALSO OPEN TO</div>
+            <div class="job-card-role">Technical Writer</div>
+            <div class="job-card-detail">Published author and poet who also speaks fluent code. I can write docs, articles, or content that doesn't bore engineers to death.</div>
+            <div class="job-card-tags"><span class="job-card-tag">Writing</span><span class="job-card-tag">Documentation</span><span class="job-card-tag">Content</span></div>
+          </div>
+        </div>
+        <div class="jobs-cta">
+          <div class="jobs-cta-text">
+            I'm <strong>available from mid-2026</strong> post-graduation, but open to part-time or contract roles right now. My CV is clean, my code is cleaner.
+          </div>
+          <a href="mailto:kashyapshashwat77@gmail.com" class="cta-action-btn electric">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            Send Me a Role
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- STARTUP TAB -->
+    <div class="tab-content" id="tab-startup">
+      <div class="startup-panel">
+        <p class="startup-intro">
+          I've been building from scratch since my first year. I've shipped MVPs, led product teams, and organized events that drew hundreds. If you're founding something, I want to be in that room.
+        </p>
+        <div class="startup-offerings">
+          <div class="startup-card">
+            <div class="startup-card-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="1.5"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+            </div>
+            <div class="startup-card-title">MVP Development</div>
+            <div class="startup-card-desc">I can take your idea from napkin sketch to deployed product. MERN, Python, Streamlit, anything — I've shipped quickly and cleanly before.</div>
+          </div>
+          <div class="startup-card">
+            <div class="startup-card-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="1.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            </div>
+            <div class="startup-card-title">Technical Co-Founder</div>
+            <div class="startup-card-desc">Looking for a CTO-type partner who also writes poetry and runs events? I'm the unusual card in your deck — and that's exactly why it works.</div>
+          </div>
+          <div class="startup-card">
+            <div class="startup-card-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="1.5"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+            </div>
+            <div class="startup-card-title">Grant & Pitch Support</div>
+            <div class="startup-card-desc">I've organized conferences and written for international publications. I can help craft grant applications, pitch decks, and technical documentation that persuades.</div>
+          </div>
+          <div class="startup-card">
+            <div class="startup-card-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+            </div>
+            <div class="startup-card-title">AI-First Product Strategy</div>
+            <div class="startup-card-desc">I've built with OpenAI API, Salesforce agents, ML models, and NLP pipelines. I can help you figure out what AI actually belongs in your product.</div>
+          </div>
+        </div>
+        <div class="startup-pitch">
+          <div class="startup-pitch-label">Why Me?</div>
+          <div class="startup-pitch-text">
+            I've helped organize a <em>TEDx event at BIT Mesra from zero</em>, built an international conference platform, developed five production web apps during internships, and published poetry in international anthologies — all simultaneously. That's the kind of velocity and range I bring to a founding team.
+          </div>
+          <div class="startup-metrics">
+            <div class="startup-metric">
+              <span class="startup-metric-num">5+</span>
+              <span class="startup-metric-label">Internships Completed</span>
+            </div>
+            <div class="startup-metric">
+              <span class="startup-metric-num">12+</span>
+              <span class="startup-metric-label">Products Shipped</span>
+            </div>
+            <div class="startup-metric">
+              <span class="startup-metric-num">500+</span>
+              <span class="startup-metric-label">Lives Impacted via Events</span>
+            </div>
+          </div>
+        </div>
+        <div class="startup-cta">
+          <a href="mailto:kashyapshashwat77@gmail.com" class="cta-action-btn emerald">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 11.5a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.5a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            Let's Co-Found Something
+          </a>
+          <a href="https://www.linkedin.com/in/shashwat-kashyap-b417aa155/" target="_blank" class="cta-action-btn" style="border-color:rgba(16,185,129,0.3);color:rgba(16,185,129,0.6);">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+            Connect on LinkedIn
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- FREELANCE TAB -->
+    <div class="tab-content" id="tab-freelance">
+      <div class="freelance-panel">
+        <p class="freelance-intro">
+          I take on focused freelance work that actually interests me. No cookie-cutter websites. I want to work on real problems with people who care about what they're building.
+        </p>
+        <div class="freelance-services">
+          <div class="freelance-card">
+            <div class="freelance-card-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="1.5"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+            </div>
+            <div class="freelance-card-title">Web Development</div>
+            <div class="freelance-card-desc">Full-stack web applications. MERN stack, Python backends, REST APIs. I deliver clean code with actual architecture — not spaghetti.</div>
+            <div class="freelance-card-price">Starting at ₹15,000 / project</div>
+          </div>
+          <div class="freelance-card">
+            <div class="freelance-card-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            </div>
+            <div class="freelance-card-title">ML & AI Solutions</div>
+            <div class="freelance-card-desc">Prediction models, computer vision pipelines, NLP tools, anomaly detection. Real deployable solutions, not Kaggle notebooks.</div>
+            <div class="freelance-card-price">Starting at ₹20,000 / project</div>
+          </div>
+          <div class="freelance-card">
+            <div class="freelance-card-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="1.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 11.5a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.5a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            </div>
+            <div class="freelance-card-title">Salesforce Setup</div>
+            <div class="freelance-card-desc">CRM configuration, automation flows, data modelling, Trailhead-certified guidance. I've done this in production — not just sandboxes.</div>
+            <div class="freelance-card-price">Starting at ₹25,000 / engagement</div>
+          </div>
+          <div class="freelance-card">
+            <div class="freelance-card-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="1.5"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+            </div>
+            <div class="freelance-card-title">Technical Writing</div>
+            <div class="freelance-card-desc">Documentation, blog content, research articles, pitch narrative. I write for humans — not just search engines. Published in international journals.</div>
+            <div class="freelance-card-price">Starting at ₹5,000 / article</div>
+          </div>
+          <div class="freelance-card">
+            <div class="freelance-card-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+            </div>
+            <div class="freelance-card-title">Event Tech Systems</div>
+            <div class="freelance-card-desc">Conference portals, automated registration, payment validation, participant dashboards. I built these for TEDx and ICIEM — I can build one for you.</div>
+            <div class="freelance-card-price">Starting at ₹18,000 / event</div>
+          </div>
+          <div class="freelance-card">
+            <div class="freelance-card-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="1.5"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+            </div>
+            <div class="freelance-card-title">SEO & Performance</div>
+            <div class="freelance-card-desc">I boosted a client's SEO ranking by 40% during my Pinaqtech internship. I know how to make sites that search engines and humans both love.</div>
+            <div class="freelance-card-price">Starting at ₹8,000 / audit</div>
+          </div>
+        </div>
+        <div class="freelance-process">
+          <div class="freelance-process-label">How I Work</div>
+          <div class="process-steps">
+            <div class="process-step">
+              <div class="process-step-num">01</div>
+              <div class="process-step-title">Discovery</div>
+              <div class="process-step-desc">We talk for 30 minutes. I understand what you're actually trying to solve.</div>
+            </div>
+            <div class="process-step">
+              <div class="process-step-num">02</div>
+              <div class="process-step-title">Proposal</div>
+              <div class="process-step-desc">I send a clear scope, timeline, and fixed quote. No surprises.</div>
+            </div>
+            <div class="process-step">
+              <div class="process-step-num">03</div>
+              <div class="process-step-title">Build</div>
+              <div class="process-step-desc">Weekly check-ins. Real code. I share progress — not just a final dump.</div>
+            </div>
+            <div class="process-step">
+              <div class="process-step-num">04</div>
+              <div class="process-step-title">Deliver</div>
+              <div class="process-step-desc">Clean handoff. Documentation included. Support for 2 weeks post-delivery.</div>
+            </div>
+          </div>
+        </div>
+        <div class="freelance-cta">
+          <a href="mailto:kashyapshashwat77@gmail.com?subject=Freelance Inquiry" class="cta-action-btn amber">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            Start a Project
+          </a>
+          <a href="https://www.linkedin.com/in/shashwat-kashyap-b417aa155/" target="_blank" class="cta-action-btn" style="border-color:rgba(245,158,11,0.3);color:rgba(245,158,11,0.6);">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+            Message on LinkedIn
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="ornament-divider"><span class="ornament-sym">❧</span></div>
+
+<!-- ABOUT / CONTACT -->
+<section id="about">
+  <div class="about-inner">
+    <h2 class="about-title reveal glow-text">LET'S<br>CONNECT</h2>
+    <p class="about-text reveal">
+      Whether you're hiring, co-founding, collaborating, or just curious about the human behind the code — my inbox is always open. Let's make something extraordinary.
+    </p>
+    <div class="contact-links">
+      <a href="mailto:kashyapshashwat77@gmail.com" class="contact-link reveal">
+        <span class="contact-link-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#c9a84c" stroke-width="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        </span>
+        <span class="contact-link-label">Email</span>
+        <span class="contact-link-value">kashyapshashwat77@gmail.com</span>
+      </a>
+      <a href="https://www.linkedin.com/in/shashwat-kashyap-b417aa155/" target="_blank" class="contact-link reveal">
+        <span class="contact-link-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#c9a84c" stroke-width="1.5"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+        </span>
+        <span class="contact-link-label">LinkedIn</span>
+        <span class="contact-link-value">ShashwatKashyap</span>
+      </a>
+      <a href="https://shashwatportfolio.vercel.app" target="_blank" class="contact-link reveal">
+        <span class="contact-link-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#c9a84c" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        </span>
+        <span class="contact-link-label">Portfolio</span>
+        <span class="contact-link-value">shashwatportfolio.vercel.app</span>
+      </a>
+      <a href="tel:+919818383499" class="contact-link reveal">
+        <span class="contact-link-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#c9a84c" stroke-width="1.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 11.5a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.5a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        </span>
+        <span class="contact-link-label">Phone</span>
+        <span class="contact-link-value">+91 98183 83499</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-left">
+    <img src="logo.png" alt="SK" style="height: 30px; width: auto; vertical-align: middle; margin-right: 10px;">
+    SHASHWAT KASHYAP
+  </div>
+  <div class="footer-right">
+    DELHI NCR, INDIA<br>
+    BIT MESRA · MCA 2024–2026<br>
+    DEVELOPER · POET · BUILDER
+  </div>
+</footer>
+
+<!-- CHATBOT -->
+<!-- CHATBOT - ENHANCED VERSION -->
+<button id="chatbot-toggle" onclick="toggleChatbot()">
+  <svg class="chat-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+  <svg class="close-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+</button>
+
+<div id="chatbot-window">
+  <div class="chatbot-header">
+    <div class="chatbot-avatar">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+    </div>
+    <div class="chatbot-header-info">
+      <div class="chatbot-name">ASK SHASHWAT</div>
+      <div class="chatbot-status">AI Assistant · Usually replies instantly</div>
+    </div>
+  </div>
+  <div class="chatbot-messages" id="chatbot-messages">
+    <div class="msg bot">
+      <div class="msg-bubble">I'm Shashwat's AI assistant. I can tell you about his work, skills, experience, publications, and how to connect with him. Feel free to ask me anything — I'm here to help.</div>
+    </div>
+  </div>
+  <div class="chatbot-suggestions" id="chatbot-suggestions">
+    <button class="suggestion-chip" onclick="askSuggestion(this)">What are Shashwat's main skills?</button>
+    <button class="suggestion-chip" onclick="askSuggestion(this)">Is he available for work?</button>
+    <button class="suggestion-chip" onclick="askSuggestion(this)">Tell me about his projects</button>
+    <button class="suggestion-chip" onclick="askSuggestion(this)">What's his Salesforce experience?</button>
+    <button class="suggestion-chip" onclick="askSuggestion(this)">His literary work?</button>
+    <button class="suggestion-chip" onclick="askSuggestion(this)">How to contact him?</button>
+  </div>
+  <div class="chatbot-input-area">
+    <input type="text" id="chatbot-input" placeholder="Ask me anything about Shashwat..." onkeydown="if(event.key==='Enter')sendChat()">
+    <button id="chatbot-send" onclick="sendChat()">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+    </button>
+  </div>
+</div>
+
+<script>
+// ======================== ENHANCED CHATBOT ========================
+// Comprehensive knowledge base with better organization and natural language understanding
+const knowledgeBase = {
+  // Personal Information
+  name: "Shashwat Kashyap — a developer, writer, and builder from Delhi NCR, India. He's currently pursuing his MCA at BIT Mesra.",
+  
+  location: "Shashwat is based in Delhi NCR, India. He's open to remote work worldwide and hybrid/on-site opportunities in the Delhi NCR region.",
+  
+  education: {
+    primary: "Shashwat completed his BCA at BIT Mesra with a CGPA of 7.76. He's currently pursuing his MCA at the same institution (2024–2026), with a current CGPA of 7.85 (8.14 in the last semester).",
+    scholarships: "He has received three prestigious scholarships: the GP Birla Foundation Scholarship, Dr. Usha Aggarwal Trust Scholarship, and HBMK Foundation Scholarship.",
+    full: "Shashwat holds a BCA from BIT Mesra (CGPA 7.76) and is completing his MCA at BIT Mesra (expected 2026, current CGPA 7.85). He's a scholarship recipient and has maintained strong academic performance throughout."
+  },
+  
+  // Professional Experience
+  experience: {
+    current: "Shashwat is currently a Salesforce Developer Intern at AA2IT India Pvt. Ltd. in New Delhi, working under the Salesforce Delivery Head on configuration, automation, and data modeling.",
+    internships: "He's completed five internships: Salesforce Developer at AA2IT India, Software Developer at Prustaz Technologies, Full Stack Developer at Pinaqtech (where he boosted SEO by 40%), Software Engineering Intern at Oohr Innovations (built an ERP system reducing manual effort by 60%), and Senior Developer Intern on a government health app serving 5,000+ users.",
+    timeline: [
+      "Dec 2025–Present: Salesforce Developer Intern at AA2IT India",
+      "Dec 2025–Feb 2026: Software Developer Intern at Prustaz Technologies",
+      "May–Aug 2025: Full Stack Developer Intern at Pinaqtech",
+      "May–Jul 2025: Software Engineering Intern at Oohr Innovations",
+      "Jul 2023–Apr 2024: Senior Developer Intern on DST Menstrual Hygiene App (Govt. Project)"
+    ]
+  },
+  
+  // Technical Skills
+  techStack: {
+    primary: "Shashwat's primary stack is MERN — MongoDB, Express.js, React.js, and Node.js. He's also proficient in Python for ML/AI, Salesforce CRM, and REST API development.",
+    languages: "Python, JavaScript, Java",
+    frameworks: "React.js, Node.js, Express.js, Flask, FastAPI, Streamlit",
+    databases: "MongoDB, MySQL",
+    tools: "Git/GitHub, Figma, Google AppScript, Salesforce",
+    specialties: "Full-stack development, Machine Learning, Salesforce configuration, REST APIs, SEO optimization",
+    full: "Shashwat's technical arsenal includes: Python, JavaScript, Java, React.js, Node.js, Express.js, MongoDB, MySQL, MERN Stack, Machine Learning, Sentiment Analysis, REST APIs, Git/GitHub, Figma, Streamlit, Flask, FastAPI, SEO Optimization, Salesforce CRM, and Google AppScript."
+  },
+  
+  // Salesforce Expertise
+  salesforce: {
+    summary: "Shashwat is a Salesforce Certified Agentforce Specialist with active certification. On Trailhead, he's achieved Mountaineer Rank with 73 badges, 38,450+ points, 3 Superbadges, and 12 completed trails.",
+    experience: "He currently works as a Salesforce Developer Intern at AA2IT India, doing hands-on configuration, automation, data modeling, and supporting live project delivery.",
+    credentials: "Salesforce Certified Agentforce Specialist (Active) · Agentblazer Innovator Superbadge · Mountaineer Rank with 73 badges, 38,450+ points, 12 trails, and 3 Superbadges.",
+    full: "Shashwat is a Salesforce Certified Agentforce Specialist — the certification is active. On Trailhead he's at Mountaineer Rank with 73 badges, 38,450+ points, 3 Superbadges, and 12 completed trails. He currently works as a Salesforce Developer Intern at AA2IT India, doing configuration, automation, and data modeling."
+  },
+  
+  // Machine Learning & AI
+  ml: {
+    summary: "Shashwat has built real ML products — not just toy projects. His work spans Random Forest prediction, anomaly detection, computer vision, NLP, and recommendation systems.",
+    projects: "F1 Oracle (race prediction with Random Forest), EV Anomaly Detector (battery anomaly detection), PlantGuard AI (crop disease detection with computer vision), Alfred (voice assistant with NLP), CineMatch AI (hybrid recommendation system), and ClarifAI (prompt structuring with OpenAI API).",
+    tools: "Scikit-learn, OpenAI API, Streamlit, Flask, FastAPI, Computer Vision (basic), NLP",
+    full: "Shashwat's ML work includes: F1 Oracle (Random Forest race prediction), EV Anomaly Detector (battery anomaly detection), PlantGuard AI (computer vision for crop disease), Alfred (NLP voice assistant), CineMatch AI (recommendation system), and ClarifAI (OpenAI API integration). All are deployed, real-world applications."
+  },
+  
+  // Projects
+  projects: {
+    summary: "Shashwat has built and shipped 12+ products across web development, machine learning, and event tech.",
+    featured: [
+      "F1 Oracle — ML race prediction engine with Random Forest and interactive Streamlit dashboard",
+      "GradLink — Alumni networking portal serving 5,000+ BIT alumni and students (MERN stack)",
+      "Alfred — AI-powered voice assistant for desktop automation with 90% command recognition",
+      "SkyVault — Encrypted file-sharing platform with role-based permissions (MERN stack)",
+      "EV Anomaly Detector — Live anomaly detection for electric vehicle batteries",
+      "PlantGuard AI — Plant leaf disease identification with treatment recommendations",
+      "ClarifAI — Prompt structuring engine with OpenAI API integration",
+      "CineMatch AI — Hybrid movie recommendation system with TMDB API",
+      "TEDx BIT Mesra — Official website with automated registration (first TEDx at BIT Mesra)",
+      "ICIEM 2026 — International conference portal with paper submission workflows"
+    ],
+    full: "Shashwat's projects include: F1 Oracle (ML race prediction), GradLink (alumni portal with 5k+ users), Alfred (AI voice assistant), SkyVault (encrypted MERN file-sharing), EV Anomaly Detector, PlantGuard AI (crop disease detection), ClarifAI (OpenAI prompt engine), CineMatch AI (recommendation system), TEDx BIT Mesra website, ICIEM 2026 conference portal, LifeCompass (multi-output ML model), and Timetable Generator (deployed for BIT Noida)."
+  },
+  
+  // Literary Work
+  literary: {
+    summary: "Shashwat is a published poet and author. His work has appeared in international publications and national anthologies.",
+    poetry: [
+      "Alone — published in BIT Newsletter",
+      "Symphony of Despair — published in WhyNot Australia",
+      "Echoes in the Abyss — published in WhyNot Australia",
+      "The Greyness of Man — published in WhyNot Australia"
+    ],
+    anthologies: [
+      "Be Limitless — featured at World Book Fair 2025 (national publication)",
+      "Chromatic Currents V3 — literary anthology contributor",
+      "Golden Realms V4 — literary anthology contributor"
+    ],
+    articles: [
+      "The Potential Impact of Quantum Computing, AI & Unified Theory on Our Understanding of Time — Bits & Bytes Magazine",
+      "The Age of the Forgotten Mind — BIT Newsletter",
+      "A Bittersweet Farewell — WhyNot Australia"
+    ],
+    full: "Shashwat is a published poet and author. His poems have appeared in WhyNot Australia and BIT Newsletter, and he's featured in three national anthologies: 'Be Limitless' (World Book Fair 2025), 'Chromatic Currents V3', and 'Golden Realms V4'. He's also written technical and philosophical articles for Bits & Bytes Magazine and the BIT Newsletter."
+  },
+  
+  // Leadership & Campus Involvement
+  leadership: {
+    summary: "Shashwat is deeply involved in campus leadership. He's organized TEDx, led international conference tech, and coordinates multiple clubs.",
+    roles: [
+      "Head of Web Development — TEDx BIT Mesra (first TEDx at the institution)",
+      "Head of Web Development — ICIEM 2025/26 International Conference",
+      "IT Club Coordinator — BIT Mesra (workshops and technical quizzes)",
+      "Literature Society Coordinator — Writing, editing, and publication drives",
+      "Entrepreneurship Club Core Team — Startup initiatives and internship drives",
+      "News & Publication Society Member — Official newsletter author and editor"
+    ],
+    full: "Shashwat organized the first-ever TEDx at BIT Mesra, handling logistics, website development, and registration automation. He's leading tech for ICIEM 2026, an international conference with 100+ delegates. He coordinates the IT Club and Literature Society, serves on the Entrepreneurship Club core team, and contributes to the official campus newsletter."
+  },
+  
+  // Sports & Achievements
+  sports: {
+    summary: "Shashwat is a multi-sport gold medalist at BIT Noida and coordinates badminton tournaments.",
+    medals: [
+      "Gold — Volleyball (BIT Noida)",
+      "Gold — Kho-Kho (BIT Noida)",
+      "Gold — Basketball (BIT Noida)",
+      "Silver — Table Tennis (BIT Noida)"
+    ],
+    role: "Sports Club Coordinator (Badminton) — organizing campus tournaments and keeping the competitive spirit alive.",
+    full: "Shashwat has won gold medals in Volleyball, Kho-Kho, and Basketball at BIT Noida, plus a silver in Table Tennis. He serves as Sports Club Coordinator for Badminton, organizing campus tournaments and fostering athletic excellence."
+  },
+  
+  // Availability & Work Opportunities
+  availability: {
+    summary: "Shashwat is actively seeking opportunities. He's available for full-time roles from mid-2026 post-graduation, and open to part-time, contract, or freelance work immediately.",
+    roles: [
+      "Full-Stack Developer (MERN, Python, REST APIs)",
+      "Salesforce Developer (Certified Agentforce Specialist)",
+      "ML/AI Engineer (real shipped products)",
+      "Technical Writer (published author who codes)",
+      "Startup Technical Co-founder / Consultant",
+      "Freelance Developer (web, ML, Salesforce, writing)"
+    ],
+    timeline: "Full-time from mid-2026 (post-MCA graduation). Available now for part-time, contract, and freelance projects.",
+    full: "Yes, Shashwat is actively looking for opportunities! He's targeting full-time roles as a Full-Stack Developer, Salesforce Developer, or ML/AI Engineer starting mid-2026. He's also open to startup collaborations, technical co-founder roles, and freelance projects right now. He's based in Delhi NCR and open to remote, hybrid, or on-site roles."
+  },
+  
+  // Freelance Services
+  freelance: {
+    summary: "Shashwat offers focused freelance work across web development, ML/AI, Salesforce, technical writing, and event tech.",
+    services: [
+      "Web Development (MERN, Python backends) — starting at ₹15,000/project",
+      "ML & AI Solutions (prediction, computer vision, NLP) — starting at ₹20,000/project",
+      "Salesforce Setup (configuration, automation, data modeling) — starting at ₹25,000/engagement",
+      "Technical Writing (documentation, blogs, research) — starting at ₹5,000/article",
+      "Event Tech Systems (conference portals, registration) — starting at ₹18,000/event",
+      "SEO & Performance Audits — starting at ₹8,000/audit"
+    ],
+    process: "He follows a 4-step process: Discovery (30-min conversation to understand your needs), Proposal (clear scope, timeline, fixed quote), Build (weekly check-ins, real code sharing), and Deliver (clean handoff with documentation and 2 weeks of support).",
+    full: "Shashwat offers freelance services in: Web Development (MERN, Python, REST APIs, from ₹15k), ML & AI Solutions (from ₹20k), Salesforce setup (from ₹25k), Technical Writing (from ₹5k/article), Event Tech Systems (from ₹18k), and SEO/Performance audits (from ₹8k). He works with a clear, transparent process and provides 2 weeks of post-delivery support."
+  },
+  
+  // Startup Collaboration
+  startup: {
+    summary: "Shashwat is very open to startup collaborations. He can serve as a technical co-founder, build MVPs, help with pitch decks, or consult on AI product strategy.",
+    offerings: [
+      "MVP Development — from napkin sketch to deployed product",
+      "Technical Co-Founder — CTO-type partner with diverse skills",
+      "Grant & Pitch Support — grant applications, pitch decks, technical documentation",
+      "AI-First Product Strategy — OpenAI API, ML models, NLP pipelines"
+    ],
+    full: "Yes, Shashwat is open to startup collaborations! He can be a technical co-founder, build your MVP, help with grant applications and pitch decks, or consult on AI product strategy. He's organized TEDx from zero, built international conference platforms, developed production web apps during internships, and published poetry — all simultaneously. That's the kind of velocity he brings to a founding team."
+  },
+  
+  // Contact Information
+  contact: {
+    email: "kashyapshashwat77@gmail.com",
+    linkedin: "linkedin.com/in/ShashwatKashyap",
+    phone: "+91 98183 83499",
+    portfolio: "shashwatportfolio.vercel.app",
+    full: "Best ways to reach Shashwat:\n📧 Email: kashyapshashwat77@gmail.com\n💼 LinkedIn: linkedin.com/in/ShashwatKashyap\n📞 Phone: +91 98183 83499\n🌐 Portfolio: shashwatportfolio.vercel.app"
+  },
+  
+  // About
+  about: {
+    summary: "Shashwat is a developer, writer, and builder based in Delhi NCR. He's a computer scientist who writes poetry, a developer who organizes conferences, an introvert who captains sports teams — a collection of beautiful contradictions.",
+    quote: "I don't just occupy rooms — I transform them. I'm a leader, athlete, writer, and builder. All at once. Always.",
+    full: "Shashwat is a library — stacked floor to ceiling with contradictions made beautiful. A computer scientist who writes poetry. A developer who organizes conferences. An introvert who captains sports teams and leads cultural festivals. From BIT Mesra to the national stage — scholarship recipient, gold medalist, published author, TEDx pioneer, MCA scholar. He inhabits multiplicity with intention."
+  }
+};
+
+// Enhanced intent matching with synonyms and natural language patterns
+const intents = [
+  {
+    patterns: ['name', 'who is', 'tell me about yourself', 'introduce', 'about shashwat'],
+    response: knowledgeBase.about.full + "\n\n" + knowledgeBase.name
+  },
+  {
+    patterns: ['skill', 'tech stack', 'technologies', 'programming', 'language', 'code', 'developer', 'engineer'],
+    response: knowledgeBase.techStack.full
+  },
+  {
+    patterns: ['python', 'javascript', 'java', 'react', 'node', 'mongodb', 'mern', 'framework'],
+    response: (input) => {
+      const lower = input.toLowerCase();
+      if (lower.includes('python')) return "Python is one of Shashwat's strongest languages. He's used it for ML models (Random Forest, anomaly detection, computer vision), backend APIs with Flask and FastAPI, and data apps with Streamlit. Check out F1 Oracle, EV Anomaly Detector, and PlantGuard AI in his projects section.";
+      if (lower.includes('mern') || (lower.includes('react') && lower.includes('node'))) return knowledgeBase.techStack.primary;
+      if (lower.includes('react')) return "Shashwat uses React.js extensively for frontend development. It's part of his core MERN stack, and he's built projects like GradLink (5k+ users) and SkyVault with it.";
+      if (lower.includes('node') || lower.includes('express')) return "Node.js and Express.js form the backend of Shashwat's MERN stack. He's used them for REST APIs, authentication systems, and full-stack applications.";
+      return knowledgeBase.techStack.full;
+    }
+  },
+  {
+    patterns: ['project', 'build', 'portfolio', 'work sample', 'what have you made', 'developed'],
+    response: knowledgeBase.projects.full
+  },
+  {
+    patterns: ['f1 oracle', 'gradlink', 'alfred', 'skyvault', 'ev anomaly', 'plantguard', 'clarifai', 'cinematch', 'tedx', 'iciem'],
+    response: (input) => {
+      const lower = input.toLowerCase();
+      if (lower.includes('f1 oracle')) return "F1 Oracle is a Formula 1 race prediction engine Shashwat built using Random Forest models and historical telemetry data. It features interactive charts, responsive UI, and real-time simulation. Built with Python, Streamlit, and scikit-learn.";
+      if (lower.includes('gradlink')) return "GradLink is an alumni networking portal Shashwat built connecting 5,000+ BIT alumni and students. It features authentication, real-time chat, and intelligent search. This was his first large-scale platform, built with the MERN stack.";
+      if (lower.includes('alfred')) return "Alfred is Shashwat's AI-powered voice assistant for desktop automation, achieving 90% command recognition accuracy. It features natural language desktop control with NLP at its core, built with Python.";
+      if (lower.includes('skyvault')) return "SkyVault is an encrypted file-sharing platform Shashwat designed with role-based permissions and analytics dashboards. Built on MERN with advanced security architecture.";
+      if (lower.includes('ev') || lower.includes('anomaly')) return "EV Anomaly Detector is Shashwat's live anomaly detection system for electric vehicle batteries. It visualizes voltage and temperature anomalies with predictive dashboards, built with Python, ML, and Streamlit.";
+      if (lower.includes('plantguard')) return "PlantGuard AI is Shashwat's AI model to identify plant leaf diseases via uploaded images and recommend treatments. It's a real-world application for agriculture, built with Python, Flask, and computer vision.";
+      if (lower.includes('clarifai')) return "ClarifAI is Shashwat's prompt structuring engine that converts natural language into structured JSON queries using OpenAI API integration. Built with Python and Streamlit.";
+      if (lower.includes('cinematch')) return "CineMatch AI is Shashwat's hybrid movie recommendation system engineered with search history, trending lists, and personalized watchlists powered by TMDB API. Built with Python and Flask.";
+      if (lower.includes('tedx')) return "TEDx BIT Mesra was the first TEDx event at BIT Mesra. Shashwat built the official website with automated registration and payment validation via Google Sheets & Drive integration, and he also helped organize the event.";
+      if (lower.includes('iciem')) return "ICIEM 2026 is an international conference portal Shashwat developed end-to-end — automated paper submission, review workflows, and participant acknowledgment systems. He's also Head of Web Development for the conference.";
+      return "Shashwat has built 12+ projects across web development, machine learning, and event tech. Some featured ones include F1 Oracle (ML race prediction), GradLink (alumni portal with 5k+ users), Alfred (AI voice assistant), and the TEDx BIT Mesra website. Would you like to know more about any specific project?";
+    }
+  },
+  {
+    patterns: ['salesforce', 'trailhead', 'badge', 'certified', 'crm', 'agentforce', 'mountaineer'],
+    response: knowledgeBase.salesforce.full
+  },
+  {
+    patterns: ['experience', 'internship', 'work history', 'job', 'employment', 'professional'],
+    response: knowledgeBase.experience.internships + "\n\nHere's his timeline:\n• " + knowledgeBase.experience.timeline.join('\n• ')
+  },
+  {
+    patterns: ['education', 'college', 'university', 'degree', 'academic', 'bca', 'mca', 'bit', 'mesra'],
+    response: knowledgeBase.education.full
+  },
+  {
+    patterns: ['scholarship', 'scholar', 'foundation', 'award', 'honour'],
+    response: knowledgeBase.education.scholarships
+  },
+  {
+    patterns: ['literary', 'poem', 'poetry', 'writing', 'author', 'published', 'anthology', 'write'],
+    response: knowledgeBase.literary.full
+  },
+  {
+    patterns: ['leadership', 'organize', 'club', 'coordinator', 'tedx', 'conference', 'event'],
+    response: knowledgeBase.leadership.full
+  },
+  {
+    patterns: ['sports', 'athlete', 'medal', 'volleyball', 'basketball', 'kho-kho', 'table tennis', 'badminton', 'gold'],
+    response: knowledgeBase.sports.full
+  },
+  {
+    patterns: ['available', 'hire', 'job', 'work', 'opportunity', 'open to', 'looking for', 'recruiting'],
+    response: knowledgeBase.availability.full
+  },
+  {
+    patterns: ['freelance', 'contract', 'project based', 'service', 'rate', 'cost', 'price', 'hire for'],
+    response: "Shashwat offers freelance services with transparent pricing:\n\n" + 
+               knowledgeBase.freelance.services.join('\n') + 
+               "\n\n" + knowledgeBase.freelance.process
+  },
+  {
+    patterns: ['startup', 'co-founder', 'found', 'mvp', 'pitch', 'funding', 'venture'],
+    response: knowledgeBase.startup.full
+  },
+  {
+    patterns: ['contact', 'reach', 'email', 'linkedin', 'phone', 'call', 'message', 'connect'],
+    response: knowledgeBase.contact.full
+  },
+  {
+    patterns: ['location', 'based', 'delhi', 'ncr', 'india', 'remote'],
+    response: knowledgeBase.location
+  },
+  {
+    patterns: ['ml', 'machine learning', 'ai', 'artificial intelligence', 'model', 'algorithm'],
+    response: knowledgeBase.ml.full
+  },
+  {
+    patterns: ['hello', 'hi', 'hey', 'greeting', 'good morning', 'good afternoon', 'good evening'],
+    response: "Hello! I'm Shashwat's AI assistant. It's a pleasure to meet you. How may I help you learn about Shashwat's work, skills, or experience today?"
+  },
+  {
+    patterns: ['thank', 'thanks', 'appreciate', 'grateful'],
+    response: "You're most welcome! It's been my pleasure to assist you. Is there anything else you'd like to know about Shashwat? I'm here to help."
+  },
+  {
+    patterns: ['bye', 'goodbye', 'see you', 'farewell'],
+    response: "Thank you for your interest in Shashwat's work. If you have more questions later, I'll be here. You can also reach him directly at kashyapshashwat77@gmail.com. Wishing you a wonderful day!"
+  },
+  {
+    patterns: ['help', 'what can you do', 'capabilities', 'function'],
+    response: "I'm Shashwat's AI assistant, and I can tell you about:\n\n• His technical skills and projects\n• Professional experience and internships\n• Salesforce certifications and achievements\n• Literary work and publications\n• Leadership roles and campus involvement\n• Sports achievements\n• Availability for work and freelance services\n• Contact information\n\nFeel free to ask me anything!"
+  }
+];
+
+// Sophisticated response generation with context awareness
+function generateResponse(input) {
+  const cleanInput = input.toLowerCase().trim();
+  
+  // Remove punctuation and extra spaces for better matching
+  const normalized = cleanInput.replace(/[^\w\s]/g, ' ').replace(/\s+/g, ' ').trim();
+  
+  // Check for exact matches first
+  for (const intent of intents) {
+    for (const pattern of intent.patterns) {
+      if (normalized.includes(pattern.toLowerCase())) {
+        // If response is a function, call it with the input
+        if (typeof intent.response === 'function') {
+          return intent.response(input);
+        }
+        return intent.response;
+      }
+    }
+  }
+  
+  // Multi-intent detection for complex queries
+  const topics = [];
+  if (normalized.includes('skill') || normalized.includes('tech')) topics.push('skills');
+  if (normalized.includes('project') || normalized.includes('build')) topics.push('projects');
+  if (normalized.includes('experience') || normalized.includes('intern')) topics.push('experience');
+  if (normalized.includes('salesforce')) topics.push('salesforce');
+  if (normalized.includes('literary') || normalized.includes('poem')) topics.push('literary');
+  if (normalized.includes('contact')) topics.push('contact');
+  
+  if (topics.length > 1) {
+    // Handle compound questions gracefully
+    let response = "You've asked about several aspects of Shashwat's profile. Let me address each:\n\n";
+    for (const topic of topics.slice(0, 2)) { // Limit to 2 topics to avoid overwhelming
+      switch(topic) {
+        case 'skills':
+          response += "• " + knowledgeBase.techStack.summary + "\n\n";
+          break;
+        case 'projects':
+          response += "• " + knowledgeBase.projects.summary + "\n\n";
+          break;
+        case 'experience':
+          response += "• " + knowledgeBase.experience.current + "\n\n";
+          break;
+        case 'salesforce':
+          response += "• " + knowledgeBase.salesforce.summary + "\n\n";
+          break;
+        case 'literary':
+          response += "• " + knowledgeBase.literary.summary + "\n\n";
+          break;
+        case 'contact':
+          response += "• " + knowledgeBase.contact.email + "\n\n";
+          break;
+      }
+    }
+    response += "Would you like me to elaborate on any of these areas? Or feel free to ask a more specific question.";
+    return response;
+  }
+  
+  // For questions about specific numbers or metrics
+  if (normalized.includes('how many') || normalized.includes('number of')) {
+    if (normalized.includes('project')) return "Shashwat has built and shipped 12+ products across web development, machine learning, and event tech. This includes 4 featured projects, 2 live event sites, and several ML applications.";
+    if (normalized.includes('badge')) return "Shashwat has earned 73 badges on Salesforce Trailhead, including 3 Superbadges, placing him at Mountaineer Rank.";
+    if (normalized.includes('internship')) return "Shashwat has completed 5 internships to date, spanning Salesforce development, full-stack development, and government projects.";
+    if (normalized.includes('poem') || normalized.includes('publication')) return "Shashwat has published 4 poems in international venues, 3 articles, and is featured in 3 national anthologies.";
+  }
+  
+  // For questions about specific years or time periods
+  if (normalized.includes('when') || normalized.includes('year')) {
+    if (normalized.includes('graduate') || normalized.includes('graduation')) {
+      return "Shashwat will complete his MCA in 2026. He's currently in his second year at BIT Mesra. He completed his BCA in 2024 from the same institution.";
+    }
+    if (normalized.includes('start')) {
+      if (normalized.includes('work') || normalized.includes('job')) {
+        return "Shashwat is available for full-time roles from mid-2026 after graduation. However, he's open to part-time, contract, and freelance opportunities right now.";
+      }
+    }
+  }
+  
+  // For questions about "why" or "what makes him special"
+  if (normalized.includes('why') || normalized.includes('what makes') || normalized.includes('unique')) {
+    return "What makes Shashwat unique is his ability to inhabit multiple worlds with equal mastery — he's a computer scientist who writes poetry, a developer who organizes conferences, an introvert who captains sports teams. He's built ML models, organized TEDx from scratch, published poetry internationally, and led campus initiatives — all simultaneously. That breadth and depth, combined with genuine passion, is rare.";
+  }
+  
+  // For questions about specific technologies not covered
+  if (normalized.includes('database') || normalized.includes('sql') || normalized.includes('nosql')) {
+    return "Shashwat works with both SQL (MySQL) and NoSQL (MongoDB) databases. He's built full-stack applications with MongoDB for flexibility and also has experience with relational database design.";
+  }
+  
+  if (normalized.includes('api') || normalized.includes('rest')) {
+    return "Shashwat designs and builds REST APIs extensively. He's created APIs for authentication, data retrieval, and third-party integrations (like TMDB and OpenAI). His APIs follow clean architecture principles and include proper error handling and documentation.";
+  }
+  
+  // Graceful fallback for unknown queries
+  const fallbackResponses = [
+    "That's an interesting question. While I don't have specific information about that in my knowledge base, I'd be happy to tell you about Shashwat's skills, projects, experience, or how to contact him directly.",
+    
+    "I don't have an answer for that particular question, but I can help with information about Shashwat's technical work, literary publications, leadership roles, or professional availability. What would you like to know?",
+    
+    "I'm not sure about that specific detail. However, I can share information about his projects, Salesforce expertise, freelance services, or contact details. Feel free to ask about any of these areas.",
+    
+    "That's a thoughtful question. While I don't have that information, I can tell you about Shashwat's experience, skills, or how to reach him directly at kashyapshashwat77@gmail.com for more personalized inquiries."
+  ];
+  
+  return fallbackResponses[Math.floor(Math.random() * fallbackResponses.length)];
+}
+
+// Enhanced chat functions
+function addMessage(text, isUser) {
+  const msgs = document.getElementById('chatbot-messages');
+  const div = document.createElement('div');
+  div.className = `msg ${isUser ? 'user' : 'bot'}`;
+  
+  // Handle line breaks in responses
+  const formattedText = text.replace(/\n/g, '<br>');
+  div.innerHTML = `<div class="msg-bubble">${formattedText}</div>`;
+  
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function sendChat() {
+  const input = document.getElementById('chatbot-input');
+  const text = input.value.trim();
+  if (!text) return;
+  
+  addMessage(text, true);
+  input.value = '';
+  
+  // Hide suggestions after first message
+  document.getElementById('chatbot-suggestions').style.display = 'none';
+  
+  // Show typing indicator (optional)
+  setTimeout(() => {
+    const response = generateResponse(text);
+    addMessage(response, false);
+  }, 800); // Slight delay for natural conversation feel
+}
+
+function askSuggestion(btn) {
+  const text = btn.textContent;
+  addMessage(text, true);
+  document.getElementById('chatbot-suggestions').style.display = 'none';
+  
+  setTimeout(() => {
+    const response = generateResponse(text);
+    addMessage(response, false);
+  }, 600);
+}
+
+function toggleChatbot() {
+  const btn = document.getElementById('chatbot-toggle');
+  const win = document.getElementById('chatbot-window');
+  btn.classList.toggle('open');
+  win.classList.toggle('open');
+  
+  // Reset suggestions when opening
+  if (win.classList.contains('open')) {
+    document.getElementById('chatbot-suggestions').style.display = 'flex';
+  }
+}
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+<script>
+// ======================== LOADER ========================
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    gsap.to('#loader', {
+      opacity: 0, duration: 0.8, ease: 'power2.inOut',
+      onComplete: () => {
+        document.getElementById('loader').style.display = 'none';
+        initAnimations();
+      }
+    });
+  }, 2600);
+});
+
+// ======================== CURSOR ========================
+const cursor = document.getElementById('cursor');
+const cursorTrail = document.getElementById('cursorTrail');
+let mx = 0, my = 0, tx = 0, ty = 0;
+document.addEventListener('mousemove', e => {
+  mx = e.clientX; my = e.clientY;
+  cursor.style.left = mx - 6 + 'px';
+  cursor.style.top = my - 6 + 'px';
+});
+function animateCursor() {
+  tx += (mx - tx) * 0.12; ty += (my - ty) * 0.12;
+  cursorTrail.style.left = tx - 18 + 'px'; cursorTrail.style.top = ty - 18 + 'px';
+  requestAnimationFrame(animateCursor);
+}
+animateCursor();
+document.querySelectorAll('a, button, .portal-card, .project-card, .achieve-card, .poem-card, .article-row, .contact-link, .medal, .job-card, .startup-card, .freelance-card, .tab-btn').forEach(el => {
+  el.addEventListener('mouseenter', () => {
+    cursor.style.transform = 'scale(2)';
+    cursorTrail.style.transform = 'scale(1.5)';
+    cursorTrail.style.borderColor = 'rgba(201,168,76,0.8)';
+  });
+  el.addEventListener('mouseleave', () => {
+    cursor.style.transform = 'scale(1)';
+    cursorTrail.style.transform = 'scale(1)';
+    cursorTrail.style.borderColor = 'rgba(201,168,76,0.4)';
+  });
+});
+
+// ======================== PARTICLES ========================
+const particlesContainer = document.getElementById('particles');
+for (let i = 0; i < 30; i++) {
+  const dust = document.createElement('div');
+  dust.className = 'dust';
+  dust.style.left = Math.random() * 100 + 'vw';
+  dust.style.animationDuration = (8 + Math.random() * 20) + 's';
+  dust.style.animationDelay = (Math.random() * 20) + 's';
+  dust.style.width = (1 + Math.random() * 2) + 'px';
+  dust.style.height = dust.style.width;
+  dust.style.opacity = 0.2 + Math.random() * 0.4;
+  particlesContainer.appendChild(dust);
+}
+
+// ======================== THREE.JS GALAXY ========================
+const canvas = document.getElementById('galaxy-canvas');
+const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+renderer.setPixelRatio(window.devicePixelRatio);
+renderer.setSize(window.innerWidth, window.innerHeight);
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+camera.position.z = 3;
+function createStarField(count, size, spread, color) {
+  const geometry = new THREE.BufferGeometry();
+  const positions = new Float32Array(count * 3);
+  for (let i = 0; i < count * 3; i++) positions[i] = (Math.random() - 0.5) * spread;
+  geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+  const material = new THREE.PointsMaterial({ size, color, transparent: true, opacity: 0.7, sizeAttenuation: true });
+  return new THREE.Points(geometry, material);
+}
+const stars1 = createStarField(4000, 0.003, 20, 0xc9a84c);
+const stars2 = createStarField(2000, 0.002, 20, 0xa8b8c8);
+const stars3 = createStarField(1000, 0.004, 15, 0x00d4ff);
+const stars4 = createStarField(500, 0.006, 8, 0xf0d080);
+scene.add(stars1, stars2, stars3, stars4);
+function createSpiralArm(color, offset) {
+  const geo = new THREE.BufferGeometry();
+  const count = 600; const pos = new Float32Array(count * 3);
+  for (let i = 0; i < count; i++) {
+    const t = (i / count) * Math.PI * 6; const r = (i / count) * 5;
+    const scatter = (Math.random() - 0.5) * 0.6;
+    pos[i*3] = Math.cos(t+offset)*r+scatter;
+    pos[i*3+1] = (Math.random()-0.5)*0.4;
+    pos[i*3+2] = Math.sin(t+offset)*r+scatter;
+  }
+  geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+  const mat = new THREE.PointsMaterial({ size: 0.008, color, transparent: true, opacity: 0.4, sizeAttenuation: true });
+  return new THREE.Points(geo, mat);
+}
+const arm1 = createSpiralArm(0xc9a84c, 0);
+const arm2 = createSpiralArm(0x00d4ff, Math.PI);
+scene.add(arm1, arm2);
+let scrollY = 0, mouseX = 0, mouseY = 0;
+window.addEventListener('scroll', () => { scrollY = window.scrollY; });
+document.addEventListener('mousemove', e => {
+  mouseX = (e.clientX / window.innerWidth - 0.5) * 0.5;
+  mouseY = (e.clientY / window.innerHeight - 0.5) * 0.5;
+});
+window.addEventListener('resize', () => {
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth, window.innerHeight);
+});
+function animate() {
+  requestAnimationFrame(animate);
+  const t = Date.now() * 0.0001;
+  stars1.rotation.y = t * 0.3 + mouseX * 0.5;
+  stars1.rotation.x = mouseY * 0.2;
+  stars2.rotation.y = -t * 0.15 + mouseX * 0.3;
+  stars3.rotation.y = t * 0.2;
+  stars4.rotation.y = -t * 0.4;
+  arm1.rotation.y = t * 0.6 + mouseX * 0.4;
+  arm2.rotation.y = t * 0.6 + mouseX * 0.4;
+  camera.position.y = -scrollY * 0.001;
+  renderer.render(scene, camera);
+}
+animate();
+
+// ======================== GSAP ANIMATIONS ========================
+function initAnimations() {
+  gsap.registerPlugin(ScrollTrigger);
+  gsap.utils.toArray('.reveal').forEach(el => {
+    gsap.fromTo(el, { opacity: 0, y: 50 }, {
+      opacity: 1, y: 0, duration: 1, ease: 'power3.out',
+      scrollTrigger: { trigger: el, start: 'top 88%', toggleActions: 'play none none none' }
+    });
+  });
+  gsap.utils.toArray('.reveal-left').forEach(el => {
+    gsap.fromTo(el, { opacity: 0, x: -60 }, {
+      opacity: 1, x: 0, duration: 1.2, ease: 'power3.out',
+      scrollTrigger: { trigger: el, start: 'top 85%' }
+    });
+  });
+  gsap.utils.toArray('.reveal-right').forEach(el => {
+    gsap.fromTo(el, { opacity: 0, x: 60 }, {
+      opacity: 1, x: 0, duration: 1.2, ease: 'power3.out',
+      scrollTrigger: { trigger: el, start: 'top 85%' }
+    });
+  });
+  gsap.utils.toArray('.skill-tag').forEach((el, i) => {
+    gsap.fromTo(el, { opacity: 0, scale: 0.8 }, {
+      opacity: 1, scale: 1, duration: 0.5, delay: i * 0.03, ease: 'back.out(1.5)',
+      scrollTrigger: { trigger: el, start: 'top 90%' }
+    });
+  });
+  gsap.utils.toArray('.sf-badge-num').forEach(el => {
+    const end = parseInt(el.textContent.replace(/,/g, ''));
+    gsap.fromTo({ val: 0 }, { val: end }, {
+      duration: 2, ease: 'power2.out',
+      onUpdate: function() { el.textContent = Math.round(this.targets()[0].val).toLocaleString(); },
+      scrollTrigger: { trigger: el, start: 'top 90%' }
+    });
+  });
+  gsap.utils.toArray('.portal-card').forEach((el, i) => {
+    gsap.fromTo(el, { opacity: 0, y: 60 }, {
+      opacity: 1, y: 0, duration: 0.9, delay: i * 0.12, ease: 'power3.out',
+      scrollTrigger: { trigger: '#portals', start: 'top 80%' }
+    });
+  });
+  const sections = ['hero','portals','tech','literary','human','opportunity','about'];
+  sections.forEach(id => {
+    ScrollTrigger.create({
+      trigger: `#${id}`, start: 'top 50%', end: 'bottom 50%',
+      onEnter: () => setActiveNav(id), onEnterBack: () => setActiveNav(id),
+    });
+  });
+}
+function setActiveNav(id) {
+  document.querySelectorAll('.nav-links a').forEach(a => {
+    a.classList.remove('active');
+    const href = a.getAttribute('href');
+    if (href === '#' + id || 
+       (id === 'opportunity' && href === '#opportunity') ||
+       (id === 'human' && href === '#human')) {
+      a.classList.add('active');
+    }
+  });
+}
+
+// ======================== NAV SCROLL ========================
+window.addEventListener('scroll', () => {
+  const nav = document.getElementById('main-nav');
+  if (window.scrollY > 50) nav.classList.add('scrolled');
+  else nav.classList.remove('scrolled');
+});
+window.addEventListener('scroll', () => {
+  const sy = window.scrollY;
+  const hero = document.querySelector('#hero');
+  if (hero) hero.style.transform = `translateY(${sy * 0.3}px)`;
+});
+
+// ======================== POEM SWITCHER ========================
+const poems = [
+  {
+    title: "Alone",
+    text: `Alone in the darkness, I reside
+Hearing your words, as you try to hide
+Your true feelings, and your true intent
+But I still care for you, in the end
+
+Your secrets and sins, I know them well
+But I won't judge, or break the spell
+Of my love for you, that will always be
+A guiding light, to set you free
+
+I'll be there for you, through thick and thin
+In the shadows, where I always win
+Against the pain, that I try to hide
+And the memories, that I can't subside
+
+I'll pretend to be normal, with a mask on tight
+But inside, I know what's right
+For in the darkness, I find my peace
+And all of my thoughts, start to release
+
+So don't be afraid, to come to me
+For I'll be your friend, and I'll always be
+In the shadows, where I find my strength
+To be there for you, at any length
+
+Alone in the darkness, I may reside
+But with you, I'll stand by your side
+For my love for you, will never end
+Even in the shadows, I'll be your friend.`
+  },
+
+  {
+    title: "Symphony of Despair",
+    text: `In the abyss, where shadows devour the last gleam,
+Life’s feeble echo silenced, drowned in a hopeless dream.
+Despair’s dance, a relentless, soul-shattering cry,
+Raging against the dying, a futile attempt to defy.
+Torment’s tapestry, woven with threads of endless gloom,
+Loved ones mere specters, swallowed by impending doom.
+Craft a life in the void, where passion withers away,
+In the heart of despair, where dreams decay.
+A symphony of hopelessness, a dirge of eternal night,
+The echoes of the finale wail, a soul-crushing blight.
+In the fading ember of passion, where darkness prevails,
+A journey into the abyss, where all meaning fails.`
+  },
+
+  {
+    title: "Echoes in the Abyss",
+    text: `In the abyss where shadows loom,
+A tale of despair begins to bloom.
+With clenched fists and hearts worn thin,
+I march through darkness, a war within.
+
+No light to guide, no stars to chart,
+I walk the maze within my heart.
+The abyss—its depths a silent scream,
+A fractured mirror of broken dreams.
+
+Yet faintly, softly, a melody stirs,
+A whisper of hope that still occurs.
+O Captain, my guide, though far you seem,
+I chase the echo of your dream.
+
+The helm is mine, though fear takes hold,
+This ship of sorrow, this night so cold.
+Through stormy seas and shadowed tide,
+I steer with doubt yet must decide.
+
+Each step I take, the weight remains,
+A silent cry in unseen chains.
+Yet through the void, a voice breaks free,
+A fragile hymn of what could be.
+
+The abyss consumes, yet grants a choice,
+To silence fear or raise my voice.
+Its vastness hides both scars and light,
+A cruel dance of shadow and flight.
+
+Once, there was magic—fragile, brief,
+Shattered by malice, consumed by grief.
+Yet embers linger, a flame unspent,
+A testament to what hope meant.
+
+So, I roam this desolate expanse,
+A weary soul in a tireless dance.
+For in this search, I may yet find,
+The boundless truth of the abyss: the mind.`
+  },
+
+  {
+    title: "The Greyness of Man",
+    text: `I stand on the precipice, staring into the void—
+Not the kind that echoes with silence,
+But the kind that hums with whispers
+Of broken promises, shattered dreams, and deceit so profound
+It coats the soul like tar, thick and suffocating.
+
+Man is not flesh and bone, but a tapestry of lies.
+We breathe betrayal, we bleed indifference.
+And in the dark, we laugh. Yes, we laugh.
+
+There is a joke in all this madness,
+A cosmic jest written in scars and shadows.
+We speak of progress, of light,
+But the truth, oh, the truth is a beast lurking, waiting,
+In the corridors of power,
+Behind the gilded smiles of politicians,
+In the half-truths of friends who toast to your downfall.
+
+And we, the fools,
+March forward, hands bloodied, hearts hollow.
+
+I once trusted, once believed
+In the goodness of man, in the light of humanity.
+But look close—too close—
+And you see the grey.
+Not black, not white—
+No.
+Grey,
+The color of compromise,
+Of “I didn’t mean to hurt you,”
+Of “It’s just the way things are.”
+
+We betray with open eyes,
+Gazing into each other’s souls,
+But seeing nothing.
+
+And isn’t it funny?
+How we glorify love, friendship, brotherhood,
+While behind the curtain, knives are sharpened,
+Waiting for the flesh of trust,
+The throat of faith.
+
+We sing of unity, of hope,
+Yet feed on each other like ravenous wolves,
+Starved, insatiable.
+
+I remember the moments—oh yes, they haunt me still—
+When smiles were daggers,
+When handshakes were chains,
+And when the word “friend” was but a comma,
+A breath before the betrayal.
+
+Humanity is a joke told by the cruel,
+And I laugh—because what else is there?
+To trust is to be a fool,
+To love is to invite ruin,
+And to believe?
+Belief is the ultimate folly.
+
+Look around and tell me what you see.
+Do you see kindness, compassion, truth?
+Or do you see the grey—the masks, the veiled treachery?
+We build towers of ideals,
+But beneath, the foundation rots
+With greed, lust, envy, betrayal.
+
+And so, here I stand, not merely broken,
+But disillusioned.
+Not by the world, but by myself,
+For ever believing we were more than this.
+
+But no.
+Humanity is what it has always been—
+A beast devouring itself
+In the name of progress.
+
+In the end, the joke is on me.
+But I smile.
+Because even in the darkness,
+Even in the ruin,
+The broken find their place.`
+  }
+];
+function showPoem(index) {
+  document.querySelectorAll('.poem-card').forEach((c, i) => c.classList.toggle('active', i === index));
+  const titleEl = document.getElementById('poemTitle');
+  const textEl = document.getElementById('poemText');
+  gsap.to([titleEl, textEl], { opacity: 0, y: 10, duration: 0.3, onComplete: () => {
+    titleEl.textContent = poems[index].title;
+    textEl.textContent = poems[index].text;
+    gsap.to([titleEl, textEl], { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out', stagger: 0.1 });
+  }});
+}
+
+// ======================== TABS ========================
+function switchTab(type) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+  document.querySelector(`.tab-btn.${type}`).classList.add('active');
+  document.getElementById(`tab-${type}`).classList.add('active');
+}
+
+// ======================== CHATBOT ========================
+const chatKB = {
+  "tech stack": "I work primarily with the MERN stack — MongoDB, Express.js, React.js, and Node.js. I also do Python for ML (scikit-learn, Flask, FastAPI, Streamlit), Salesforce CRM, and REST API development. My go-to for quick AI prototypes is Streamlit + OpenAI API.",
+  "stack": "I work primarily with the MERN stack — MongoDB, Express.js, React.js, and Node.js. I also do Python for ML (scikit-learn, Flask, FastAPI, Streamlit), Salesforce CRM, and REST API development. My go-to for quick AI prototypes is Streamlit + OpenAI API.",
+  "python": "Python is one of my strongest languages. I've used it for ML models (Random Forest, anomaly detection, computer vision), backend APIs with Flask and FastAPI, and data apps with Streamlit. Check out F1 Oracle, EV Anomaly Detector, and PlantGuard AI in my projects section.",
+  "available": "Yes! I'm actively looking for opportunities. I'm available for full-time roles from mid-2026 after graduating, but I'm open to part-time, contract, or freelance work right now. Reach me at kashyapshashwat77@gmail.com.",
+  "hire": "Absolutely — I'm open to it. For full-time roles I'm targeting Full-Stack Developer, Salesforce Developer, and ML/AI Engineer positions. For freelance, I do web development, ML solutions, Salesforce setup, and technical writing. Scroll up to the 'Open For Work' section or email me directly.",
+  "freelance": "I offer: Web Development (from ₹15k), ML & AI Solutions (from ₹20k), Salesforce setup (from ₹25k), Technical Writing (from ₹5k/article), Event Tech Systems (from ₹18k), and SEO/Performance audits (from ₹8k). I work with a clear 4-step process — Discovery, Proposal, Build, Deliver.",
+  "projects": "My featured projects include: F1 Oracle (ML race prediction), GradLink (alumni portal serving 5k+ users), Alfred (AI voice assistant), SkyVault (encrypted MERN file-sharing), EV Anomaly Detector, ClarifAI, PlantGuard AI, and the TEDx + ICIEM websites I built from scratch. Total 12+ shipped products.",
+  "salesforce": "I'm a Salesforce Certified Agentforce Specialist — the certification is active. On Trailhead I'm at Mountaineer Rank with 73 badges, 38,450+ points, 3 Superbadges, and 12 completed trails. I currently work as a Salesforce Developer Intern at AA2IT India, doing config, automation, and data modelling.",
+  "startup": "Yes, I'm very open to startup collaborations. I can be a technical co-founder, build your MVP, help with pitch decks, or consult on AI product strategy. I've led events with 500+ attendees and shipped real products under pressure. If you're building something worth building — let's talk.",
+  "co-found": "Yes, I'm very open to startup collaborations. I can be a technical co-founder, build your MVP, help with pitch decks, or consult on AI product strategy. I've led events with 500+ attendees and shipped real products under pressure. If you're building something worth building — let's talk.",
+  "experience": "I've had 5 internships: Salesforce Developer at AA2IT India (current), Software Developer at Prustaz Technologies, Full-Stack at Pinaqtech (boosted SEO 40%), Software Engineering at Oohr Innovations (built a full ERP, cut manual effort 60%), and Senior Dev Intern on a Govt. health app serving 5k+ users.",
+  "education": "I hold a BCA from BIT Mesra (CGPA 7.76) and I'm currently completing my MCA at BIT Mesra — graduating 2026, current CGPA 7.85 (SGPA 8.14 last semester). I've also received the GP Birla Foundation Scholarship, Dr. Usha Aggarwal Trust Scholarship, and HBMK Foundation Scholarship.",
+  "writing": "I'm a published poet and author. My poems have been published by WhyNot Australia, and I'm featured in national anthologies including 'Be Limitless' (World Book Fair 2025), 'Chromatic Currents V3', and 'Golden Realms V4'. I've also written for Bits & Bytes Magazine and the BIT Newsletter.",
+  "tedx": "I organized the first-ever TEDx at BIT Mesra — I handled logistics, built the website (with automated registration and payment via Google Sheets + AppScript), and coordinated the entire event. It's one of the things I'm most proud of.",
+  "contact": "Best ways to reach me: Email — kashyapshashwat77@gmail.com | LinkedIn — linkedin.com/in/ShashwatKashyap | Phone — +91 98183 83499 | Portfolio — shashwatportfolio.vercel.app",
+  "location": "I'm based in Delhi NCR, India. I'm open to remote work worldwide and hybrid/on-site roles in Delhi NCR and nearby areas.",
+  "salary": "I'm flexible and open to discussing compensation based on the role and scope. Feel free to reach out and we can have that conversation — email is best: kashyapshashwat77@gmail.com",
+  "rate": "My freelance rates start at: Web Dev (₹15k+), ML/AI (₹20k+), Salesforce (₹25k+), Writing (₹5k/article+), Event Tech (₹18k+), SEO (₹8k+). For larger engagements we can discuss custom pricing.",
+  "hello": "Hey! Great to meet you. I'm Shashwat's portfolio assistant. Ask me about his skills, availability, projects, or how to work with him. What would you like to know?",
+  "hi": "Hey! Great to meet you. I'm Shashwat's portfolio assistant. Ask me about his skills, availability, projects, or how to work with him. What would you like to know?",
+  "sports": "I'm a multi-sport gold medalist at BIT Noida — Volleyball, Kho-Kho, and Basketball golds, plus a Silver in Table Tennis. I also serve as the Sports Club Coordinator for Badminton and organize campus tournaments.",
+  "scholarship": "I've received three scholarships: the GP Birla Foundation Scholarship, the Dr. Usha Aggarwal Trust Scholarship, and the HBMK Foundation Scholarship. These were awarded during my time at BIT Mesra.",
+  "mern": "I'm proficient with the full MERN stack — I've used it to build GradLink (5k+ users), SkyVault (encrypted file-sharing), and the Timetable Generator (deployed for BIT Noida). It's my bread and butter for full-stack web apps.",
+  "ml": "My ML work spans: Random Forest prediction (F1 Oracle), anomaly detection (EV batteries), computer vision (PlantGuard AI for crop disease), NLP (Alfred voice assistant, sentiment analysis), and recommendation systems (CineMatch AI). All deployed, all real-world.",
+  "default": "I don't have a specific answer for that — but I'd love to connect directly! Email me at kashyapshashwat77@gmail.com or reach out on LinkedIn (ShashwatKashyap). I respond fast."
+};
+
+function getBotResponse(input) {
+  const lower = input.toLowerCase();
+  for (const key in chatKB) {
+    if (lower.includes(key)) return chatKB[key];
+  }
+  return chatKB.default;
+}
+
+function addMessage(text, isUser) {
+  const msgs = document.getElementById('chatbot-messages');
+  const div = document.createElement('div');
+  div.className = `msg ${isUser ? 'user' : 'bot'}`;
+  div.innerHTML = `<div class="msg-bubble">${text}</div>`;
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function sendChat() {
+  const input = document.getElementById('chatbot-input');
+  const text = input.value.trim();
+  if (!text) return;
+  addMessage(text, true);
+  input.value = '';
+  document.getElementById('chatbot-suggestions').style.display = 'none';
+  setTimeout(() => addMessage(getBotResponse(text), false), 600);
+}
+
+function askSuggestion(btn) {
+  const text = btn.textContent;
+  addMessage(text, true);
+  document.getElementById('chatbot-suggestions').style.display = 'none';
+  setTimeout(() => addMessage(getBotResponse(text), false), 600);
+}
+
+function toggleChatbot() {
+  const btn = document.getElementById('chatbot-toggle');
+  const win = document.getElementById('chatbot-window');
+  btn.classList.toggle('open');
+  win.classList.toggle('open');
+}
+</script>
+</body>
+</html>
