@@ -1112,6 +1112,13 @@ body::after {
   .freelance-work-grid, .projects-grid { grid-template-columns: repeat(2, 1fr); }
   nav { padding: 18px 32px; }
 }
+
+
+.portal-card {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
 </style>
 <body>
 
@@ -1177,79 +1184,121 @@ body::after {
   <div class="portals-container">
     <div class="section-eyebrow reveal">What I Do</div>
     <h2 class="section-title reveal">MY DOMAINS</h2>
+
     <div class="portals-grid">
-      <div class="portal-card reveal" onclick="document.getElementById('tech').scrollIntoView({behavior:'smooth'})">
+
+      <!-- 01 Engineering - Link to tech stack section -->
+      <a href="#tech" class="portal-card reveal" aria-label="Explore Engineering Domain">
         <div class="portal-bg"></div>
         <div class="portal-symbol">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#00d4ff" stroke-width="1.2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#00d4ff" stroke-width="1.2">
+            <polyline points="16 18 22 12 16 6"/>
+            <polyline points="8 6 2 12 8 18"/>
+          </svg>
         </div>
         <div class="portal-content">
           <span class="portal-num">01</span>
           <span class="portal-name">Engineering</span>
-          <div class="portal-desc">MERN Stack, Python, ML. I build full-stack systems that actually scale.</div>
-          <a class="portal-btn" href="#tech">Explore ↓</a>
+          <div class="portal-desc">
+            MERN Stack, Python, ML. I build full-stack systems that actually scale.
+          </div>
+          <span class="portal-btn">Explore ↓</span>
         </div>
-      </div>
-      <div class="portal-card reveal" onclick="document.getElementById('opportunity').scrollIntoView({behavior:'smooth'})">
+      </a>
+
+      <!-- 02 Hire - Link to opportunity section -->
+      <a href="#opportunity" class="portal-card reveal" aria-label="Hire Shashwat">
         <div class="portal-bg"></div>
         <div class="portal-symbol">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="1.2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="1.2">
+            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+            <polyline points="9 22 9 12 15 12 15 22"/>
+          </svg>
         </div>
         <div class="portal-content">
           <span class="portal-num">02</span>
           <span class="portal-name">Hire Me?</span>
-          <div class="portal-desc">I consult, and build MVPs. From ideation to build — I've done it.</div>
-          <a class="portal-btn" href="#freelance-work">Partner ↓</a>
+          <div class="portal-desc">
+            I consult, and build MVPs. From ideation to build — I've done it.
+          </div>
+          <span class="portal-btn">Partner ↓</span>
         </div>
-      </div>
-      <div class="portal-card reveal" onclick="document.getElementById('literary').scrollIntoView({behavior:'smooth'})">
+      </a>
+
+      <!-- 03 Writing - Link to literary section -->
+      <a href="#literary" class="portal-card reveal" aria-label="Read Writing Work">
         <div class="portal-bg"></div>
         <div class="portal-symbol">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#c9a84c" stroke-width="1.2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#c9a84c" stroke-width="1.2">
+            <path d="M12 20h9"/>
+            <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
+          </svg>
         </div>
         <div class="portal-content">
           <span class="portal-num">03</span>
           <span class="portal-name">Writing</span>
-          <div class="portal-desc">Published poet, author, and technical writer. Words are my second language of code.</div>
-          <a class="portal-btn" href="#literary">Read ↓</a>
+          <div class="portal-desc">
+            Published poet, author, and technical writer. Words are my second language of code.
+          </div>
+          <span class="portal-btn">Read ↓</span>
         </div>
-      </div>
-      <div class="portal-card reveal" onclick="document.getElementById('opportunity').scrollIntoView({behavior:'smooth'})">
+      </a>
+
+      <!-- 04 Freelance - Link to freelance-work section -->
+      <a href="#freelance-work" class="portal-card reveal" aria-label="Freelance Services">
         <div class="portal-bg"></div>
         <div class="portal-symbol">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="1.2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="1.2">
+            <circle cx="12" cy="12" r="10"/>
+            <polyline points="12 6 12 12 16 14"/>
+          </svg>
         </div>
         <div class="portal-content">
           <span class="portal-num">04</span>
           <span class="portal-name">Freelance</span>
-          <div class="portal-desc">Need a site, an ML model, or a CRM? I take on focused freelance work that matters.</div>
-          <a class="portal-btn" href="#opportunity">Hire ↓</a>
+          <div class="portal-desc">
+            Need a site, an ML model, or a CRM? I take on focused freelance work that matters.
+          </div>
+          <span class="portal-btn">Hire ↓</span>
         </div>
-      </div>
-      <div class="portal-card reveal">
+      </a>
+
+      <!-- 05 Salesforce - Link to opportunity section -->
+      <a href="#tech" class="portal-card reveal" aria-label="Salesforce Expertise">
         <div class="portal-bg"></div>
         <div class="portal-symbol">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#c9a84c" stroke-width="1.2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 11.5a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 0.87h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.5a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#c9a84c" stroke-width="1.2">
+            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 11.5a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 0.87h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.5a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
+          </svg>
         </div>
         <div class="portal-content">
           <span class="portal-num">05</span>
           <span class="portal-name">Salesforce</span>
-          <div class="portal-desc">Certified Agentforce Specialist. 73 badges, 38k+ points. I'm your CRM architect.</div>
-          <a class="portal-btn" href="#tech">Learn ↓</a>
+          <div class="portal-desc">
+            Certified Agentforce Specialist. 73 badges, 38k+ points. I'm your CRM architect.
+          </div>
+          <span class="portal-btn">Learn ↓</span>
         </div>
-      </div>
-      <div class="portal-card reveal">
+      </a>
+
+      <!-- 06 Research & AI - Link to opportunity section -->
+      <a href="#tech" class="portal-card reveal" aria-label="Research and AI Work">
         <div class="portal-bg"></div>
         <div class="portal-symbol">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#00d4ff" stroke-width="1.2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#00d4ff" stroke-width="1.2">
+            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+          </svg>
         </div>
         <div class="portal-content">
           <span class="portal-num">06</span>
           <span class="portal-name">Research & AI</span>
-          <div class="portal-desc">Published on quantum computing, AI, and time. I think at the edge of what's known.</div>
-          <a class="portal-btn" href="#literary">Read ↓</a>
+          <div class="portal-desc">
+            Published on quantum computing, AI, and time. I think at the edge of what's known.
+          </div>
+          <span class="portal-btn">Read ↓</span>
         </div>
-      </div>
+      </a>
+
     </div>
   </div>
 </section>
@@ -1323,7 +1372,7 @@ body::after {
   </div>
   <div class="fw-cta-wrap reveal">
     <p class="fw-cta-text">Want something like this? I'm taking on new projects.</p>
-    <a href="mailto:kashyapshashwat77@gmail.com" class="cta-action-btn amber" style="display:inline-flex;align-items:center;gap:10px;">
+    <a href="/cdn-cgi/l/email-protection#365d57455e4f5746455e57455e415742010176515b575f5a1855595b" class="cta-action-btn amber" style="display:inline-flex;align-items:center;gap:10px;">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
       Let's Work Together
     </a>
@@ -1568,6 +1617,428 @@ body::after {
   </div>
 </section>
 
+<!-- ======================== TECH SECTION ======================== -->
+<div class="ornament-divider"><span class="ornament-sym">✦</span></div>
+
+<section id="tech">
+
+  <div class="tech-header reveal-left">
+    <div>
+      <div class="tech-big-title">TECH<br><span class="accent">STACK</span></div>
+    </div>
+    <div>
+      <p class="tech-tagline">Full-stack developer who builds real things — not just demos. MERN, Python, ML, Salesforce.</p>
+    </div>
+  </div>
+
+  <!-- SKILLS -->
+  <div class="skills-section">
+    <div class="skills-label">Languages</div>
+    <div class="skills-grid">
+      <span class="skill-tag">Python</span>
+      <span class="skill-tag">JavaScript</span>
+      <span class="skill-tag">Java</span>
+      <span class="skill-tag">HTML / CSS</span>
+      <span class="skill-tag">SQL</span>
+    </div>
+  </div>
+
+  <div class="skills-section">
+    <div class="skills-label">Frameworks & Libraries</div>
+    <div class="skills-grid">
+      <span class="skill-tag">React.js</span>
+      <span class="skill-tag">Node.js</span>
+      <span class="skill-tag">Express.js</span>
+      <span class="skill-tag">Flask</span>
+      <span class="skill-tag">FastAPI</span>
+      <span class="skill-tag">Streamlit</span>
+      <span class="skill-tag">MERN Stack</span>
+    </div>
+  </div>
+
+  <div class="skills-section">
+    <div class="skills-label">Databases & Tools</div>
+    <div class="skills-grid">
+      <span class="skill-tag">MongoDB</span>
+      <span class="skill-tag">MySQL</span>
+      <span class="skill-tag">Git / GitHub</span>
+      <span class="skill-tag">VS Code</span>
+      <span class="skill-tag">Figma</span>
+      <span class="skill-tag">Render</span>
+      <span class="skill-tag">Vercel</span>
+    </div>
+  </div>
+
+  <div class="skills-section">
+    <div class="skills-label">ML / AI</div>
+    <div class="skills-grid">
+      <span class="skill-tag">scikit-learn</span>
+      <span class="skill-tag">Random Forest</span>
+      <span class="skill-tag">Computer Vision</span>
+      <span class="skill-tag">NLP</span>
+      <span class="skill-tag">Anomaly Detection</span>
+      <span class="skill-tag">OpenAI API</span>
+      <span class="skill-tag">Sentiment Analysis</span>
+      <span class="skill-tag">EDA</span>
+    </div>
+  </div>
+
+  <div class="skills-section">
+    <div class="skills-label">Other</div>
+    <div class="skills-grid">
+      <span class="skill-tag">REST APIs</span>
+      <span class="skill-tag">SEO Optimization</span>
+      <span class="skill-tag">Agile</span>
+      <span class="skill-tag">AppScript</span>
+      <span class="skill-tag">Google Sites</span>
+      <span class="skill-tag">Technical Documentation</span>
+      <span class="skill-tag">Canva</span>
+    </div>
+  </div>
+
+  <!-- PROJECTS -->
+  <div style="max-width:1200px;margin:100px auto 0;">
+    <div class="skills-label reveal">Featured Projects</div>
+    <div class="projects-grid" style="margin-top:32px;">
+
+      <div class="project-card reveal">
+        <span class="featured-badge">FEATURED</span>
+        <div class="project-year">2025 · Python · Streamlit · ML</div>
+        <div class="project-title">F1 Oracle</div>
+        <div class="project-desc">Formula 1 race prediction engine using Random Forest models and historical race data. Interactive charts, responsive UI, real-time simulation logic.</div>
+        <div class="project-tags">
+          <span class="project-tag">Python</span>
+          <span class="project-tag">Streamlit</span>
+          <span class="project-tag">Machine Learning</span>
+          <span class="project-tag">Random Forest</span>
+        </div>
+      </div>
+
+      <div class="project-card reveal">
+        <span class="featured-badge">FEATURED</span>
+        <div class="project-year">2023 · MERN Stack · Render</div>
+        <div class="project-title">GradLink</div>
+        <div class="project-desc">Alumni networking portal connecting 5,000+ BIT alumni and students. User authentication, real-time chat, intelligent search — deployed and live.</div>
+        <div class="project-tags">
+          <span class="project-tag">React</span>
+          <span class="project-tag">Node.js</span>
+          <span class="project-tag">MongoDB</span>
+          <span class="project-tag">5k+ Users</span>
+        </div>
+      </div>
+
+      <div class="project-card reveal">
+        <div class="project-year">2023 · Python · NLP</div>
+        <div class="project-title">Alfred</div>
+        <div class="project-desc">AI-powered voice assistant for desktop automation with 90% accuracy. Responds to natural language commands, controls applications, automates workflows.</div>
+        <div class="project-tags">
+          <span class="project-tag">Python</span>
+          <span class="project-tag">NLP</span>
+          <span class="project-tag">Voice Recognition</span>
+        </div>
+      </div>
+
+      <div class="project-card reveal">
+        <div class="project-year">2024 · MERN Stack</div>
+        <div class="project-title">SkyVault</div>
+        <div class="project-desc">Encrypted file-sharing platform with role-based permissions and analytics dashboards. End-to-end encryption, clean UI, production-ready architecture.</div>
+        <div class="project-tags">
+          <span class="project-tag">React</span>
+          <span class="project-tag">Node.js</span>
+          <span class="project-tag">MongoDB</span>
+          <span class="project-tag">Encryption</span>
+        </div>
+      </div>
+
+      <div class="project-card reveal">
+        <div class="project-year">2025 · Python · Streamlit</div>
+        <div class="project-title">EV Anomaly Detector</div>
+        <div class="project-desc">Live anomaly detection system for electric vehicle batteries using ML algorithms. Visualized voltage and temperature anomalies with predictive dashboards.</div>
+        <div class="project-tags">
+          <span class="project-tag">Python</span>
+          <span class="project-tag">Streamlit</span>
+          <span class="project-tag">Anomaly Detection</span>
+        </div>
+      </div>
+
+      <div class="project-card reveal">
+        <div class="project-year">2025 · Python · Flask · Computer Vision</div>
+        <div class="project-title">PlantGuard AI</div>
+        <div class="project-desc">AI model that identifies plant leaf diseases from uploaded images and recommends treatments. Built on computer vision pipeline, deployable Flask backend.</div>
+        <div class="project-tags">
+          <span class="project-tag">Python</span>
+          <span class="project-tag">Flask</span>
+          <span class="project-tag">Computer Vision</span>
+        </div>
+      </div>
+
+      <div class="project-card reveal">
+        <div class="project-year">2025 · Python · OpenAI API</div>
+        <div class="project-title">ClarifAI</div>
+        <div class="project-desc">Prompt structuring engine that converts natural language into structured JSON queries for LLMs. Clean Streamlit interface, OpenAI API integration.</div>
+        <div class="project-tags">
+          <span class="project-tag">Python</span>
+          <span class="project-tag">Streamlit</span>
+          <span class="project-tag">OpenAI API</span>
+        </div>
+      </div>
+
+      <div class="project-card reveal">
+        <div class="project-year">2025 · Python · Flask · TMDB API</div>
+        <div class="project-title">CineMatch AI</div>
+        <div class="project-desc">Hybrid movie recommendation system — API + dataset-based. Search history, trending lists, and a personalized Watchlist feature baked in.</div>
+        <div class="project-tags">
+          <span class="project-tag">Python</span>
+          <span class="project-tag">Flask</span>
+          <span class="project-tag">TMDB API</span>
+          <span class="project-tag">Recommendation</span>
+        </div>
+      </div>
+
+      <div class="project-card reveal">
+        <div class="project-year">2025 · MERN Stack</div>
+        <div class="project-title">Timetable Generator</div>
+        <div class="project-desc">Constraints-based timetable generator for BIT Noida with clash-free scheduling. Admin panel, REST APIs, and exportable final schedules. Deployed in production.</div>
+        <div class="project-tags">
+          <span class="project-tag">MongoDB</span>
+          <span class="project-tag">Express</span>
+          <span class="project-tag">React</span>
+          <span class="project-tag">Node.js</span>
+        </div>
+      </div>
+
+      <div class="project-card reveal">
+        <div class="project-year">2025 · Python · ML · FastAPI</div>
+        <div class="project-title">LifeCompass</div>
+        <div class="project-desc">Multi-output ML model for personalized life-recommendation scores. Clean API + UI with interpretable outputs and local-first processing. Built for privacy.</div>
+        <div class="project-tags">
+          <span class="project-tag">Python</span>
+          <span class="project-tag">ML</span>
+          <span class="project-tag">FastAPI</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- EXPERIENCE -->
+  <div class="exp-section">
+    <div class="skills-label reveal">Experience</div>
+    <div class="exp-timeline" style="margin-top:40px;">
+
+      <div class="exp-item reveal">
+        <div class="exp-period">DEC 2025 — PRESENT</div>
+        <div class="exp-role">Salesforce Developer Intern</div>
+        <div class="exp-company">AA2IT India Pvt. Ltd. · New Delhi</div>
+        <div class="exp-desc">Selected for a 6-month Salesforce Developer internship working under the Salesforce Delivery Head. Hands-on configuration, automation, data modelling, and live project delivery.</div>
+      </div>
+
+      <div class="exp-item reveal">
+        <div class="exp-period">DEC 2025 — FEB 2026</div>
+        <div class="exp-role">Software Developer Intern</div>
+        <div class="exp-company">Prustaz Technologies Pvt. Ltd. · Bengaluru / Remote</div>
+        <div class="exp-desc">Contributed to innovation-driven software projects, supporting development tasks and collaborating within engineering workflows across flexible on-site/remote arrangements.</div>
+      </div>
+
+      <div class="exp-item reveal">
+        <div class="exp-period">MAY 2025 — AUG 2025</div>
+        <div class="exp-role">Full Stack Developer Intern</div>
+        <div class="exp-company">Pinaqtech</div>
+        <div class="exp-desc">Developed and deployed the company's official website using MERN stack. Boosted SEO ranking by 40% and reduced bounce rate. Integrated advanced security measures and optimized UX across all platforms.</div>
+      </div>
+
+      <div class="exp-item reveal">
+        <div class="exp-period">MAY 2025 — JUL 2025</div>
+        <div class="exp-role">Software Engineering Intern</div>
+        <div class="exp-company">Oohr Innovations</div>
+        <div class="exp-desc">Built a custom ERP system for educational institutions, automating academic workflows and reducing manual effort by 60%. Led QA testing, resolved 20+ critical bugs, and improved overall system reliability.</div>
+      </div>
+
+      <div class="exp-item reveal">
+        <div class="exp-period">MAY 2025 — JUL 2025</div>
+        <div class="exp-role">MIS Intern</div>
+        <div class="exp-company">Furnish Me Architects</div>
+        <div class="exp-desc">Designed a secure, centralized intranet for reporting and analytics. Improved data access speed by 40% and streamlined internal communications across departments.</div>
+      </div>
+
+      <div class="exp-item reveal">
+        <div class="exp-period">JUL 2023 — APR 2024</div>
+        <div class="exp-role">Senior Developer Intern — Government Project</div>
+        <div class="exp-company">DST Menstrual Hygiene App</div>
+        <div class="exp-desc">Developed scalable features for a public health application serving 5,000+ users. Collaborated with health professionals to translate medical requirements into functional technical modules.</div>
+      </div>
+
+      <div class="exp-item reveal">
+        <div class="exp-period">SEP 2023 — OCT 2023</div>
+        <div class="exp-role">Python Developer Intern</div>
+        <div class="exp-company">CodSoft</div>
+        <div class="exp-desc">Created five automation tools for sentiment analysis, data handling, and process scheduling. Delivered clean, well-documented Python modules on time.</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SALESFORCE -->
+  <div class="salesforce-section reveal" style="position:relative;z-index:1;">
+    <div class="skills-label" style="color:var(--gold);">Salesforce</div>
+    <div style="font-family:'Bebas Neue',sans-serif;font-size:clamp(2rem,5vw,4rem);color:var(--parchment);margin-top:12px;letter-spacing:0.05em;">CERTIFIED AGENTFORCE SPECIALIST</div>
+    <div style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--silver);font-style:italic;margin-top:12px;max-width:600px;line-height:1.7;">Trailhead Mountaineer. Active certification. Real-world internship experience in configuration, automation, and data modelling.</div>
+    <div class="sf-badges">
+      <div class="sf-badge">
+        <span class="sf-badge-num">73</span>
+        <span class="sf-badge-label">Badges</span>
+      </div>
+      <div class="sf-badge">
+        <span class="sf-badge-num">38,450</span>
+        <span class="sf-badge-label">Points</span>
+      </div>
+      <div class="sf-badge">
+        <span class="sf-badge-num">12</span>
+        <span class="sf-badge-label">Trails Completed</span>
+      </div>
+      <div class="sf-badge">
+        <span class="sf-badge-num">3</span>
+        <span class="sf-badge-label">Superbadges</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- EDUCATION -->
+  <div class="edu-section reveal">
+    <div class="edu-card" data-degree="MCA">
+      <div class="edu-degree">MCA</div>
+      <div class="edu-inst">Birla Institute of Technology, Mesra</div>
+      <div class="edu-meta">
+        2024 – 2026 · Master of Computer Applications<br>
+        GP Birla Foundation Scholarship<br>
+        Dr. Usha Aggarwal Trust Scholarship<br>
+        HBMK Foundation Scholarship
+      </div>
+      <span class="edu-cgpa">7.85</span>
+      <div style="font-family:'Space Mono',monospace;font-size:0.55rem;color:rgba(0,212,255,0.5);letter-spacing:0.2em;margin-top:4px;">SGPA 8.14 LAST SEMESTER</div>
+    </div>
+    <div class="edu-card" data-degree="BCA">
+      <div class="edu-degree">BCA</div>
+      <div class="edu-inst">Birla Institute of Technology, Mesra</div>
+      <div class="edu-meta">
+        2021 – 2024 · Bachelor of Computer Applications<br>
+        Gold — Volleyball · Kho-Kho · Basketball<br>
+        Silver — Table Tennis<br>
+        Sports Club Coordinator, Badminton
+      </div>
+      <span class="edu-cgpa">7.76</span>
+      <div style="font-family:'Space Mono',monospace;font-size:0.55rem;color:rgba(0,212,255,0.5);letter-spacing:0.2em;margin-top:4px;">CGPA · BIT MESRA</div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ======================== LITERARY SECTION ======================== -->
+<div class="ornament-divider"><span class="ornament-sym">❦</span></div>
+
+<section id="literary">
+  <div class="lit-header">
+    <div class="lit-big-title reveal">THE<br>WRITTEN<br>WORD</div>
+    <p class="lit-subtitle reveal">A computer scientist who writes poetry. Published internationally, anthologized nationally. Words are the other half of the code.</p>
+  </div>
+
+  <div class="poem-showcase">
+
+    <!-- POEM SELECTOR -->
+    <div>
+      <div class="skills-label" style="color:var(--gold);margin-bottom:24px;">Poems</div>
+      <div class="poem-card active" onclick="showPoem(0)">
+        <div class="poem-card-title">Alone</div>
+        <div class="poem-card-pub" style="font-family:'Space Mono',monospace;font-size:0.55rem;color:rgba(201,168,76,0.5);letter-spacing:0.2em;margin-top:4px;">PUBLISHED · WHYNOT AUSTRALIA</div>
+      </div>
+      <div class="poem-card" onclick="showPoem(1)">
+        <div class="poem-card-title">Symphony of Despair</div>
+        <div class="poem-card-pub" style="font-family:'Space Mono',monospace;font-size:0.55rem;color:rgba(201,168,76,0.5);letter-spacing:0.2em;margin-top:4px;">PUBLISHED · WHYNOT AUSTRALIA</div>
+      </div>
+      <div class="poem-card" onclick="showPoem(2)">
+        <div class="poem-card-title">Echoes in the Abyss</div>
+        <div class="poem-card-pub" style="font-family:'Space Mono',monospace;font-size:0.55rem;color:rgba(201,168,76,0.5);letter-spacing:0.2em;margin-top:4px;">PUBLISHED · WHYNOT AUSTRALIA</div>
+      </div>
+      <div class="poem-card" onclick="showPoem(3)">
+        <div class="poem-card-title">The Greyness of Man</div>
+        <div class="poem-card-pub" style="font-family:'Space Mono',monospace;font-size:0.55rem;color:rgba(201,168,76,0.5);letter-spacing:0.2em;margin-top:4px;">PUBLISHED · WHYNOT AUSTRALIA</div>
+      </div>
+
+      <div style="margin-top:48px;">
+        <div class="skills-label" style="color:var(--gold);margin-bottom:20px;">Anthologies</div>
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <div style="padding:20px 24px;border:1px solid rgba(201,168,76,0.15);background:rgba(201,168,76,0.03);">
+            <div style="font-family:'Bebas Neue',sans-serif;font-size:1.2rem;color:var(--parchment);letter-spacing:0.05em;">Be Limitless</div>
+            <div style="font-family:'Space Mono',monospace;font-size:0.55rem;color:rgba(201,168,76,0.5);letter-spacing:0.2em;margin-top:4px;">WORLD BOOK FAIR 2025</div>
+          </div>
+          <div style="padding:20px 24px;border:1px solid rgba(201,168,76,0.15);background:rgba(201,168,76,0.03);">
+            <div style="font-family:'Bebas Neue',sans-serif;font-size:1.2rem;color:var(--parchment);letter-spacing:0.05em;">Chromatic Currents V3</div>
+            <div style="font-family:'Space Mono',monospace;font-size:0.55rem;color:rgba(201,168,76,0.5);letter-spacing:0.2em;margin-top:4px;">NATIONAL ANTHOLOGY</div>
+          </div>
+          <div style="padding:20px 24px;border:1px solid rgba(201,168,76,0.15);background:rgba(201,168,76,0.03);">
+            <div style="font-family:'Bebas Neue',sans-serif;font-size:1.2rem;color:var(--parchment);letter-spacing:0.05em;">Golden Realms V4</div>
+            <div style="font-family:'Space Mono',monospace;font-size:0.55rem;color:rgba(201,168,76,0.5);letter-spacing:0.2em;margin-top:4px;">NATIONAL ANTHOLOGY</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top:40px;">
+        <div class="skills-label" style="color:var(--gold);margin-bottom:20px;">Articles Published</div>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <div style="padding:16px 20px;border-left:2px solid rgba(201,168,76,0.3);">
+            <div style="font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--parchment);line-height:1.5;font-style:italic;">"The Potential Impact of Quantum Computing, AI &amp; Unified Theory on Our Understanding of Time"</div>
+            <div style="font-family:'Space Mono',monospace;font-size:0.5rem;color:rgba(201,168,76,0.5);letter-spacing:0.2em;margin-top:6px;">BITS &amp; BYTES MAGAZINE</div>
+          </div>
+          <div style="padding:16px 20px;border-left:2px solid rgba(201,168,76,0.3);">
+            <div style="font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--parchment);line-height:1.5;font-style:italic;">"The Age of the Forgotten Mind"</div>
+            <div style="font-family:'Space Mono',monospace;font-size:0.5rem;color:rgba(201,168,76,0.5);letter-spacing:0.2em;margin-top:6px;">BIT NEWSLETTER</div>
+          </div>
+          <div style="padding:16px 20px;border-left:2px solid rgba(201,168,76,0.3);">
+            <div style="font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--parchment);line-height:1.5;font-style:italic;">"A Bittersweet Farewell"</div>
+            <div style="font-family:'Space Mono',monospace;font-size:0.5rem;color:rgba(201,168,76,0.5);letter-spacing:0.2em;margin-top:6px;">WHYNOT AUSTRALIA</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- POEM DISPLAY -->
+    <div class="poem-preview" style="position:sticky;top:120px;">
+      <div style="font-family:'Space Mono',monospace;font-size:0.6rem;color:rgba(201,168,76,0.5);letter-spacing:0.4em;text-transform:uppercase;margin-bottom:24px;">Currently Reading</div>
+      <div id="poemTitle" style="font-family:'Cormorant Garamond',serif;font-size:clamp(1.5rem,4vw,2.5rem);color:var(--gold);font-style:italic;margin-bottom:32px;line-height:1.1;">Alone</div>
+      <div id="poemText" style="font-family:'Crimson Pro',serif;font-size:1.05rem;color:var(--parchment);line-height:2;white-space:pre-line;opacity:0.9;max-height:60vh;overflow-y:auto;padding-right:16px;"></div>
+    </div>
+
+  </div>
+
+  <!-- LEADERSHIP -->
+  <div style="max-width:1200px;margin:80px auto 0;">
+    <div class="skills-label reveal" style="color:var(--gold);">Leadership &amp; Extracurriculars</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:2px;margin-top:32px;">
+      <div class="project-card reveal" style="border-color:rgba(201,168,76,0.1);background:rgba(201,168,76,0.02);">
+        <div class="project-year" style="color:rgba(201,168,76,0.5);">Event Leadership</div>
+        <div class="project-title">TEDx BIT Mesra Organizer</div>
+        <div class="project-desc">Managed logistics, built the official website with automated registration and payment validation (Google Sheets + AppScript). First-ever TEDx at BIT Mesra.</div>
+      </div>
+      <div class="project-card reveal" style="border-color:rgba(201,168,76,0.1);background:rgba(201,168,76,0.02);">
+        <div class="project-year" style="color:rgba(201,168,76,0.5);">Conference Leadership</div>
+        <div class="project-title">ICIEM 2025 — Head of Web Dev</div>
+        <div class="project-desc">Spearheading the International Conference on Innovation, Engineering & Management. End-to-end portal development, paper submission, review workflows.</div>
+      </div>
+      <div class="project-card reveal" style="border-color:rgba(201,168,76,0.1);background:rgba(201,168,76,0.02);">
+        <div class="project-year" style="color:rgba(201,168,76,0.5);">Campus Leadership</div>
+        <div class="project-title">Coordinator — IT Club &amp; Lit Society</div>
+        <div class="project-desc">Conducted technical workshops and quizzes as IT Club Coordinator. Led writing, editing, and publication drives as Literature Society Coordinator.</div>
+      </div>
+      <div class="project-card reveal" style="border-color:rgba(201,168,76,0.1);background:rgba(201,168,76,0.02);">
+        <div class="project-year" style="color:rgba(201,168,76,0.5);">Sports Achievements</div>
+        <div class="project-title">Multi-Sport Gold Medalist</div>
+        <div class="project-desc">Gold medals in Volleyball, Kho-Kho, and Basketball at BIT Noida. Silver in Table Tennis. Sports Club Coordinator for Badminton — organizes campus tournaments.</div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
 <div class="ornament-divider"><span class="ornament-sym">❧</span></div>
 
 <!-- ABOUT / CONTACT -->
@@ -1663,7 +2134,7 @@ body::after {
   </div>
 </div>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // ======================== ENHANCED CHATBOT ========================
 // Comprehensive knowledge base with better organization and natural language understanding
 const knowledgeBase = {
@@ -2587,6 +3058,57 @@ function toggleChatbot() {
     document.getElementById('chatbot-suggestions').style.display = 'flex';
   }
 }
+
+function setActiveNav(id) {
+  document.querySelectorAll('.nav-links a').forEach(a => {
+    a.classList.remove('active');
+    const href = a.getAttribute('href');
+    // Map section IDs to nav links
+    if (id === 'portals' && href === '#portals') a.classList.add('active');
+    else if (id === 'freelance-work' && href === '#freelance-work') a.classList.add('active');
+    else if (id === 'opportunity' && href === '#opportunity') a.classList.add('active');
+    else if (id === 'about' && href === '#about') a.classList.add('active');
+    else if (id === 'tech' && href === '#tech') a.classList.add('active');
+  });
+}
+
+// ======================== SHOW POEM ========================
+function showPoem(index) {
+  document.querySelectorAll('.poem-card').forEach((c, i) => c.classList.toggle('active', i === index));
+  const titleEl = document.getElementById('poemTitle');
+  const textEl = document.getElementById('poemText');
+  if (!titleEl || !textEl) return;
+  if (typeof gsap !== 'undefined') {
+    gsap.to([titleEl, textEl], { opacity: 0, y: 10, duration: 0.3, onComplete: () => {
+      titleEl.textContent = poems[index].title;
+      textEl.textContent = poems[index].text;
+      gsap.to([titleEl, textEl], { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out', stagger: 0.1 });
+    }});
+  } else {
+    titleEl.textContent = poems[index].title;
+    textEl.textContent = poems[index].text;
+  }
+}
+
+// ======================== TABS ========================
+function switchTab(type) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+  const btn = document.querySelector('.tab-btn.' + type);
+  const tab = document.getElementById('tab-' + type);
+  if (btn) btn.classList.add('active');
+  if (tab) tab.classList.add('active');
+}
+
+// Initialize poems display
+window.addEventListener('DOMContentLoaded', () => {
+  const textEl = document.getElementById('poemText');
+  if (textEl && poems && poems.length > 0) {
+    textEl.textContent = poems[0].text;
+  }
+  switchTab('jobs');
+});
+
 </script>
 </body>
 </html>
