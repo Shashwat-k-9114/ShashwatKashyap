@@ -125,31 +125,31 @@ nav.scrolled { backdrop-filter: blur(12px); background: rgba(2,4,8,0.85); }
   font-family: 'Space Mono', monospace; font-size: 0.65rem;
   letter-spacing: 0.6em; color: var(--gold); text-transform: uppercase;
   margin-bottom: 32px; opacity: 0; transform: translateY(20px);
-  animation: heroReveal 1s ease 2.6s forwards;
+  animation: heroReveal 1s ease 0.2s forwards;
 }
 .hero-name {
   font-family: 'Bebas Neue', sans-serif;
   font-size: clamp(4rem, 14vw, 14rem); line-height: 0.85;
   color: transparent; -webkit-text-stroke: 1px var(--gold);
   letter-spacing: -0.02em; opacity: 0; transform: translateY(40px);
-  animation: heroReveal 1.2s ease 2.8s forwards; position: relative;
+  animation: heroReveal 1.2s ease 0.4s forwards; position: relative;
 }
 .hero-name .filled { -webkit-text-stroke: 0; color: var(--gold); }
 .hero-title {
   font-family: 'Cormorant Garamond', serif;
   font-size: clamp(1.2rem, 3vw, 2rem); font-style: italic;
   color: var(--parchment); margin-top: 24px; opacity: 0;
-  transform: translateY(20px); animation: heroReveal 1s ease 3.1s forwards; font-weight: 300;
+  transform: translateY(20px); animation: heroReveal 1s ease 0.6s forwards; font-weight: 300;
 }
 .hero-desc {
   font-family: 'Cormorant Garamond', serif;
   font-size: clamp(0.95rem, 2vw, 1.2rem); color: var(--silver);
   max-width: 640px; line-height: 1.8; margin-top: 16px;
-  opacity: 0; animation: heroReveal 1s ease 3.4s forwards;
+  opacity: 0; animation: heroReveal 1s ease 0.8s forwards;
 }
 .hero-cta {
   display: flex; gap: 16px; margin-top: 36px;
-  opacity: 0; animation: heroReveal 1s ease 3.6s forwards; flex-wrap: wrap; justify-content: center;
+  opacity: 0; animation: heroReveal 1s ease 1.0s forwards; flex-wrap: wrap; justify-content: center;
 }
 .hero-btn {
   font-family: 'Space Mono', monospace; font-size: 0.62rem;
@@ -167,7 +167,7 @@ nav.scrolled { backdrop-filter: blur(12px); background: rgba(2,4,8,0.85); }
 .hero-scroll {
   position: absolute; bottom: 40px;
   display: flex; flex-direction: column; align-items: center; gap: 8px;
-  opacity: 0; animation: heroReveal 1s ease 3.9s forwards;
+  opacity: 0; animation: heroReveal 1s ease 1.2s forwards;
 }
 .hero-scroll span {
   font-family: 'Space Mono', monospace; font-size: 0.55rem;
@@ -1038,8 +1038,75 @@ body::after {
   filter: brightness(1);
 }
 
+/* FREELANCE WORK SECTION */
+#freelance-work { position: relative; z-index: 1; padding: 120px 40px; }
+.fw-header { max-width: 1200px; margin: 0 auto 60px; }
+.freelance-work-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 2px; max-width: 1200px; margin: 0 auto; }
+.fw-card { display: block; text-decoration: none; padding: 36px 28px; position: relative; overflow: hidden; background: rgba(245,158,11,0.03); border: 1px solid rgba(245,158,11,0.1); transition: all 0.4s ease; }
+.fw-card:hover { background: rgba(245,158,11,0.08); border-color: rgba(245,158,11,0.35); transform: translateY(-4px); }
+.fw-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 2px; background: linear-gradient(to right, transparent, var(--amber), transparent); transform: translateX(-100%); transition: transform 0.5s ease; }
+.fw-card:hover::before { transform: translateX(100%); }
+.fw-card-badge { font-family: 'Space Mono', monospace; font-size: 0.5rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--amber); background: rgba(245,158,11,0.1); border: 1px solid rgba(245,158,11,0.2); padding: 3px 10px; display: inline-block; margin-bottom: 20px; }
+.fw-card-num { font-family: 'Bebas Neue', sans-serif; font-size: 4rem; color: rgba(245,158,11,0.1); line-height: 1; position: absolute; top: 16px; right: 20px; pointer-events: none; }
+.fw-card-title { font-family: 'Bebas Neue', sans-serif; font-size: 1.7rem; color: var(--parchment); letter-spacing: 0.05em; margin-bottom: 12px; line-height: 1.1; }
+.fw-card-desc { font-family: 'Cormorant Garamond', serif; font-size: 0.97rem; color: var(--silver); line-height: 1.7; margin-bottom: 18px; }
+.fw-card-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; }
+.fw-card-tags span { font-family: 'Space Mono', monospace; font-size: 0.52rem; padding: 3px 10px; background: rgba(245,158,11,0.07); color: rgba(245,158,11,0.7); border: 1px solid rgba(245,158,11,0.12); letter-spacing: 0.1em; }
+.fw-card-link { font-family: 'Space Mono', monospace; font-size: 0.58rem; color: var(--amber); letter-spacing: 0.15em; border-bottom: 1px solid rgba(245,158,11,0.3); display: inline-block; padding-bottom: 2px; }
+.fw-cta-wrap { max-width: 1200px; margin: 60px auto 0; text-align: center; }
+.fw-cta-text { font-family: 'Cormorant Garamond', serif; font-size: 1.15rem; color: var(--silver); font-style: italic; margin-bottom: 24px; }
+
+/* RESPONSIVE */
+@media (max-width: 1100px) {
+  .portals-grid { grid-template-columns: repeat(2, 1fr); }
+  .process-steps { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 900px) {
+  nav { padding: 16px 24px; }
+  #portals, #tech, #opportunity, #about, #freelance-work { padding: 80px 24px; }
+  .jobs-panel, .startup-panel, .freelance-panel { padding: 36px 24px; }
+  .tech-header { flex-direction: column; gap: 20px; }
+}
+@media (max-width: 768px) {
+  nav { padding: 14px 20px; }
+  .nav-links { gap: 12px; }
+  .nav-links li:nth-child(3) { display: none; }
+  #hero { padding: 100px 20px 60px; }
+  .hero-name { font-size: clamp(3.5rem, 18vw, 8rem); }
+  .hero-cta { flex-direction: column; align-items: center; }
+  .hero-btn { width: 100%; max-width: 300px; text-align: center; justify-content: center; display: flex; align-items: center; }
+  .portals-grid { grid-template-columns: 1fr 1fr; }
+  .portal-card { aspect-ratio: 1/1; }
+  .freelance-work-grid, .projects-grid, .jobs-grid, .startup-offerings, .freelance-services { grid-template-columns: 1fr; }
+  .tab-btn { font-size: 0.55rem; padding: 12px; }
+  .tab-btn span { display: none; }
+  .jobs-panel, .startup-panel, .freelance-panel { padding: 24px 16px; }
+  .jobs-cta { flex-direction: column; gap: 20px; }
+  .process-steps { grid-template-columns: 1fr 1fr; }
+  .contact-links { flex-direction: column; align-items: center; }
+  .contact-link { width: 100%; max-width: 320px; }
+  footer { flex-direction: column; gap: 16px; text-align: center; padding: 32px 20px; }
+  .footer-right { text-align: center; }
+  .edu-section { flex-direction: column; }
+  #chatbot-window { width: calc(100vw - 24px); right: 12px; left: 12px; }
+}
+@media (max-width: 540px) {
+  .portals-grid { grid-template-columns: 1fr; }
+  .hero-name { font-size: clamp(3rem, 22vw, 6rem); }
+  .nav-links li:nth-child(2), .nav-links li:nth-child(4) { display: none; }
+  .process-steps { grid-template-columns: 1fr; }
+  .startup-metrics { flex-direction: column; gap: 16px; }
+  .fw-card { padding: 24px 16px; }
+}
+@media (max-width: 380px) {
+  .hero-name { font-size: clamp(2.6rem, 24vw, 5rem); }
+  .nav-links { display: none; }
+}
+@media (min-width: 769px) and (max-width: 1024px) {
+  .freelance-work-grid, .projects-grid { grid-template-columns: repeat(2, 1fr); }
+  nav { padding: 18px 32px; }
+}
 </style>
-</head>
 <body>
 
 <div class="cursor" id="cursor"></div>
@@ -1061,8 +1128,8 @@ body::after {
 </a>
   <ul class="nav-links">
     <li><a href="#portals">Overview</a></li>
+    <li><a href="#freelance-work">Client Work</a></li>
     <li><a href="#tech">Tech</a></li>
-    <li><a href="#literary">Literary</a></li>
     <li><a href="#opportunity">Hire Me</a></li>
     <li><a href="#about">Contact</a></li>
   </ul>
@@ -1070,27 +1137,27 @@ body::after {
 
 <!-- HERO -->
 <section id="hero">
-  <div class="hero-eyebrow">Full-Stack Developer · Writer · Entrepreneur · BIT Mesra</div>
+  <div class="hero-eyebrow">Full-Stack Developer · Available for Freelance · BIT Mesra</div>
   <h1 class="hero-name">
     <span class="filled">SHASH</span>WAT<br><span class="filled">KASH</span>YAP
   </h1>
-  <div class="hero-title">I build systems that think, write words that breathe, and lead people that matter.</div>
+  <div class="hero-title">I build websites and web apps that actually work — for real clients.</div>
   <p class="hero-desc">
-    Delhi NCR, India — currently pursuing MCA at BIT Mesra.<br>
-    I'm open to full-time roles, startup collaborations, and freelance projects.
+    MCA student at BIT Mesra, Delhi NCR — available for freelance right now.<br>
+    I've built 8+ client sites and I'd love to help with yours.
   </p>
   <div class="hero-cta">
-    <a href="#opportunity" class="hero-btn primary">
-      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:inline;margin-right:6px;vertical-align:middle"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
-      Available to Hire
-    </a>
-    <a href="#tech" class="hero-btn secondary">
-      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:inline;margin-right:6px;vertical-align:middle"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
-      View Projects
+    <a href="#freelance-work" class="hero-btn primary">
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:inline;margin-right:6px;vertical-align:middle"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+      See My Client Work
     </a>
     <a href="#opportunity" onclick="setTimeout(()=>document.querySelectorAll('.tab-btn')[2].click(),400)" class="hero-btn tertiary">
       <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:inline;margin-right:6px;vertical-align:middle"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-      Freelance Work
+      Hire Me for Freelance
+    </a>
+    <a href="#about" class="hero-btn secondary">
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:inline;margin-right:6px;vertical-align:middle"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 11.5a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.5a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+      Get in Touch
     </a>
   </div>
   <div class="hero-scroll">
@@ -1124,9 +1191,9 @@ body::after {
         </div>
         <div class="portal-content">
           <span class="portal-num">02</span>
-          <span class="portal-name">Startups</span>
-          <div class="portal-desc">I co-found, consult, and build MVPs. From ideation to launch — I've done it.</div>
-          <a class="portal-btn" href="#opportunity">Partner ↓</a>
+          <span class="portal-name">Freelance Projects?</span>
+          <div class="portal-desc">I consult, and build MVPs. From ideation to build — I've done it.</div>
+          <a class="portal-btn" href="#freelance-work">Partner ↓</a>
         </div>
       </div>
       <div class="portal-card reveal" onclick="document.getElementById('literary').scrollIntoView({behavior:'smooth'})">
@@ -1595,6 +1662,82 @@ Even in the shadows, I'll be your friend.</div>
 
 <div class="ornament-divider"><span class="ornament-sym">✦</span></div>
 
+<!-- FREELANCE CLIENT WORK -->
+<section id="freelancework">
+  <div class="fw-header">
+    <div class="section-eyebrow reveal">Client Work</div>
+    <h2 class="section-title reveal">BUILT FOR<br><span style="color:var(--amber)">REAL CLIENTS</span></h2>
+    <p style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--silver);font-style:italic;max-width:680px;line-height:1.8;margin-top:16px" class="reveal">Live websites I've built for actual clients — from conference portals to company sites. Every one is deployed and working.</p>
+  </div>
+  <div class="freelance-work-grid">
+    <a href="https://iciem.vercel.app" target="_blank" class="fw-card reveal">
+      <div class="fw-card-badge">Conference Portal</div><div class="fw-card-num">01</div>
+      <div class="fw-card-title">ICIEM 2026</div>
+      <div class="fw-card-desc">International conference portal — built end-to-end.</div>
+      <div class="fw-card-tags"><span>Full Stack</span><span>Automation</span><span>AppScript</span></div>
+      <div class="fw-card-link">iciem.vercel.app ↗</div>
+    </a>
+    <a href="https://ctrl-alt-elite-blond.vercel.app/" target="_blank" class="fw-card reveal">
+      <div class="fw-card-badge">Event Website</div><div class="fw-card-num">02</div>
+      <div class="fw-card-title">Ctrl+Alt+Elite</div>
+      <div class="fw-card-desc">Function website for the Ctrl+Alt+Elite tech event — clean, modern, and built to excite attendees before they even walk in.</div>
+      <div class="fw-card-tags"><span>Full Stack</span><span>Event</span><span>UI/UX</span></div>
+      <div class="fw-card-link">ctrl-alt-elite-blond.vercel.app ↗</div>
+    </a>
+    <a href="https://bit-mca-placement.vercel.app/" target="_blank" class="fw-card reveal">
+      <div class="fw-card-badge">Academic Portal</div><div class="fw-card-num">03</div>
+      <div class="fw-card-title">MCA Placement Portal</div>
+      <div class="fw-card-desc">Placement portal for BIT Mesra MCA students — helping students navigate placement season without the chaos.</div>
+      <div class="fw-card-tags"><span>Full Stack</span><span>Website</span><span>Academic</span></div>
+      <div class="fw-card-link">bit-mca-placement.vercel.app ↗</div>
+    </a>
+    <a href="https://yashportfolio-black.vercel.app/" target="_blank" class="fw-card reveal">
+      <div class="fw-card-badge">Portfolio</div><div class="fw-card-num">04</div>
+      <div class="fw-card-title">Portfolio</div>
+      <div class="fw-card-desc">Developer portfolio built to help Yash stand out — custom design, smooth animations, mobile-first throughout.</div>
+      <div class="fw-card-tags"><span>HTML/CSS/JS</span><span>Design</span><span>Animations</span></div>
+      <div class="fw-card-link">yashportfolio-black.vercel.app ↗</div>
+    </a>
+    <a href="https://shubha-portfolio.vercel.app" target="_blank" class="fw-card reveal">
+      <div class="fw-card-badge">Portfolio</div><div class="fw-card-num">05</div>
+      <div class="fw-card-title">Portfolio</div>
+      <div class="fw-card-desc">Creative personal portfolio — elegant layout, strong visual identity, content that actually reflects her personality.</div>
+      <div class="fw-card-tags"><span>HTML/CSS/JS</span><span>Creative</span><span>Design</span></div>
+      <div class="fw-card-link">shubha-portfolio.vercel.app ↗</div>
+    </a>
+    <a href="https://pankaj-teal.vercel.app" target="_blank" class="fw-card reveal">
+      <div class="fw-card-badge">Portfolio</div><div class="fw-card-num">06</div>
+      <div class="fw-card-title">Portfolio</div>
+      <div class="fw-card-desc">Professional portfolio with a distinctive teal aesthetic — built to make recruiters pay attention and keep scrolling.</div>
+      <div class="fw-card-tags"><span>React</span><span>Branding</span><span>Responsive</span></div>
+      <div class="fw-card-link">pankaj-teal.vercel.app ↗</div>
+    </a>
+    <a href="https://te-dx-bitnoida.vercel.app" target="_blank" class="fw-card reveal">
+      <div class="fw-card-badge">TEDx Event</div><div class="fw-card-num">07</div>
+      <div class="fw-card-title">TEDx BIT Noida</div>
+      <div class="fw-card-desc">Official TEDx website with automated registration and payment validation via Google Sheets & Drive integration.</div>
+      <div class="fw-card-tags"><span>Full Stack</span><span>AppScript</span><span>Automation</span></div>
+      <div class="fw-card-link">te-dx-bitnoida.vercel.app ↗</div>
+    </a>
+    <a href="https://burgeon-new.vercel.app/" target="_blank" class="fw-card reveal">
+      <div class="fw-card-badge">Company Website</div><div class="fw-card-num">08</div>
+      <div class="fw-card-title">Burgeon</div>
+      <div class="fw-card-desc">Full company website — professional, polished, built to establish their digital presence and convert visitors into clients.</div>
+      <div class="fw-card-tags"><span>React</span><span>Business</span><span>Professional</span></div>
+      <div class="fw-card-link">burgeon-new.vercel.app ↗</div>
+    </a>
+  </div>
+  <div class="fw-cta-wrap reveal">
+    <p class="fw-cta-text">Want something like this? I'm taking on new projects.</p>
+    <a href="mailto:kashyapshashwat77@gmail.com" class="cta-action-btn amber" style="display:inline-flex;align-items:center;gap:10px;">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      Let's Work Together
+    </a>
+  </div>
+</section>
+
+<div class="ornament-divider"><span class="ornament-sym">✦</span></div>
+
 <!-- OPPORTUNITY SECTION -->
 <section id="opportunity">
   <div class="opp-header">
@@ -1614,10 +1757,10 @@ Even in the shadows, I'll be your friend.</div>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
         <span>Full-Time Jobs</span>
       </button>
-      <button class="tab-btn startup" onclick="switchTab('startup')">
+      <!--<button class="tab-btn startup" onclick="switchTab('startup')">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><path d="M9 22V12h6v10M9 7h.01M15 7h.01"/></svg>
         <span>Startups & Funding</span>
-      </button>
+      </button>-->  
       <button class="tab-btn freelance" onclick="switchTab('freelance')">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
         <span>Freelance Projects</span>
@@ -1669,7 +1812,7 @@ Even in the shadows, I'll be your friend.</div>
     </div>
 
     <!-- STARTUP TAB -->
-    <div class="tab-content" id="tab-startup">
+    <!--<div class="tab-content" id="tab-startup">
       <div class="startup-panel">
         <p class="startup-intro">
           I've been building from scratch since my first year. I've shipped MVPs, led product teams, and organized events that drew hundreds. If you're founding something, I want to be in that room.
@@ -1725,7 +1868,7 @@ Even in the shadows, I'll be your friend.</div>
           </div>
         </div>
         <div class="startup-cta">
-          <a href="mailto:kashyapshashwat77@gmail.com" class="cta-action-btn emerald">
+          <a href="/cdn-cgi/l/email-protection#563d37253e2f3726253e37253e213722616116313b373f3a7835393b" class="cta-action-btn emerald">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 11.5a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.5a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
             Let's Co-Found Something
           </a>
@@ -1735,7 +1878,7 @@ Even in the shadows, I'll be your friend.</div>
           </a>
         </div>
       </div>
-    </div>
+    </div>-->
 
     <!-- FREELANCE TAB -->
     <div class="tab-content" id="tab-freelance">
@@ -1819,7 +1962,7 @@ Even in the shadows, I'll be your friend.</div>
           </div>
         </div>
         <div class="freelance-cta">
-          <a href="mailto:kashyapshashwat77@gmail.com?subject=Freelance Inquiry" class="cta-action-btn amber">
+          <a href="/cdn-cgi/l/email-protection#6a010b1902130b1a19020b19021d0b1e5d5d2a0d070b03064409050755191f08000f091e572c180f0f060b04090f4a23041b1f031813" class="cta-action-btn amber">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
             Start a Project
           </a>
@@ -1848,7 +1991,7 @@ Even in the shadows, I'll be your friend.</div>
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#c9a84c" stroke-width="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
         </span>
         <span class="contact-link-label">Email</span>
-        <span class="contact-link-value">kashyapshashwat77@gmail.com</span>
+        <span class="contact-link-value"><span class="__cf_email__" data-cfemail="761d17051e0f1706051e17051e011702414136111b171f1a5815191b">kashyapshashwat77@gmail.com</span></span>
       </a>
       <a href="https://www.linkedin.com/in/shashwat-kashyap-b417aa155/" target="_blank" class="contact-link reveal">
         <span class="contact-link-icon">
@@ -1857,13 +2000,15 @@ Even in the shadows, I'll be your friend.</div>
         <span class="contact-link-label">LinkedIn</span>
         <span class="contact-link-value">ShashwatKashyap</span>
       </a>
-      <a href="https://shashwatportfolio.vercel.app" target="_blank" class="contact-link reveal">
-        <span class="contact-link-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#c9a84c" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-        </span>
-        <span class="contact-link-label">Portfolio</span>
-        <span class="contact-link-value">shashwatportfolio.vercel.app</span>
-      </a>
+<a href="https://github.com/Shashwat-k-9114" target="_blank" class="contact-link reveal">
+  <span class="contact-link-icon">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#c9a84c">
+      <path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.57.1.78-.25.78-.55 0-.27-.01-1.16-.02-2.1-3.2.7-3.88-1.38-3.88-1.38-.52-1.34-1.27-1.7-1.27-1.7-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.02 1.75 2.67 1.25 3.32.95.1-.74.4-1.25.72-1.53-2.55-.29-5.23-1.28-5.23-5.7 0-1.26.45-2.29 1.18-3.1-.12-.29-.51-1.46.11-3.05 0 0 .96-.31 3.15 1.18a10.9 10.9 0 0 1 5.74 0c2.19-1.49 3.15-1.18 3.15-1.18.62 1.59.23 2.76.11 3.05.73.81 1.18 1.84 1.18 3.1 0 4.43-2.68 5.41-5.24 5.69.41.35.77 1.04.77 2.1 0 1.52-.01 2.75-.01 3.12 0 .3.21.65.79.55A11.51 11.51 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/>
+    </svg>
+  </span>
+  <span class="contact-link-label">GitHub</span>
+  <span class="contact-link-value">github.com/Shashwat-k-9114</span>
+</a>
       <a href="tel:+919818383499" class="contact-link reveal">
         <span class="contact-link-icon">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#c9a84c" stroke-width="1.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 11.5a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.5a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
@@ -1890,10 +2035,10 @@ Even in the shadows, I'll be your friend.</div>
 
 <!-- CHATBOT -->
 <!-- CHATBOT - ENHANCED VERSION -->
-<button id="chatbot-toggle" onclick="toggleChatbot()">
+<!-- <button id="chatbot-toggle" onclick="toggleChatbot()">
   <svg class="chat-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
   <svg class="close-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-</button>
+</button> -->
 
 <div id="chatbot-window">
   <div class="chatbot-header">
@@ -1926,7 +2071,7 @@ Even in the shadows, I'll be your friend.</div>
   </div>
 </div>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // ======================== ENHANCED CHATBOT ========================
 // Comprehensive knowledge base with better organization and natural language understanding
 const knowledgeBase = {
@@ -2398,7 +2543,7 @@ window.addEventListener('load', () => {
         initAnimations();
       }
     });
-  }, 2600);
+  }, 100);
 });
 
 // ======================== CURSOR ========================
@@ -2846,6 +2991,9 @@ function toggleChatbot() {
   const win = document.getElementById('chatbot-window');
   btn.classList.toggle('open');
   win.classList.toggle('open');
+  if (win.classList.contains('open')) {
+    document.getElementById('chatbot-suggestions').style.display = 'flex';
+  }
 }
 </script>
 </body>
