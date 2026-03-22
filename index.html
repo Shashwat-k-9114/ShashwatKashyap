@@ -9,6 +9,16 @@
 <meta name="author" content="Shashwat Kashyap">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://shashwatkashyap.com" />
+<!-- Open Graph / Social Preview -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://shashwatkashyap.com">
+<meta property="og:title" content="Shashwat Kashyap — Developer · Researcher · Writer">
+<meta property="og:description" content="Full-stack developer, Best Paper Prize winner at ICIEM'26, Salesforce Certified Agentforce Specialist, and published poet. Available for freelance and full-time roles.">
+<meta property="og:image" content="https://shashwatkashyap.com/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Shashwat Kashyap — Developer · Researcher · Writer">
+<meta name="twitter:description" content="Full-stack developer, Best Paper Prize winner at ICIEM'26, Salesforce Certified, and published poet.">
+<meta name="twitter:image" content="https://shashwatkashyap.com/og-image.png">
 <meta name="theme-color" content="#0f172a">
 <link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
@@ -118,13 +128,16 @@ body {
 
 /* NAVIGATION */
 nav {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  position: fixed; top: 0; left: 0; right: 0; z-index: 250;
   display: flex; justify-content: space-between; align-items: center;
   padding: 24px 48px;
   background: linear-gradient(to bottom, rgba(2,4,8,0.9) 0%, transparent 100%);
-  transition: backdrop-filter 0.3s ease;
+  transition: background 0.3s ease, backdrop-filter 0.3s ease;
 }
-nav.scrolled { backdrop-filter: blur(12px); background: rgba(2,4,8,0.85); }
+nav.scrolled { 
+  backdrop-filter: blur(12px); 
+  background: rgba(2,4,8,0.85);
+}
 .nav-logo {
   font-family: 'Bebas Neue', sans-serif; font-size: 1.6rem;
   color: var(--gold); letter-spacing: 0.2em; text-decoration: none;
@@ -404,6 +417,10 @@ div > .skills-label { font-size: clamp(0.75rem, 3vw, 1rem); }
   color: var(--silver); line-height: 1.65; margin-bottom: 18px;
 }
 .project-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: auto; }
+.project-links { margin-top: 14px; display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
+.project-link-btn { font-family: 'Space Mono', monospace; font-size: 0.5rem; letter-spacing: 0.15em; color: rgba(0,212,255,0.6); border-bottom: 1px solid rgba(0,212,255,0.2); text-decoration: none; transition: color 0.2s ease, border-color 0.2s ease; padding-bottom: 1px; }
+.project-link-btn:hover { color: var(--electric); border-color: var(--electric); }
+.project-link-private { font-family: 'Space Mono', monospace; font-size: 0.5rem; letter-spacing: 0.15em; color: rgba(168,184,200,0.35); }
 .project-tag {
   font-family: 'Space Mono', monospace; font-size: 0.55rem;
   padding: 3px 10px; background: rgba(0,212,255,0.08);
@@ -481,7 +498,16 @@ div > .skills-label { font-size: clamp(0.75rem, 3vw, 1rem); }
 .edu-card {
   padding: 48px; border: 1px solid rgba(0,212,255,0.08);
   background: rgba(0,212,255,0.02); position: relative; overflow: hidden;
+  transition: all 0.4s ease;
 }
+.edu-card:hover {
+  border-color: rgba(0,212,255,0.3);
+  background: rgba(0,212,255,0.06);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0,212,255,0.08);
+}
+.edu-card:hover .edu-degree { color: var(--gold); }
+.edu-card:hover::after { color: rgba(0,212,255,0.08); }
 .edu-card::after {
   content: attr(data-degree); position: absolute;
   right: -20px; top: 50%; transform: translateY(-50%) rotate(90deg);
@@ -1064,6 +1090,17 @@ body::after {
   border-radius: 50%; display: inline-block; animation: pulse-dot 2s infinite;
 }
 @keyframes pulse-dot { 0%,100%{opacity:1} 50%{opacity:0.4} }
+.typing-bubble { display:flex; gap:5px; align-items:center; padding:14px 18px !important; }
+.typing-dot { width:7px; height:7px; background:rgba(201,168,76,0.6); border-radius:50%; animation:typingBounce 1.2s infinite ease-in-out; }
+.typing-dot:nth-child(2) { animation-delay:0.2s; }
+.typing-dot:nth-child(3) { animation-delay:0.4s; }
+@keyframes typingBounce { 0%,60%,100%{transform:translateY(0);opacity:0.5} 30%{transform:translateY(-6px);opacity:1} }
+.msg-bubble strong { color:var(--gold); font-weight:600; }
+.msg-bubble em { font-style:italic; color:var(--parchment); }
+.msg-bubble ul { margin:6px 0 6px 16px; padding:0; }
+.msg-bubble li { margin:3px 0; line-height:1.5; }
+.msg-bubble p { margin:0; }
+.msg-bubble p + p { margin-top:8px; }
 .chatbot-messages {
   flex: 1; overflow-y: auto; padding: 20px; display: flex;
   flex-direction: column; gap: 14px; min-height: 0;
@@ -1121,8 +1158,6 @@ body::after {
 
 /* MOBILE */
 @media (max-width: 768px) {
-  nav { padding: 16px 24px; }
-  .nav-links { gap: 16px; }
   .portals-grid { grid-template-columns: 1fr 1fr; }
   .poem-showcase { grid-template-columns: 1fr; gap: 40px; }
   .poem-preview { position: static; }
@@ -1186,6 +1221,12 @@ body::after {
 #cf-submit:hover { background: rgba(201,168,76,0.18); transform: translateY(-1px); }
 #cf-submit:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
 
+/* Mobile-only nav actions (GitHub + Resume in hamburger menu) */
+.mobile-nav-actions { display: none !important; }
+@media (max-width: 768px) {
+  .mobile-nav-actions { display: block !important; }
+}
+
 /* HAMBURGER MENU BASE */
 .nav-hamburger {
   display: none; flex-direction: column; gap: 5px;
@@ -1206,14 +1247,16 @@ body::after {
 .nav-backdrop {
   display: none;
   position: fixed; inset: 0;
-  background: rgba(0,0,0,0.5);
-  z-index: 149;
+  background: rgba(0,0,0,0.7);
+  z-index: 210;
   opacity: 0;
   transition: opacity 0.3s ease;
+  pointer-events: none;
 }
-.nav-backdrop.open { 
+.nav-backdrop.open {
   display: block;
   opacity: 1;
+  pointer-events: auto;
 }
 
 /* RESPONSIVE */
@@ -1222,54 +1265,192 @@ body::after {
   .process-steps { grid-template-columns: repeat(2, 1fr); }
   .projects-grid, .freelance-work-grid { grid-template-columns: repeat(2, 1fr); }
 }
-@media (max-width: 900px) {
-  nav { padding: 16px 24px; }
-  #portals, #tech, #opportunity, #about, #freelance-work { padding: 80px 24px; }
-  .jobs-panel, .startup-panel, .freelance-panel { padding: 36px 24px; }
-  .tech-header { flex-direction: column; gap: 20px; }
-  .projects-grid, .freelance-work-grid { grid-template-columns: repeat(2, 1fr); }
-}
+/* ===== MOBILE NAVIGATION - SINGLE CLEAN VERSION ===== */
 @media (max-width: 768px) {
   nav { padding: 14px 20px; }
   .nav-hamburger { display: flex; }
   .nav-actions { display: none; }
+  
   .nav-links {
-    position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-    flex-direction: column; gap: 0;
-    background: rgba(2,4,8,0.98); backdrop-filter: blur(20px);
-    transform: translateX(-100%); transition: transform 0.4s cubic-bezier(0.23,1,0.32,1);
-    z-index: 200; display: flex !important;
-    justify-content: flex-start; padding: 80px 0 40px; align-items: stretch;
-    overflow-y: auto; list-style: none; margin: 0; padding-top: 80px;
+    position: fixed;
+    top: 0;
+    left: -100%;
+    right: 0;
+    bottom: 0;
+    flex-direction: column;
+    gap: 0;
+    background: rgba(2,4,8,0.98);
+    backdrop-filter: blur(20px);
+    transition: left 0.35s cubic-bezier(0.23, 1, 0.32, 1);
+    z-index: 220;
+    display: flex !important;
+    justify-content: flex-start;
+    padding: 80px 0 40px;
+    align-items: stretch;
+    overflow-y: auto;
+    list-style: none;
+    margin: 0;
+    width: 100%;
+    height: 100vh;
   }
-  .nav-links.open { transform: translateX(0); will-change: transform; }
-  .nav-links li { display: block !important; width: 100%; border-bottom: 1px solid rgba(201,168,76,0.1); margin: 0; }
-  .nav-links a { display: block; padding: 18px 32px; font-size: 0.85rem !important; letter-spacing: 0.25em; color: var(--silver); }
-  .nav-links a:hover, .nav-links a.active { color: var(--gold); }
-  .nav-resume span { display: none; }
+  
+  .nav-links.open {
+    left: 0;
+  }
+  
+  .nav-links li {
+    display: block !important;
+    width: 100%;
+    border-bottom: 1px solid rgba(201,168,76,0.1);
+    margin: 0;
+  }
+  
+  .nav-links a {
+    display: block;
+    padding: 18px 32px;
+    font-size: 0.85rem !important;
+    letter-spacing: 0.25em;
+    color: var(--silver);
+    text-decoration: none;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    pointer-events: auto !important;
+  }
+  
+  .nav-links a:hover, 
+  .nav-links a.active { 
+    color: var(--gold); 
+    background: rgba(201,168,76,0.05);
+  }
+  
+  .nav-backdrop {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.7);
+    z-index: 210;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+  }
+
+  .nav-backdrop.open {
+    display: block;
+    opacity: 1;
+    pointer-events: auto;
+  }
+  
+  nav.scrolled {
+    backdrop-filter: blur(12px);
+    background: rgba(2,4,8,0.95);
+  }
+  
+  /* Section padding reductions */
+  #tech, #literary, #human, #opportunity, #freelance-work { padding: 80px 20px; }
+  #portals { padding: 80px 20px; }
+  #about { padding: 80px 20px; }
+  .exp-section { margin-top: 60px; }
+  .exp-timeline { padding-left: 24px; }
+  .exp-item { padding: 0 0 36px 24px; }
+  .salesforce-section { padding: 32px 20px; }
+  .skills-section { margin-bottom: 48px; }
+  .tech-header { margin-bottom: 48px; }
+
+  /* Hero */
   #hero { padding: 100px 20px 90px; }
   .hero-name { font-size: clamp(3.5rem, 18vw, 8rem); }
   .hero-cta { flex-direction: column; align-items: center; }
-  .hero-btn { width: 100%; max-width: 300px; text-align: center; justify-content: center; display: flex; align-items: center; }
+  .hero-btn {
+    width: 100%;
+    max-width: 300px;
+    text-align: center;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+  }
+
+  /* Portals */
   .portals-grid { grid-template-columns: 1fr 1fr; }
   .portal-card { aspect-ratio: 1/1; }
-  .projects-grid, .freelance-work-grid, .jobs-grid, .startup-offerings, .freelance-services { grid-template-columns: 1fr; }
-  .tab-btn { font-size: 0.55rem; padding: 12px 10px; }
-  .tab-btn span { display: none; }
-  .jobs-panel, .startup-panel, .freelance-panel { padding: 24px 16px; }
-  .jobs-cta { flex-direction: column; gap: 20px; }
-  .process-steps { grid-template-columns: 1fr 1fr; }
-  .contact-links { flex-direction: column; align-items: center; }
-  .contact-link { width: 100%; max-width: 320px; }
-  footer { flex-direction: column; gap: 16px; text-align: center; padding: 32px 20px; }
-  .footer-right { text-align: center; }
-  .edu-section { flex-direction: column; }
-  #chatbot-window { width: calc(100vw - 24px); right: 12px; left: 12px; }
-  .poem-showcase { grid-template-columns: 1fr !important; gap: 40px; }
-  .poem-preview { position: static !important; }
+  .section-title { font-size: clamp(2.5rem, 10vw, 5rem); margin-bottom: 40px; }
+
+  /* Projects */
+  .projects-grid,
+  .freelance-work-grid,
+  .jobs-grid,
+  .startup-offerings,
+  .freelance-services {
+    grid-template-columns: 1fr;
+  }
   .project-card { padding: 24px 20px; }
   .fw-card { padding: 24px 20px; }
+
+  /* Opportunity tabs */
+  .tab-buttons { flex-wrap: wrap; }
+  .tab-btn {
+    font-size: 0.55rem;
+    padding: 12px 10px;
+    flex: 1;
+    min-width: 80px;
+  }
+  .tab-btn span { display: none; }
+  .jobs-panel,
+  .startup-panel,
+  .freelance-panel {
+    padding: 24px 16px;
+  }
+  .jobs-cta {
+    flex-direction: column;
+    gap: 20px;
+  }
+  .process-steps { grid-template-columns: 1fr 1fr; }
+  .startup-pitch { padding: 24px 20px; }
+  .freelance-process { padding: 24px 20px; }
+
+  /* Contact */
+  .contact-links {
+    flex-direction: column;
+    align-items: center;
+  }
+  .contact-link {
+    width: 100%;
+    max-width: 320px;
+  }
+
+  /* Footer */
+  footer {
+    flex-direction: column;
+    gap: 16px;
+    text-align: center;
+    padding: 32px 20px;
+  }
+  .footer-right { text-align: center; }
+
+  /* Education */
+  .edu-section { flex-direction: column; }
+  .edu-card { padding: 32px 20px; }
+
+  /* Chatbot */
+  #chatbot-window {
+    width: calc(100vw - 24px);
+    right: 12px;
+    left: 12px;
+  }
+  #chatbot-toggle { bottom: 20px; right: 20px; }
+
+  /* Poem section */
+  .poem-showcase {
+    grid-template-columns: 1fr !important;
+    gap: 40px;
+  }
+  .poem-preview { position: static !important; }
+  .lit-header { margin-bottom: 48px; }
+
+  /* SF badges */
+  .sf-badges { gap: 24px; }
+  .sf-badge-num { font-size: 3rem; }
 }
+
 @media (max-width: 540px) {
   .portals-grid { grid-template-columns: 1fr; }
   .hero-name { font-size: clamp(3rem, 22vw, 6rem); }
@@ -1279,6 +1460,7 @@ body::after {
   .project-card { padding: 20px 16px; }
   .projects-grid, .freelance-work-grid { gap: 1px; }
 }
+
 @media (max-width: 380px) {
   .hero-name { font-size: clamp(2.6rem, 24vw, 5rem); }
 }
@@ -1290,6 +1472,11 @@ body::after {
 
 /* Custom cursor — only active when JS confirms cursor running */
 .js-cursor * { cursor: none !important; }
+
+/* Ensure body doesn't scroll when menu is open */
+body.menu-open {
+  overflow: hidden;
+}
 </style>
 <body>
 
@@ -1336,6 +1523,185 @@ body::after {
 })();
 </script>
 
+<script>
+// ======================== ESSENTIAL UI FUNCTIONS ========================
+// Defined here — before CDN scripts — so onclick handlers always work
+
+function switchTab(type) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+  var btn = document.querySelector('.tab-btn.' + type);
+  var tab = document.getElementById('tab-' + type);
+  if (btn) btn.classList.add('active');
+  if (tab) tab.classList.add('active');
+}
+
+function showPoem(index) {
+  document.querySelectorAll('.poem-card').forEach(function(c, i) {
+    c.classList.toggle('active', i === index);
+  });
+  var titleEl = document.getElementById('poemTitle');
+  var textEl  = document.getElementById('poemText');
+  if (!titleEl || !textEl) return;
+  var p = window.poems || [];
+  if (!p[index]) return;
+  if (typeof gsap !== 'undefined') {
+    gsap.to([titleEl, textEl], { opacity: 0, y: 10, duration: 0.3, onComplete: function() {
+      titleEl.textContent = p[index].title;
+      textEl.textContent  = p[index].text;
+      gsap.to([titleEl, textEl], { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out', stagger: 0.1 });
+    }});
+  } else {
+    titleEl.textContent = p[index].title;
+    textEl.textContent  = p[index].text;
+  }
+}
+
+// ======================== MOBILE NAVIGATION - DIRECT LINK BINDING ========================
+
+function toggleMobileNav() {
+  console.log('*** toggleMobileNav() called ***');
+  var nav = document.getElementById('nav-links-list');
+  var btn = document.getElementById('nav-hamburger');
+  var backdrop = document.getElementById('nav-backdrop');
+  var mainNav = document.getElementById('main-nav');
+  
+  console.log('Elements found - nav:', !!nav, 'btn:', !!btn, 'backdrop:', !!backdrop);
+  
+  if (nav) {
+    nav.classList.toggle('open');
+    var isOpen = nav.classList.contains('open');
+    console.log('After toggle, menu isOpen:', isOpen);
+    
+    if (isOpen) {
+      nav.style.left = '0';
+      document.body.classList.add('menu-open');
+      if (mainNav) mainNav.classList.remove('scrolled');
+      console.log('Menu OPENED - left set to 0');
+    } else {
+      nav.style.left = '-100%';
+      document.body.classList.remove('menu-open');
+      if (mainNav && window.scrollY > 50) {
+        mainNav.classList.add('scrolled');
+      }
+      console.log('Menu CLOSED - left set to -100%');
+    }
+  }
+  
+  if (btn) btn.classList.toggle('open');
+  if (backdrop) backdrop.classList.toggle('open');
+}
+
+function closeMobileNav() {
+  var nav = document.getElementById('nav-links-list');
+  var btn = document.getElementById('nav-hamburger');
+  var backdrop = document.getElementById('nav-backdrop');
+  var mainNav = document.getElementById('main-nav');
+  
+  if (nav && nav.classList.contains('open')) {
+    nav.classList.remove('open');
+    nav.style.left = '-100%';
+    document.body.classList.remove('menu-open');
+    
+    if (mainNav && window.scrollY > 50) {
+      mainNav.classList.add('scrolled');
+    }
+    
+    if (btn) btn.classList.remove('open');
+    if (backdrop) backdrop.classList.remove('open');
+  }
+}
+
+function scrollToSection(href) {
+  var targetId = href.substring(1);
+  var targetElement = document.getElementById(targetId);
+  
+  console.log('scrollToSection called with href:', href);
+  console.log('targetId:', targetId);
+  console.log('targetElement found:', !!targetElement);
+  
+  if (targetElement) {
+    var mainNav = document.getElementById('main-nav');
+    var navHeight = mainNav ? mainNav.offsetHeight : 80;
+    var elementPosition = targetElement.getBoundingClientRect().top + window.pageYOffset;
+    var offsetPosition = elementPosition - navHeight - 20;
+    
+    console.log('navHeight:', navHeight);
+    console.log('elementPosition:', elementPosition);
+    console.log('offsetPosition:', offsetPosition);
+    console.log('Scrolling to top:', offsetPosition);
+    
+    window.scrollTo({
+      top: offsetPosition,
+      behavior: 'smooth'
+    });
+    
+    history.pushState(null, null, href);
+    console.log('URL pushed:', href);
+  } else {
+    console.log('ERROR: Could not find element with id:', targetId);
+  }
+}
+
+// Handle nav link clicks from onclick attribute
+function handleNavClick(event, href) {
+  console.log('*** handleNavClick called with:', href);
+  event.preventDefault();
+  event.stopPropagation();
+  
+  closeMobileNav();
+  console.log('Menu closed, will scroll to:', href);
+  
+  setTimeout(function() {
+    console.log('Scrolling to:', href);
+    scrollToSection(href);
+  }, 100);
+  
+  return false;
+}
+
+// Initialize on DOMContentLoaded
+document.addEventListener('DOMContentLoaded', function() {
+  try {
+    console.log('=== PAGE LOADED - DOMContentLoaded fired ===');
+    switchTab('jobs');
+    
+    // Backdrop click
+    var backdrop = document.getElementById('nav-backdrop');
+    if (backdrop) {
+      backdrop.addEventListener('click', closeMobileNav);
+    }
+    
+    // Debug: Check nav structure
+    var navLinks = document.getElementById('nav-links-list');
+    console.log('Nav links element found:', !!navLinks);
+    if (navLinks) {
+      var links = navLinks.querySelectorAll('a');
+      console.log('Number of nav links:', links.length);
+      links.forEach(function(link, index) {
+        console.log('Link ' + index + ':', link.textContent, 'href=' + link.href);
+      });
+    }
+  } catch(e) {
+    console.error('Error in DOMContentLoaded:', e.message);
+  }
+});
+
+// Scroll handler for navbar styling
+window.addEventListener('scroll', function() {
+  var navList = document.getElementById('nav-links-list');
+  var nav = document.getElementById('main-nav');
+  
+  if (navList && !navList.classList.contains('open')) {
+    if (window.scrollY > 50) {
+      nav.classList.add('scrolled');
+    } else {
+      nav.classList.remove('scrolled');
+    }
+  }
+});
+</script>
+
 <canvas id="galaxy-canvas"></canvas>
 <div class="particle-overlay" id="particles"></div>
 
@@ -1345,11 +1711,24 @@ body::after {
   <img src="logo.png" alt="Shashwat Kashyap" style="height: 40px; width: auto; vertical-align: middle;">
 </a>
   <ul class="nav-links" id="nav-links-list">
-    <li><a href="#portals">Overview</a></li>
-    <li><a href="#freelance-work">Client Work</a></li>
-    <li><a href="#tech">Tech</a></li>
-    <li><a href="#opportunity">Hire Me</a></li>
-    <li><a href="#about">Contact</a></li>
+    <li><a href="#portals" onclick="console.log('CLICK DETECTED'); handleNavClick(event, '#portals'); return false;">Overview</a></li>
+    <li><a href="#freelance-work" onclick="console.log('CLICK DETECTED'); handleNavClick(event, '#freelance-work'); return false;">Client Work</a></li>
+    <li><a href="#tech" onclick="console.log('CLICK DETECTED'); handleNavClick(event, '#tech'); return false;">Tech</a></li>
+    <li><a href="#literary" onclick="console.log('CLICK DETECTED'); handleNavClick(event, '#literary'); return false;">Writing</a></li>
+    <li><a href="#opportunity" onclick="console.log('CLICK DETECTED'); handleNavClick(event, '#opportunity'); return false;">Hire Me</a></li>
+    <li><a href="#about" onclick="console.log('CLICK DETECTED'); handleNavClick(event, '#about'); return false;">Contact</a></li>
+    <li class="mobile-nav-actions" style="display:none;">
+      <div style="padding:20px 32px;display:flex;flex-direction:column;gap:12px;border-top:1px solid rgba(201,168,76,0.15);margin-top:8px;">
+        <a href="https://github.com/Shashwat-k-9114" target="_blank" rel="noopener" onclick="closeMobileNav()" style="font-family:'Space Mono',monospace;font-size:0.7rem;color:rgba(168,184,200,0.7);letter-spacing:0.2em;text-decoration:none;display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid rgba(201,168,76,0.08);">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.57.1.78-.25.78-.55 0-.27-.01-1.16-.02-2.1-3.2.7-3.88-1.38-3.88-1.38-.52-1.34-1.27-1.7-1.27-1.7-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.02 1.75 2.67 1.25 3.32.95.1-.74.4-1.25.72-1.53-2.55-.29-5.23-1.28-5.23-5.7 0-1.26.45-2.29 1.18-3.1-.12-.29-.51-1.46.11-3.05 0 0 .96-.31 3.15 1.18a10.9 10.9 0 0 1 5.74 0c2.19-1.49 3.15-1.18 3.15-1.18.62 1.59.23 2.76.11 3.05.73.81 1.18 1.84 1.18 3.1 0 4.43-2.68 5.41-5.24 5.69.41.35.77 1.04.77 2.1 0 1.52-.01 2.75-.01 3.12 0 .3.21.65.79.55A11.51 11.51 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/></svg>
+          GitHub Profile
+        </a>
+        <a href="#" id="mobile-resume-btn" download onclick="closeMobileNav()" style="font-family:'Space Mono',monospace;font-size:0.7rem;color:var(--gold);letter-spacing:0.2em;text-decoration:none;display:flex;align-items:center;gap:10px;padding:10px 0;border:1px solid rgba(201,168,76,0.3);padding:10px 16px;background:rgba(201,168,76,0.05);">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Download Resume
+        </a>
+      </div>
+    </li>
   </ul>
   <div class="nav-actions">
     <a href="https://github.com/Shashwat-k-9114" target="_blank" class="nav-github" aria-label="GitHub">
@@ -1364,7 +1743,7 @@ body::after {
     <span></span><span></span><span></span>
   </button>
 </nav>
-<div class="nav-backdrop" id="nav-backdrop" onclick="toggleMobileNav()"></div>
+<div class="nav-backdrop" id="nav-backdrop" onclick="if(event.target.id === 'nav-backdrop') toggleMobileNav()"></div>
 
 <!-- HERO -->
 <section id="hero">
@@ -1372,10 +1751,10 @@ body::after {
   <h1 class="hero-name">
     <span class="filled">SHASH</span>WAT<br><span class="filled">KASH</span>YAP
   </h1>
-  <div class="hero-title">I build websites and web apps that actually work — for real clients.</div>
+  <div class="hero-title">Full-stack developer. Award-winning researcher. Published poet. — Building things that actually matter.</div>
   <p class="hero-desc">
-    MCA student at BIT Mesra, Delhi NCR — available for freelance right now.<br>
-    I've built 8+ client sites and I'd love to help with yours.
+    MCA · BIT Mesra · Salesforce Certified · Best Paper Prize ICIEM'26<br>
+    8+ client sites shipped · Available for freelance and full-time roles.
   </p>
   <div class="hero-cta">
     <a href="#freelance-work" class="hero-btn primary">
@@ -1395,13 +1774,11 @@ body::after {
       Download CV
     </a>
   </div>
-  <br/>
   <div class="hero-scroll">
     <span>Scroll to Begin</span>
     <div class="scroll-line"></div>
   </div>
 </section>
-<br/><br/><br/><br/>
 <!-- PORTALS -->
 <section id="portals">
   <div class="portals-container">
@@ -1516,7 +1893,7 @@ body::after {
           <span class="portal-num">06</span>
           <span class="portal-name">Research & AI</span>
           <div class="portal-desc">
-            Published on quantum computing, AI, and time. I think at the edge of what's known.
+            Best Paper Prize · ICIEM'26. Published articles on AI, quantum computing, and time.
           </div>
           <span class="portal-btn">Read ↓</span>
         </div>
@@ -1557,8 +1934,29 @@ body::after {
       <div class="fw-card-tags"><span>React</span><span>Portal</span><span>Academic</span></div>
       <div class="fw-card-link">bit-mca-placement.vercel.app ↗</div>
     </a>
+    <a href="https://te-dx-bitnoida.vercel.app" target="_blank" class="fw-card reveal">
+      <div class="fw-card-badge">TEDx Event</div><div class="fw-card-num">04</div>
+      <div class="fw-card-title">TEDx BIT Noida</div>
+      <div class="fw-card-desc">Official TEDx website with automated registration and payment validation via Google Sheets &amp; Drive integration.</div>
+      <div class="fw-card-tags"><span>HTML/CSS/JS</span><span>AppScript</span><span>Automation</span></div>
+      <div class="fw-card-link">te-dx-bitnoida.vercel.app ↗</div>
+    </a>
+    <a href="https://burgeon-new.vercel.app/" target="_blank" class="fw-card reveal">
+      <div class="fw-card-badge">Company Website</div><div class="fw-card-num">05</div>
+      <div class="fw-card-title">Burgeon</div>
+      <div class="fw-card-desc">Full company website — professional, polished, built to establish digital presence and convert visitors into clients.</div>
+      <div class="fw-card-tags"><span>React</span><span>Business</span><span>Professional</span></div>
+      <div class="fw-card-link">burgeon-new.vercel.app ↗</div>
+    </a>
+    <a href="https://project-sathi.vercel.app" target="_blank" class="fw-card reveal">
+      <div class="fw-card-badge">NGO Website</div><div class="fw-card-num">06</div>
+      <div class="fw-card-title">Project Sathi</div>
+      <div class="fw-card-desc">Website for Sai Helping Hands Foundation — a Bengaluru-based non-profit at the intersection of mental wellness, menstrual health, and community building. Founded by Harvard HPAIR 2025 delegate Viddushi Choudhary. Features initiative showcases, media gallery, founder profile, and awareness campaign sections.</div>
+      <div class="fw-card-tags"><span>HTML/CSS/JS</span><span>Non-Profit</span><span>Social Impact</span><span>Responsive</span></div>
+      <div class="fw-card-link">project-sathi.vercel.app ↗</div>
+    </a>
     <div class="fw-card reveal" style="cursor:default;">
-      <div class="fw-card-badge">Portfolio Design — 5 Clients</div><div class="fw-card-num">04</div>
+      <div class="fw-card-badge">Portfolio Design — 5 Clients</div><div class="fw-card-num">07</div>
       <div class="fw-card-title">Bespoke Portfolios</div>
       <div class="fw-card-desc">Distinctive personal portfolios built for professionals across industries — each crafted from scratch with unique design identity and storytelling.</div>
       <ul>
@@ -1570,27 +1968,6 @@ body::after {
       </ul>
       <div class="fw-card-tags"><span>HTML/CSS/JS</span><span>Custom Design</span><span>Branding</span><span>Animations</span></div>
     </div>
-    <a href="https://te-dx-bitnoida.vercel.app" target="_blank" class="fw-card reveal">
-      <div class="fw-card-badge">TEDx Event</div><div class="fw-card-num">05</div>
-      <div class="fw-card-title">TEDx BIT Noida</div>
-      <div class="fw-card-desc">Official TEDx website with automated registration and payment validation via Google Sheets &amp; Drive integration.</div>
-      <div class="fw-card-tags"><span>HTML/CSS/JS</span><span>AppScript</span><span>Automation</span></div>
-      <div class="fw-card-link">te-dx-bitnoida.vercel.app ↗</div>
-    </a>
-    <a href="https://burgeon-new.vercel.app/" target="_blank" class="fw-card reveal">
-      <div class="fw-card-badge">Company Website</div><div class="fw-card-num">06</div>
-      <div class="fw-card-title">Burgeon</div>
-      <div class="fw-card-desc">Full company website — professional, polished, built to establish digital presence and convert visitors into clients.</div>
-      <div class="fw-card-tags"><span>React</span><span>Business</span><span>Professional</span></div>
-      <div class="fw-card-link">burgeon-new.vercel.app ↗</div>
-    </a>
-    <a href="https://project-sathi.vercel.app" target="_blank" class="fw-card reveal">
-      <div class="fw-card-badge">NGO Website</div><div class="fw-card-num">07</div>
-      <div class="fw-card-title">Project Sathi</div>
-      <div class="fw-card-desc">Website for Sai Helping Hands Foundation — a Bengaluru-based non-profit at the intersection of mental wellness, menstrual health, and community building. Founded by Harvard HPAIR 2025 delegate Viddushi Choudhary. Features initiative showcases, media gallery, founder profile, and awareness campaign sections.</div>
-      <div class="fw-card-tags"><span>HTML/CSS/JS</span><span>Non-Profit</span><span>Social Impact</span><span>Responsive</span></div>
-      <div class="fw-card-link">project-sathi.vercel.app ↗</div>
-    </a>
     <div class="fw-card reveal" style="cursor:default;">
       <div class="fw-card-badge">EdTech Platform</div><div class="fw-card-num">08</div>
       <div class="fw-card-title">Campus Garh</div>
@@ -1607,8 +1984,9 @@ body::after {
     </div>
   </div>
 
-  <br/> <br/>
-    <p class="fw-cta-text">Want something like this? I'm taking on new projects.</p>
+  <div class="fw-cta-wrap reveal">
+    <p class="fw-cta-text" style="font-size:1.4rem;color:var(--parchment);margin-bottom:8px;">Want something like this?</p>
+    <p class="fw-cta-text" style="margin-bottom:32px;">I'm taking on new projects — let's build something worth remembering.</p>
     <a href="mailto:kashyapshashwat77@gmail.com" class="cta-action-btn amber" style="display:inline-flex;align-items:center;gap:10px;">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
       Let's Work Together
@@ -1894,15 +2272,34 @@ body::after {
   </div>
 
   <div class="skills-section">
-    <div class="skills-label">Databases & Tools</div>
+    <div class="skills-label">Databases</div>
     <div class="skills-grid">
       <span class="skill-tag">MongoDB</span>
       <span class="skill-tag">MySQL</span>
+      <span class="skill-tag">SQLite</span>
+      <span class="skill-tag">PostgreSQL</span>
+    </div>
+  </div>
+
+  <div class="skills-section">
+    <div class="skills-label">Tools & Platforms</div>
+    <div class="skills-grid">
       <span class="skill-tag">Git / GitHub</span>
       <span class="skill-tag">VS Code</span>
       <span class="skill-tag">Figma</span>
+      <span class="skill-tag">Canva</span>
+      <span class="skill-tag">Docker</span>
+    </div>
+  </div>
+
+  <div class="skills-section">
+    <div class="skills-label">Deployment & Domains</div>
+    <div class="skills-grid">
       <span class="skill-tag">Render</span>
       <span class="skill-tag">Vercel</span>
+      <span class="skill-tag">Railway</span>
+      <span class="skill-tag">GoDaddy</span>
+      <span class="skill-tag">Hostinger</span>
     </div>
   </div>
 
@@ -1915,21 +2312,20 @@ body::after {
       <span class="skill-tag">NLP</span>
       <span class="skill-tag">Anomaly Detection</span>
       <span class="skill-tag">OpenAI API</span>
+      <span class="skill-tag">LLaMA</span>
       <span class="skill-tag">Sentiment Analysis</span>
       <span class="skill-tag">EDA</span>
     </div>
   </div>
 
   <div class="skills-section">
-    <div class="skills-label">Other</div>
+    <div class="skills-label">Engineering Practices</div>
     <div class="skills-grid">
       <span class="skill-tag">REST APIs</span>
       <span class="skill-tag">SEO Optimization</span>
-      <span class="skill-tag">Agile</span>
-      <span class="skill-tag">AppScript</span>
-      <span class="skill-tag">Google Sites</span>
+      <span class="skill-tag">Agile / Scrum</span>
+      <span class="skill-tag">Google AppScript</span>
       <span class="skill-tag">Technical Documentation</span>
-      <span class="skill-tag">Canva</span>
     </div>
   </div>
 
@@ -1951,19 +2347,44 @@ body::after {
           <span class="project-tag">WebSocket</span>
           <span class="project-tag">STT / TTS</span>
         </div>
+        <div class="project-links">
+          <a href="https://github.com/Shashwat-k-9114" target="_blank" class="project-link-btn">GITHUB ↗</a>
+          <span class="project-link-private">Private repo · Code available on request</span>
+        </div>
       </div>
 
       <div class="project-card reveal">
         <span class="featured-badge">FEATURED</span>
         <div class="project-year">2025 · AI · NLP · Chatbot · Enterprise</div>
-        <div class="project-title">Signify / Philips AI Chatbot</div>
-        <div class="project-desc">Enterprise AI chatbot built for Signify (Philips Lighting) powering intelligent product search across their full catalogue. NLP-based error tolerance handles misspellings and fuzzy queries, smart product filters enable precision browsing, and a real-time recommendation engine surfaces contextually relevant results. Built for large-scale deployment with consumer-grade UX.</div>
+        <div class="project-title">Enterprise AI Chatbot</div>
+        <div class="project-desc">Enterprise-grade AI chatbot powering intelligent product search across a large global catalogue for a major industry client. NLP-based error tolerance handles misspellings and fuzzy queries, smart product filters enable precision browsing, and a real-time recommendation engine surfaces contextually relevant results. Built for large-scale deployment with consumer-grade UX.</div>
         <div class="project-tags">
           <span class="project-tag">AI Chatbot</span>
           <span class="project-tag">NLP</span>
           <span class="project-tag">Python</span>
           <span class="project-tag">Enterprise</span>
-          <span class="project-tag">Signify</span>
+          <span class="project-tag">Confidential Client</span>
+        </div>
+        <div class="project-links">
+          <span class="project-link-private">Confidential · Code available under NDA</span>
+        </div>
+      </div>
+
+      <div class="project-card reveal" style="border-color:rgba(16,185,129,0.2);background:rgba(16,185,129,0.02);">
+        <span class="featured-badge" style="color:var(--emerald);border-color:rgba(16,185,129,0.3);">BEST PAPER · ICIEM'26</span>
+        <div class="project-year" style="color:rgba(16,185,129,0.6);">2025 · Python · ML · ESG · Flask · Research</div>
+        <div class="project-title">Carbon.ESG</div>
+        <div class="project-desc">Hybrid policy-calibrated framework for adaptive carbon estimation and ESG benchmarking. Integrates GHG Protocol deterministic module with Gradient Boosting Regressor (R² = 0.9757, MAPE 5.51%). Enterprise ESG classifier at 90.25% accuracy across 8 industry sectors. Deployed as a Flask web app with PDF sustainability certificate generation.</div>
+        <div class="project-tags">
+          <span class="project-tag" style="color:rgba(16,185,129,0.8);border-color:rgba(16,185,129,0.2);">Gradient Boosting</span>
+          <span class="project-tag" style="color:rgba(16,185,129,0.8);border-color:rgba(16,185,129,0.2);">ESG Scoring</span>
+          <span class="project-tag" style="color:rgba(16,185,129,0.8);border-color:rgba(16,185,129,0.2);">Flask</span>
+          <span class="project-tag" style="color:rgba(16,185,129,0.8);border-color:rgba(16,185,129,0.2);">GHG Protocol</span>
+          <span class="project-tag" style="color:rgba(16,185,129,0.8);border-color:rgba(16,185,129,0.2);">Python</span>
+        </div>
+        <div class="project-links">
+          <a href="https://github.com/Shashwat-k-9114" target="_blank" class="project-link-btn" style="color:rgba(16,185,129,0.7);border-color:rgba(16,185,129,0.25);">GITHUB ↗</a>
+          <span class="project-link-private">Best Paper · ICIEM'26 · Paper available on request</span>
         </div>
       </div>
 
@@ -1979,6 +2400,9 @@ body::after {
           <span class="project-tag">Healthcare AI</span>
           <span class="project-tag">Multi-Model</span>
         </div>
+        <div class="project-links">
+          <a href="https://github.com/Shashwat-k-9114" target="_blank" class="project-link-btn">GITHUB ↗</a>
+        </div>
       </div>
 
       <div class="project-card reveal">
@@ -1991,6 +2415,9 @@ body::after {
           <span class="project-tag">Node.js</span>
           <span class="project-tag">MongoDB</span>
           <span class="project-tag">5k+ Users</span>
+        </div>
+        <div class="project-links">
+          <a href="https://github.com/Shashwat-k-9114" target="_blank" class="project-link-btn">GITHUB ↗</a>
         </div>
       </div>
 
@@ -2005,6 +2432,9 @@ body::after {
           <span class="project-tag">Machine Learning</span>
           <span class="project-tag">Random Forest</span>
         </div>
+        <div class="project-links">
+          <a href="https://github.com/Shashwat-k-9114" target="_blank" class="project-link-btn">GITHUB ↗</a>
+        </div>
       </div>
 
       <div class="project-card reveal">
@@ -2017,6 +2447,9 @@ body::after {
           <span class="project-tag">CRM</span>
           <span class="project-tag">Python</span>
           <span class="project-tag">OpenAI API</span>
+        </div>
+        <div class="project-links">
+          <a href="https://github.com/Shashwat-k-9114" target="_blank" class="project-link-btn">GITHUB ↗</a>
         </div>
       </div>
 
@@ -2156,13 +2589,6 @@ body::after {
       </div>
 
       <div class="exp-item reveal">
-        <div class="exp-period">DEC 2025 — FEB 2026</div>
-        <div class="exp-role">Software Developer Intern</div>
-        <div class="exp-company">Prustaz Technologies Pvt. Ltd. · Bengaluru / Remote</div>
-        <div class="exp-desc">Contributed to innovation-driven software projects, supporting development tasks and collaborating within engineering workflows across flexible on-site/remote arrangements.</div>
-      </div>
-
-      <div class="exp-item reveal">
         <div class="exp-period">MAY 2025 — AUG 2025</div>
         <div class="exp-role">Full Stack Developer Intern</div>
         <div class="exp-company">Pinaqtech</div>
@@ -2216,7 +2642,7 @@ body::after {
             <div style="font-family:'Space Mono',monospace;font-size:0.44rem;color:rgba(0,161,224,0.5);letter-spacing:0.12em;margin-top:2px;">CREDENTIAL ID: 7203889</div>
           </div>
         </div>
-        <div class="sf-cert-note"><!-- Replace src below with your Credly/Trailhead badge image URL --><img id="sf-badge-img" src="" alt="" style="display:none;width:80px;height:80px;border-radius:50%;border:1px solid rgba(0,161,224,0.3);" onerror="this.style.display='none'"></div>
+        <div class="sf-cert-note"></div>
       </div>
       <div style="display:flex;flex-direction:column;gap:10px;">
         <a href="https://www.salesforce.com/trailblazer/hrjll6ctqeehk2kkr1" target="_blank" rel="noopener" style="font-family:'Space Mono',monospace;font-size:0.52rem;color:#00A1E0;letter-spacing:0.15em;border-bottom:1px solid rgba(0,161,224,0.3);padding-bottom:2px;text-decoration:none;transition:border-color 0.2s ease;display:inline-block;" onmouseover="this.style.borderColor='#00A1E0'" onmouseout="this.style.borderColor='rgba(0,161,224,0.3)'">VIEW TRAILBLAZER PROFILE ↗</a>
@@ -2261,24 +2687,24 @@ body::after {
       <div class="edu-inst">Birla Institute of Technology, Mesra</div>
       <div class="edu-meta">
         2024 – 2026 · Master of Computer Applications<br>
-        GP Birla Foundation Scholarship<br>
-        Dr. Usha Aggarwal Trust Scholarship<br>
-        HBMK Foundation Scholarship
+        Best Paper Prize · ICIEM'26 International Conference<br>
+        Salesforce Certified Agentforce Specialist<br>
+        Head of Web Dev · TEDx BIT Mesra &amp; ICIEM
       </div>
       <span class="edu-cgpa">7.85</span>
-      <div style="font-family:'Space Mono',monospace;font-size:0.55rem;color:rgba(0,212,255,0.5);letter-spacing:0.2em;margin-top:4px;">SGPA 8.14 LAST SEMESTER</div>
+      <div style="font-family:'Space Mono',monospace;font-size:0.55rem;color:rgba(0,212,255,0.5);letter-spacing:0.2em;margin-top:4px;">SGPA 8.14 LAST SEMESTER · TRIPLE SCHOLARSHIP</div>
     </div>
     <div class="edu-card" data-degree="BCA">
       <div class="edu-degree">BCA</div>
       <div class="edu-inst">Birla Institute of Technology, Mesra</div>
       <div class="edu-meta">
         2021 – 2024 · Bachelor of Computer Applications<br>
-        Gold — Volleyball · Kho-Kho · Basketball<br>
-        Silver — Table Tennis<br>
-        Sports Club Coordinator, Badminton
+        Published Poet · WhyNot Australia &amp; BIT Newsletter<br>
+        Triple Merit Scholarship Recipient<br>
+        Gold Medalist · Volleyball · Kho-Kho · Basketball
       </div>
       <span class="edu-cgpa">7.76</span>
-      <div style="font-family:'Space Mono',monospace;font-size:0.55rem;color:rgba(0,212,255,0.5);letter-spacing:0.2em;margin-top:4px;">CGPA · BIT MESRA</div>
+      <div style="font-family:'Space Mono',monospace;font-size:0.55rem;color:rgba(0,212,255,0.5);letter-spacing:0.2em;margin-top:4px;">CGPA · BIT MESRA · SILVER — TABLE TENNIS</div>
     </div>
   </div>
 
@@ -2300,7 +2726,7 @@ body::after {
       <div class="skills-label" style="color:var(--gold);margin-bottom:24px;">Poems</div>
       <div class="poem-card active" onclick="showPoem(0)">
         <div class="poem-card-title">Alone</div>
-        <div class="poem-card-pub" style="font-family:'Space Mono',monospace;font-size:0.55rem;color:rgba(201,168,76,0.5);letter-spacing:0.2em;margin-top:4px;">PUBLISHED · WHYNOT AUSTRALIA</div>
+        <div class="poem-card-pub" style="font-family:'Space Mono',monospace;font-size:0.55rem;color:rgba(201,168,76,0.5);letter-spacing:0.2em;margin-top:4px;">PUBLISHED · BIT NEWSLETTER</div>
       </div>
       <div class="poem-card" onclick="showPoem(1)">
         <div class="poem-card-title">Symphony of Despair</div>
@@ -2313,6 +2739,10 @@ body::after {
       <div class="poem-card" onclick="showPoem(3)">
         <div class="poem-card-title">The Greyness of Man</div>
         <div class="poem-card-pub" style="font-family:'Space Mono',monospace;font-size:0.55rem;color:rgba(201,168,76,0.5);letter-spacing:0.2em;margin-top:4px;">PUBLISHED · WHYNOT AUSTRALIA</div>
+      </div>
+      <div class="poem-card" onclick="showPoem(4)">
+        <div class="poem-card-title">Mehsoos Na Hone Ka Shok</div>
+        <div class="poem-card-pub" style="font-family:'Space Mono',monospace;font-size:0.55rem;color:rgba(201,168,76,0.5);letter-spacing:0.2em;margin-top:4px;">FORTHCOMING · PRATIGYAN MAGAZINE · MAR 2026</div>
       </div>
 
       <div style="margin-top:48px;">
@@ -2390,6 +2820,12 @@ body::after {
         <div class="project-title">Scholarships — Triple Recipient</div>
         <div class="project-desc">Awarded three merit-based scholarships across academic tenure at BIT Mesra: the GP Birla Foundation Scholarship, the Dr. Usha Aggarwal Trust Scholarship, and the HBMK Foundation Scholarship.</div>
       </div>
+      <div class="project-card reveal" style="border-color:rgba(201,168,76,0.25);background:rgba(201,168,76,0.05);">
+        <div class="project-year" style="color:rgba(201,168,76,0.5);">Research · Best Paper Prize · ICIEM'26</div>
+        <div class="project-title" style="color:var(--gold);">Best Paper Award — ICIEM 2026</div>
+        <div class="project-desc" style="font-style:italic;">"A Hybrid Policy-Calibrated Framework for Adaptive Carbon Estimation and ESG Benchmarking" — awarded Best Paper Prize and Rs. 5,000/- cash prize at the 4th International Conference on Innovation, Engineering and Management (ICIEM'26).</div>
+        <div style="font-family:'Space Mono',monospace;font-size:0.52rem;color:var(--gold);letter-spacing:0.15em;margin-top:12px;">★ BEST PAPER · RS. 5,000/- CASH PRIZE</div>
+      </div>
     </div>
   </div>
 
@@ -2413,7 +2849,7 @@ body::after {
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#c9a84c" stroke-width="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
         </span>
         <span class="contact-link-label">Email</span>
-        <span class="contact-link-value"><span class="__cf_email__" data-cfemail="fa919b8992839b8a89929b89928d9b8ecdcdba9d979b9396d4999597">kashyapshashwat77@gmail.com</span></span></span>
+        <span class="contact-link-value">kashyapshashwat77@gmail.com</span>
       </a>
       <a href="https://www.linkedin.com/in/shashwat-kashyap-b417aa155/" target="_blank" class="contact-link reveal">
         <span class="contact-link-icon">
@@ -2499,7 +2935,7 @@ body::after {
         ✓ Message sent. I'll get back to you within 24 hours.
       </div>
       <div id="form-error" style="display:none;font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:#e57373;font-style:italic;padding:24px;border:1px solid rgba(229,115,115,0.3);background:rgba(229,115,115,0.05);margin-bottom:24px;text-align:center;">
-        Something went wrong. Please try emailing me directly at <a href="mailto:kashyapshashwat77@gmail.com" class="__cf_email__" data-cfemail="d2b9b3a1baabb3a2a1bab3a1baa5b3a6e5e592b5bfb3bbbefcb1bdbf">kashyapshashwat77@gmail.com</a>
+        Something went wrong. Please try emailing me directly at <a href="mailto:kashyapshashwat77@gmail.com" style="color:#e57373;">kashyapshashwat77@gmail.com</a>
       </div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;" class="form-two-col">
         <div>
@@ -2551,8 +2987,7 @@ body::after {
 </footer>
 
 <!-- CHATBOT -->
-<!-- CHATBOT - ENHANCED VERSION -->
-<!-- <button id="chatbot-toggle" onclick="toggleChatbot()">
+<!-- <button id="chatbot-toggle" onclick="toggleChatbot()" aria-label="Open AI Assistant">
   <svg class="chat-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
   <svg class="close-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
 </button> -->
@@ -2569,7 +3004,7 @@ body::after {
   </div>
   <div class="chatbot-messages" id="chatbot-messages">
     <div class="msg bot">
-      <div class="msg-bubble">I'm Shashwat's AI assistant. I can tell you about his work, skills, experience, publications, and how to connect with him. Feel free to ask me anything — I'm here to help.</div>
+      <div class="msg-bubble">Hey! I'm Shashwat's AI assistant — trained on everything about him. Ask me about his <strong>projects</strong>, <strong>skills</strong>, <strong>research</strong>, <strong>Salesforce certification</strong>, <strong>publications</strong>, or <strong>how to hire him</strong>. I handle typos and follow-up questions too.</div>
     </div>
   </div>
   <div class="chatbot-suggestions" id="chatbot-suggestions">
@@ -2588,7 +3023,7 @@ body::after {
   </div>
 </div>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
 // ======================== ENHANCED CHATBOT ========================
 // Comprehensive knowledge base with better organization and natural language understanding
 const knowledgeBase = {
@@ -2606,12 +3041,12 @@ const knowledgeBase = {
   // Professional Experience
   experience: {
     current: "Shashwat is currently a Salesforce Developer Intern at AA2IT India Pvt. Ltd. in New Delhi, working under the Salesforce Delivery Head on configuration, automation, and data modeling.",
-    internships: "He's completed five internships: Salesforce Developer at AA2IT India, Software Developer at Prustaz Technologies, Full Stack Developer at Pinaqtech (where he boosted SEO by 40%), Software Engineering Intern at Oohr Innovations (built an ERP system reducing manual effort by 60%), and Senior Developer Intern on a government health app serving 5,000+ users.",
+    internships: "He's completed multiple internships: Salesforce Developer at AA2IT India, Full Stack Developer at Pinaqtech (where he boosted SEO by 40%), Software Engineering Intern at Oohr Innovations (built an ERP system reducing manual effort by 60%), MIS Intern at Furnish Me Architects, and Senior Developer Intern on a government health app serving 5,000+ users.",
     timeline: [
       "Dec 2025–Present: Salesforce Developer Intern at AA2IT India",
-      "Dec 2025–Feb 2026: Software Developer Intern at Prustaz Technologies",
       "May–Aug 2025: Full Stack Developer Intern at Pinaqtech",
       "May–Jul 2025: Software Engineering Intern at Oohr Innovations",
+      "May–Jul 2025: MIS Intern at Furnish Me Architects",
       "Jul 2023–Apr 2024: Senior Developer Intern on DST Menstrual Hygiene App (Govt. Project)"
     ]
   },
@@ -2621,10 +3056,11 @@ const knowledgeBase = {
     primary: "Shashwat's primary stack is MERN — MongoDB, Express.js, React.js, and Node.js. He's also proficient in Python for ML/AI, Salesforce CRM, and REST API development.",
     languages: "Python, JavaScript, Java",
     frameworks: "React.js, Node.js, Express.js, Flask, FastAPI, Streamlit",
-    databases: "MongoDB, MySQL",
-    tools: "Git/GitHub, Figma, Google AppScript, Salesforce",
+    databases: "MongoDB, MySQL, SQLite, PostgreSQL",
+    tools: "Git/GitHub, VS Code, Figma, Canva, Docker, Google AppScript, Salesforce",
+    deployment: "Render, Vercel, Railway, GoDaddy, Hostinger",
     specialties: "Full-stack development, Machine Learning, Salesforce configuration, REST APIs, SEO optimization",
-    full: "Shashwat's technical arsenal includes: Python, JavaScript, Java, React.js, Node.js, Express.js, MongoDB, MySQL, MERN Stack, Machine Learning, Sentiment Analysis, REST APIs, Git/GitHub, Figma, Streamlit, Flask, FastAPI, SEO Optimization, Salesforce CRM, and Google AppScript."
+    full: "Shashwat's technical arsenal includes: Python, JavaScript, Java, React.js, Node.js, Express.js, MongoDB, MySQL, SQLite, PostgreSQL, MERN Stack, Machine Learning (scikit-learn, Random Forest, NLP, LLaMA, OpenAI API), REST APIs, Git/GitHub, VS Code, Figma, Canva, Docker, Render, Vercel, Railway, Flask, FastAPI, Streamlit, SEO Optimization, Salesforce CRM, and Google AppScript."
   },
   
   // Salesforce Expertise
@@ -2668,7 +3104,8 @@ const knowledgeBase = {
       "Alone — published in BIT Newsletter",
       "Symphony of Despair — published in WhyNot Australia",
       "Echoes in the Abyss — published in WhyNot Australia",
-      "The Greyness of Man — published in WhyNot Australia"
+      "The Greyness of Man — published in WhyNot Australia",
+      "Mehsoos Na Hone Ka Shok — forthcoming in Pratigyan Magazine (March 2026)"
     ],
     anthologies: [
       "Be Limitless — featured at World Book Fair 2025 (national publication)",
@@ -2680,7 +3117,7 @@ const knowledgeBase = {
       "The Age of the Forgotten Mind — BIT Newsletter",
       "A Bittersweet Farewell — WhyNot Australia"
     ],
-    full: "Shashwat is a published poet and author. His poems have appeared in WhyNot Australia and BIT Newsletter, and he's featured in three national anthologies: 'Be Limitless' (World Book Fair 2025), 'Chromatic Currents V3', and 'Golden Realms V4'. He's also written technical and philosophical articles for Bits & Bytes Magazine and the BIT Newsletter."
+    full: "Shashwat is a published poet and author. His poems have appeared in WhyNot Australia and BIT Newsletter, with a new poem forthcoming in Pratigyan Magazine (March 2026). He's featured in three national anthologies: 'Be Limitless' (World Book Fair 2025), 'Chromatic Currents V3', and 'Golden Realms V4'. He's also written technical and philosophical articles for Bits & Bytes Magazine and the BIT Newsletter."
   },
   
   // Leadership & Campus Involvement
@@ -2758,7 +3195,7 @@ const knowledgeBase = {
     linkedin: "linkedin.com/in/ShashwatKashyap",
     phone: "+91 98183 83499",
     portfolio: "shashwatportfolio.vercel.app",
-    full: "Best ways to reach Shashwat:\nEmail: kashyapshashwat77@gmail.com\nLinkedIn: linkedin.com/in/ShashwatKashyap\nPhone: +91 98183 83499\nPortfolio: shashwatportfolio.vercel.app"
+    full: "Best ways to reach Shashwat:\nEmail: kashyapshashwat77@gmail.com\nLinkedIn: linkedin.com/shashwat-kashyap-b417aa155/\nPhone: +91 98183 83499\nPortfolio: shashwatkashyap.com"
   },
   
   // About
@@ -2769,7 +3206,292 @@ const knowledgeBase = {
   }
 };
 
-// Enhanced intent matching with synonyms and natural language patterns
+// ======================== PRODUCTION CHATBOT ENGINE v2.0 ========================
+// NLP error tolerance · Context awareness · Entity extraction · TF-IDF intent scoring
+
+const ChatState = { history: [], lastTopic: null, messageCount: 0, isTyping: false };
+
+const CONTRACTIONS = { "don't":"do not","doesn't":"does not","didn't":"did not","won't":"will not","wouldn't":"would not","couldn't":"could not","shouldn't":"should not","isn't":"is not","aren't":"are not","wasn't":"was not","weren't":"were not","haven't":"have not","hasn't":"has not","hadn't":"had not","i'm":"i am","i've":"i have","i'll":"i will","i'd":"i would","he's":"he is","she's":"she is","it's":"it is","that's":"that is","what's":"what is","who's":"who is","how's":"how is","there's":"there is","they're":"they are","you're":"you are","we're":"we are","they've":"they have","you've":"you have","we've":"we have","they'll":"they will","you'll":"you will","we'll":"we will","let's":"let us","whats":"what is","hes":"he is","doesnt":"does not","didnt":"did not","wont":"will not","isnt":"is not","cant":"can not","wasnt":"was not" };
+
+const STOP_WORDS = new Set(["a","an","the","is","are","was","were","be","been","being","have","has","had","do","does","did","will","would","could","should","may","might","shall","can","need","i","you","he","she","it","we","they","me","him","her","us","them","my","your","his","its","our","their","this","that","these","those","what","which","who","whom","whose","when","where","why","how","and","but","or","nor","for","so","yet","both","either","neither","not","no","only","own","same","than","too","very","just","about","above","after","before","between","by","during","from","in","into","of","off","on","out","over","through","to","under","up","with","at","tell","me","give","show","want","need","please","some","any","all","also","more","most","other","such","even","much","many","do","did","does","am","pm"]);
+
+function levenshtein(s,t){const m=s.length,n=t.length;const d=Array.from({length:m+1},(_,i)=>Array.from({length:n+1},(_,j)=>i===0?j:j===0?i:0));for(let j=1;j<=n;j++)for(let i=1;i<=m;i++)d[i][j]=s[i-1]===t[j-1]?d[i-1][j-1]:1+Math.min(d[i-1][j],d[i][j-1],d[i-1][j-1]);return d[m][n];}
+function similarity(a,b){if(a===b)return 1;if(!a||!b)return 0;const mx=Math.max(a.length,b.length);return mx===0?1:1-levenshtein(a,b)/mx;}
+
+function preprocess(text){let t=text.toLowerCase().trim();Object.keys(CONTRACTIONS).forEach(c=>{t=t.replace(new RegExp('\\b'+c+'\\b','g'),CONTRACTIONS[c]);});t=t.replace(/[^\w\s]/g,' ').replace(/\s+/g,' ').trim();const all=t.split(' ').filter(w=>w.length>1);const meaningful=all.filter(w=>!STOP_WORDS.has(w)&&w.length>2);return{raw:t,tokens:all,meaningful};}
+
+const ENTITY_MAP = {"ai interviewer":"project_ai_interviewer","interviewer ai":"project_ai_interviewer","carbon esg":"project_carbon_esg","carbon.esg":"project_carbon_esg","carbon":"project_carbon_esg","esg":"project_carbon_esg","ghg":"project_carbon_esg","medai":"project_medai","med ai":"project_medai","gradlink":"project_gradlink","grad link":"project_gradlink","f1 oracle":"project_f1","formula 1":"project_f1","formula one":"project_f1","f1 race":"project_f1","skyvault":"project_skyvault","sky vault":"project_skyvault","alfred":"project_alfred","voice assistant":"project_alfred","ev anomaly":"project_ev","electric vehicle battery":"project_ev","plantguard":"project_plantguard","plant guard":"project_plantguard","clarifai":"project_clarifai","clarif ai":"project_clarifai","cinematch":"project_cinematch","cine match":"project_cinematch","ai crm":"project_crm","ai enabled crm":"project_crm","timetable generator":"project_timetable","lifecompass":"project_lifecompass","life compass":"project_lifecompass","iciem":"client_iciem","tedx":"client_tedx","burgeon":"client_burgeon","project sathi":"client_sathi","mca placement":"client_placement","ctrl alt elite":"client_ctrlalt","bespoke portfolio":"client_bespoke","campus garh":"client_campusgarh","aa2it":"exp_aa2it","pinaqtech":"exp_pinaqtech","oohr":"exp_oohr","furnish me":"exp_furnish","codsoft":"exp_codsoft","agentforce":"salesforce","trailhead":"salesforce","trailblazer":"salesforce","agentblazer":"salesforce","bit mesra":"edu_bit","pratigyan":"poem_mehsoos","mehsoos":"poem_mehsoos","symphony of despair":"poem_symphony","echoes in the abyss":"poem_echoes","greyness of man":"poem_greyness","be limitless":"anthology_belimitless","chromatic currents":"anthology_chromatic","golden realms":"anthology_golden","whynot australia":"pub_whynot","best paper":"research_award","research paper":"research_award","iciem 26":"research_award","iciem'26":"research_award"};
+
+const ENTITY_RESPONSES = {
+  "project_ai_interviewer": ()=>"**AI Interviewer** — Shashwat's most ambitious project:\n\nA full-stack autonomous interview platform:\n• Recruiters configure role-specific sessions\n• Candidates get a tokenised link and are **interviewed in real-time by an AI avatar** over WebSocket\n• **LLaMA 3** generates domain-specific questions dynamically\n• Browser STT captures voice responses\n• Reports: composite scoring, behavioral fingerprinting, skill radar charts, integrity analysis, AI-likelihood detection\n\n**Stack:** Next.js · FastAPI · MongoDB · LLaMA 3 · WebSocket · STT/TTS",
+  "project_carbon_esg": ()=>"**Carbon.ESG** — Best Paper Prize winner at ICIEM'26:\n\nA hybrid policy-calibrated ML framework for carbon estimation and ESG benchmarking:\n• **GHG Protocol** deterministic module + **Gradient Boosting Regressor** (R² = 0.9757, MAPE 5.51%)\n• Enterprise ESG classifier at **90.25% accuracy** across 8 industry sectors\n• Flask web app with **PDF sustainability certificate generation**\n• Won **Best Paper Prize + ₹5,000 cash prize** at ICIEM'26\n\n**Stack:** Python · scikit-learn · Flask · GHG Protocol · Gradient Boosting",
+  "project_medai": ()=>"**MedAI** — Multi-disease prediction platform:\n\nScreens for **Diabetes, Parkinson's Disease, and Heart Disease** from clinical inputs:\n• Each disease runs an independently trained model on validated medical datasets\n• Returns probability-scored risk assessments with contributing risk factors\n• Actionable diagnostic context beyond binary output\n\n**Stack:** Python · Flask · scikit-learn",
+  "project_gradlink": ()=>"**GradLink** — Alumni networking portal:\n\nConnects **5,000+ BIT alumni and students**:\n• User authentication and role-based access\n• Real-time chat between alumni and students\n• Intelligent search across profiles\n• Deployed live on Render\n\n**Stack:** React.js · Node.js · Express.js · MongoDB",
+  "project_f1": ()=>"**F1 Oracle** — Formula 1 race prediction engine:\n\n• Random Forest models trained on historical F1 telemetry\n• Interactive charts with qualifying and race outcome simulations\n• Responsive Streamlit dashboard\n\n**Stack:** Python · Streamlit · scikit-learn · Random Forest",
+  "project_ev": ()=>"**EV Anomaly Detector** — Live battery anomaly detection:\n\n• Detects voltage and temperature anomalies in real-time\n• Predictive dashboards visualizing battery health trends\n• Unsupervised ML algorithms for real-world EV data\n\n**Stack:** Python · Streamlit · scikit-learn",
+  "project_alfred": ()=>"**Alfred** — AI voice assistant:\n\n• **90% command recognition accuracy**\n• Natural language desktop control and automation\n• NLP-powered intent parsing for complex commands\n\n**Stack:** Python · NLP · Speech Recognition",
+  "project_skyvault": ()=>"**SkyVault** — Encrypted file-sharing platform:\n\n• Role-based permissions and access control\n• Analytics dashboards for usage tracking\n• End-to-end encryption with production-ready security\n\n**Stack:** React.js · Node.js · MongoDB · Encryption",
+  "project_clarifai": ()=>"**ClarifAI** — Prompt structuring engine:\n\n• Converts natural language into structured JSON queries for LLMs\n• OpenAI API integration for accurate parsing\n• Clean Streamlit interface\n\n**Stack:** Python · Streamlit · OpenAI API",
+  "project_cinematch": ()=>"**CineMatch AI** — Hybrid movie recommendation system:\n\n• Combines TMDB API data with curated datasets\n• Personalized watchlists, search history, trending lists\n• Hybrid collaborative + content-based filtering\n\n**Stack:** Python · Flask · TMDB API",
+  "project_crm": ()=>"**AI-Enabled CRM** — Intelligent CRM platform:\n\n• Automated lead scoring\n• Smart follow-up suggestions\n• Sentiment analysis on client communications\n• Predictive churn detection for sales teams\n\n**Stack:** Python · OpenAI API · CRM Architecture",
+  "project_timetable": ()=>"**Timetable Generator** — Constraint-based scheduling for BIT Noida:\n\n• Clash-free scheduling with an admin panel\n• REST APIs and exportable schedules\n• Deployed in production\n\n**Stack:** React · Node.js · MongoDB · Express",
+  "client_iciem": ()=>"**ICIEM 2026** (iciem.vercel.app):\n\nEnd-to-end international conference portal:\n• Automated paper submission and review workflows\n• Participant acknowledgment systems\n• Shashwat also served as **Head of Web Development** for the conference\n• And won **Best Paper Prize** at ICIEM'26 for Carbon.ESG research",
+  "client_tedx": ()=>"**TEDx BIT Noida** (te-dx-bitnoida.vercel.app):\n\nOfficial TEDx website with:\n• Automated registration and payment validation\n• Google Sheets & Drive integration via AppScript\n• Handled last-minute changes gracefully right up to event day\n\n**Stack:** HTML/CSS/JS · Google AppScript",
+  "client_burgeon": ()=>"**Burgeon** (burgeon-new.vercel.app):\n\nFull company website — professional, polished, built to establish digital presence and convert visitors into clients.\n\n**Stack:** React.js",
+  "client_sathi": ()=>"**Project Sathi** (project-sathi.vercel.app):\n\nNGO website for Sai Helping Hands Foundation — at the intersection of mental wellness, menstrual health, and community building. Founded by a Harvard HPAIR 2025 delegate. Features initiative showcases, media gallery, and founder profile.\n\n**Stack:** HTML/CSS/JS",
+  "client_bespoke": ()=>"**Bespoke Portfolios** — 5 custom portfolio sites:\n\n• **Head of Strategic Alliances** — Premier Indian education institute\n• **Quantitative Research Analyst** — Australian fintech\n• **ServiceNow Developer** — Enterprise Fortune 500 focus\n• **Academic Professor** — 30 years' international experience\n• **Graphic Designer & Illustrator** — Gallery-style portfolio\n\nEach crafted from scratch with unique design identity.",
+  "client_campusgarh": ()=>"**Campus Garh** — College discovery EdTech platform:\n\nA feature-rich alternative to CollegeDunia:\n• Smart college listings with ranking, fees, placement data\n• Advanced filters (stream, state, NIRF ranking, entrance exams)\n• Head-to-head comparison of up to 3 colleges\n• Placement analytics and verified student reviews\n• Exam & admission hub\n\n**Stack:** React · Node.js · MongoDB",
+  "exp_aa2it": ()=>"**AA2IT India Pvt. Ltd.** (Dec 2025–Present) — Salesforce Developer Intern:\n\nWorking under the Salesforce Delivery Head on:\n• CRM configuration and automation flows\n• Data modeling for enterprise clients\n• Supporting live production Salesforce delivery",
+  "exp_pinaqtech": ()=>"**Pinaqtech** (May–Aug 2025) — Full Stack Developer Intern:\n\n• Built and deployed the company's official MERN stack website\n• Boosted SEO ranking by **40%** and reduced bounce rate\n• Integrated security measures and optimized UX across all platforms",
+  "exp_oohr": ()=>"**Oohr Innovations** (May–Jul 2025) — Software Engineering Intern:\n\n• Built a custom ERP system for educational institutions\n• Reduced manual effort by **60%** through automation\n• Led QA testing and resolved 20+ critical bugs",
+  "exp_furnish": ()=>"**Furnish Me Architects** (May–Jul 2025) — MIS Intern:\n\n• Designed a secure, centralized intranet for reporting and analytics\n• Improved data access speed by **40%**\n• Streamlined internal communications across departments",
+  "exp_codsoft": ()=>"**CodSoft** (Sep–Oct 2023) — Python Developer Intern:\n\n• Created 5 automation tools for sentiment analysis, data handling, and process scheduling\n• Delivered clean, well-documented Python modules on time",
+  "salesforce": ()=>knowledgeBase.salesforce.full,
+  "edu_bit": ()=>knowledgeBase.education.full,
+  "poem_mehsoos": ()=>"**\"Mehsoos Na Hone Ka Shok\"** — forthcoming in **Pratigyan Magazine** (March 2026).\n\nA Hindi poem — the title translates to *'The Grief of Not Being Felt'*. Shashwat's most recent work, forthcoming in one of India's prominent literary magazines.",
+  "poem_symphony": ()=>"**\"Symphony of Despair\"** — published in **WhyNot Australia**.\n\nOne of three poems Shashwat has published in the international literary magazine WhyNot Australia.",
+  "poem_echoes": ()=>"**\"Echoes in the Abyss\"** — published in **WhyNot Australia**.\n\nPublished internationally, this poem is part of Shashwat's body of work exploring depth, silence, and human experience.",
+  "poem_greyness": ()=>"**\"The Greyness of Man\"** — published in **WhyNot Australia**.\n\nA meditation on moral ambiguity and the human condition. Published internationally.",
+  "anthology_belimitless": ()=>"**Be Limitless** — featured at the **World Book Fair 2025**.\n\nA national anthology in which Shashwat's work was featured. Presented at one of India's largest book events.",
+  "anthology_chromatic": ()=>"**Chromatic Currents V3** — National Literary Anthology.\n\nShashwat is a contributing poet in this curated national anthology.",
+  "anthology_golden": ()=>"**Golden Realms V4** — National Literary Anthology.\n\nAnother national anthology featuring Shashwat's poetry.",
+  "pub_whynot": ()=>"**WhyNot Australia** — International literary magazine.\n\nShashwat has published **3 poems** and **1 article** in WhyNot Australia:\n• Symphony of Despair\n• Echoes in the Abyss\n• The Greyness of Man\n• Article: \"A Bittersweet Farewell\"",
+  "research_award": ()=>"**Best Paper Prize — ICIEM'26:**\n\nShashwat's paper *\"A Hybrid Policy-Calibrated Framework for Adaptive Carbon Estimation and ESG Benchmarking\"* won:\n• **Best Paper Award** at the 4th International Conference on Innovation, Engineering and Management\n• **₹5,000 cash prize**\n• The paper presents the Carbon.ESG framework — a Gradient Boosting model (R² = 0.9757) with 90.25% ESG classifier accuracy"
+};
+
+const INTENTS = [
+  { id:"greeting", kw:["hello","hi","hey","greet","morning","afternoon","evening","howdy","sup","yo","hiya","namaste","helo","hii","heyy","hai"], response:()=>{const h=new Date().getHours();const g=h<12?"Good morning":h<17?"Good afternoon":"Good evening";return `${g}! I'm Shashwat's AI assistant. Ask me about his **skills**, **projects**, **research**, **publications**, or **how to hire him**.`;}, followUp:["What are his main skills?","Tell me about his projects","Is he available for work?"] },
+  { id:"farewell", kw:["bye","goodbye","farewell","see you","later","ciao","take care","ttyl","goodnight","gn","done","finished"], response:()=>"Thanks for visiting! Reach Shashwat directly at **kashyapshashwat77@gmail.com** — he reads everything. Have a great day!", followUp:[] },
+  { id:"thanks", kw:["thank","thanks","appreciate","grateful","helpful","great","awesome","perfect","nice","cool","wonderful","excellent","brilliant","amazing","good"], response:()=>"You're welcome! Anything else you'd like to know about Shashwat?", followUp:["What else should I know?","How can I contact him?","Tell me more about his projects"] },
+  { id:"help", kw:["help","what can you do","capability","function","feature","assist","guide","option","topic","ask","know"], response:()=>`I'm Shashwat's AI assistant. Here's what I know:\n\n• **Tech Skills** — MERN, Python, ML/AI, Salesforce, Docker, PostgreSQL\n• **Projects** — 12+ shipped products (AI Interviewer, Carbon.ESG, GradLink, F1 Oracle...)\n• **Client Work** — 8+ live client websites\n• **Research** — Best Paper Prize · ICIEM'26\n• **Salesforce** — Certified Agentforce Specialist, 81 badges, 40k+ points\n• **Literary Work** — Published poems, articles, 3 national anthologies\n• **Availability** — Freelance now · Full-time from mid-2026\n• **Contact** — Email, LinkedIn, phone\n\nJust ask naturally — I understand typos and context!`, followUp:["What are his top projects?","Tell me about Carbon.ESG","How do I hire him?"] },
+  { id:"about", kw:["who","about","introduce","overview","summary","background","profile","shashwat","person","himself","describe"], response:()=>knowledgeBase.about.full+"\n\nBased in **Delhi NCR** — available for freelance and full-time roles.", followUp:["What does he build?","What awards has he won?","How do I contact him?"] },
+  { id:"skills_general", kw:["skill","tech","technology","stack","expertise","language","tool","programming","capable","know","learn","proficient","specialize"], response:()=>knowledgeBase.techStack.full, followUp:["Tell me about his ML skills","What databases does he use?","Any Salesforce experience?"] },
+  { id:"skill_python", kw:["python","flask","fastapi","streamlit","django","scripting"], response:()=>"**Python** is one of Shashwat's strongest languages, used across:\n\n• **ML/AI** — scikit-learn, Random Forest, Gradient Boosting, Computer Vision, NLP\n• **Backends** — Flask, FastAPI (REST APIs)\n• **Data apps** — Streamlit dashboards\n• **Automation** — Scripting, data pipelines\n\nKey Python projects: **Carbon.ESG** (Best Paper Prize), **F1 Oracle**, **MedAI**, **EV Anomaly Detector**, **PlantGuard AI**, **Alfred**.", followUp:["Tell me about Carbon.ESG","What ML models has he used?","Tell me about MedAI"] },
+  { id:"skill_mern", kw:["mern","react","reactjs","node","nodejs","express","expressjs","mongodb","mongo","full stack","fullstack","frontend","backend","javascript","js"], response:()=>"**MERN Stack** — Shashwat's primary web development stack:\n\n• **React.js** — Complex frontends with state management\n• **Node.js + Express.js** — REST APIs, authentication, real-time features\n• **MongoDB** — Flexible NoSQL for large-scale applications\n\nKey MERN projects: **GradLink** (5k+ users), **SkyVault** (encrypted file-sharing), **AI-Enabled CRM**, **Campus Garh** (EdTech).", followUp:["Tell me about GradLink","What is SkyVault?","What client websites has he built?"] },
+  { id:"skill_ml", kw:["machine learning","artificial intelligence","deep learning","data science","sklearn","scikit","random forest","gradient boosting","neural","nlp","natural language","computer vision","llm","llama","openai","gpt","model","algorithm","prediction","classification","regression"], response:()=>"**ML/AI** — Shashwat's work is production-grade:\n\n• **Gradient Boosting** — Carbon.ESG (R² = 0.9757) — Best Paper Prize, ICIEM'26\n• **Random Forest** — F1 Oracle race prediction\n• **Computer Vision** — PlantGuard AI (crop disease detection)\n• **NLP** — Alfred (90% accuracy), Enterprise AI Chatbot\n• **Anomaly Detection** — EV Battery Anomaly Detector\n• **Healthcare ML** — MedAI (Diabetes, Parkinson's, Heart Disease)\n• **LLM Integration** — LLaMA (AI Interviewer), OpenAI API (ClarifAI, AI CRM)\n\n**Tools:** scikit-learn, Flask, FastAPI, Streamlit, OpenAI API, LLaMA", followUp:["Tell me about Carbon.ESG","What is MedAI?","Tell me about AI Interviewer"] },
+  { id:"salesforce", kw:["salesforce","trailhead","badge","certified","agentforce","crm","trailblazer","agentblazer","expeditioner","superbadge","sf","sfdc","salesforce developer","salesforce certified"], response:()=>knowledgeBase.salesforce.full, followUp:["Verify his credential","What Salesforce work has he done professionally?","Tell me about AA2IT internship"] },
+  { id:"experience", kw:["experience","internship","work history","professional","employment","career","worked","company","corporate","intern","job history","past work"], response:()=>`${knowledgeBase.experience.internships}\n\n**Timeline:**\n• ${knowledgeBase.experience.timeline.join('\n• ')}`, followUp:["Tell me about his Salesforce internship","What did he build at Pinaqtech?","What is he doing currently?"] },
+  { id:"education", kw:["education","college","university","degree","academic","study","student","mesra","cgpa","grade","marks","gpa","qualification","course"], response:()=>`${knowledgeBase.education.full}\n\n**Scholarships:** ${knowledgeBase.education.scholarships}`, followUp:["What scholarships did he receive?","What is his CGPA?","When does he graduate?"] },
+  { id:"projects_general", kw:["project","build","made","created","developed","portfolio","work sample","github","repo","built","application","app","product","ship"], response:()=>knowledgeBase.projects.full, followUp:["Tell me about AI Interviewer","What is Carbon.ESG?","Tell me about GradLink"] },
+  { id:"client_work", kw:["client","freelance work","client work","real client","deployed","live site","website for","built for","live website","deployed website"], response:()=>"Shashwat has built **8+ client websites** — all deployed and live:\n\n• **ICIEM 2026** — International conference portal with automated paper submission\n• **Ctrl+Alt+Elite** — Event website for a tech community\n• **MCA Placement Portal** — Academic placement tracking for BIT Mesra\n• **TEDx BIT Noida** — Official TEDx site with automated registration & Google Sheets\n• **Burgeon** — Professional company website\n• **Project Sathi** — NGO website for mental wellness & menstrual health foundation\n• **Bespoke Portfolios** — 5 custom portfolios for professionals\n• **Campus Garh** — College discovery EdTech platform\n\nEvery single one is live in production.", followUp:["Tell me about TEDx website","What is Campus Garh?","How much does he charge?"] },
+  { id:"literary", kw:["poem","poetry","literary","writing","author","published","anthology","article","magazine","whynot","pratigyan","lit","writer","creative","publish"], response:()=>`${knowledgeBase.literary.full}\n\n**Poems:**\n• ${knowledgeBase.literary.poetry.join('\n• ')}\n\n**Anthologies:**\n• ${knowledgeBase.literary.anthologies.join('\n• ')}\n\n**Articles:**\n• ${knowledgeBase.literary.articles.join('\n• ')}`, followUp:["Tell me about his Urdu/Hindi poem","What anthologies is he in?","Tell me about his articles"] },
+  { id:"leadership", kw:["leadership","organize","club","coordinator","event","initiative","campus","role","position","committee","led","managed","organized","head"], response:()=>`${knowledgeBase.leadership.full}\n\n**Roles:**\n• ${knowledgeBase.leadership.roles.join('\n• ')}`, followUp:["Tell me about TEDx BIT Mesra","What is his role at ICIEM?","Tell me about his sports achievements"] },
+  { id:"sports", kw:["sport","athlete","medal","volleyball","basketball","kho","table tennis","badminton","gold","silver","game","physical","play","team","tournament"], response:()=>`${knowledgeBase.sports.full}\n\n**Medals:**\n• ${knowledgeBase.sports.medals.join('\n• ')}`, followUp:["Tell me about his academic achievements","What scholarships did he win?","Tell me about his personality"] },
+  { id:"availability", kw:["available","hire","hiring","opportunity","open to","looking for","recruit","role","position","vacancy","work for","join","onboard","seeking"], response:()=>knowledgeBase.availability.full, followUp:["What roles is he targeting?","What does he charge for freelance?","How do I contact him?"] },
+  { id:"freelance", kw:["freelance","contract","project based","service","rate","cost","price","charge","quote","budget","pricing","how much","fee","payment","billing"], response:()=>`**Freelance Services & Pricing:**\n\n• ${knowledgeBase.freelance.services.join('\n• ')}\n\n**Process:** ${knowledgeBase.freelance.process}\n\n📧 **Start:** kashyapshashwat77@gmail.com`, followUp:["What is included in 2-week support?","Can he build ML projects?","How do I start a project?"] },
+  { id:"startup", kw:["startup","cofounder","co founder","found","mvp","pitch","funding","venture","collaborate","partner","equity","build together","co-found","technical partner"], response:()=>knowledgeBase.startup.full, followUp:["What tech can he build?","What is his availability?","How to contact him?"] },
+  { id:"contact", kw:["contact","reach","email","linkedin","phone","call","message","connect","talk to","get in touch","dm","social","whatsapp","number","telephone"], response:()=>"**Contact Shashwat:**\n\n• 📧 **Email:** kashyapshashwat77@gmail.com\n• 💼 **LinkedIn:** linkedin.com/in/shashwat-kashyap-b417aa155\n• 📱 **Phone:** +91 98183 83499\n• 💻 **GitHub:** github.com/Shashwat-k-9114\n\nHe responds to emails within 24 hours. LinkedIn is great for professional inquiries.", followUp:["What freelance services does he offer?","Is he available right now?","What roles is he looking for?"] },
+  { id:"location", kw:["location","based","delhi","ncr","india","remote","where","city","office","relocate","timezone","country"], response:()=>knowledgeBase.location, followUp:["Is he open to remote work?","What roles is he targeting?","Contact him"] },
+  { id:"research", kw:["research","paper","publication","academic","conference","journal","award","prize","best paper","study","iciem","published research","academic paper"], response:()=>"**Best Paper Prize — ICIEM'26:**\n\n*\"A Hybrid Policy-Calibrated Framework for Adaptive Carbon Estimation and ESG Benchmarking\"*\n\n• **Award:** Best Paper Prize + ₹5,000 cash prize\n• **Model:** Gradient Boosting Regressor (R² = 0.9757, MAPE 5.51%)\n• **ESG Classifier:** 90.25% accuracy across 8 industry sectors\n• **Deployment:** Flask web app with PDF sustainability certificate generation\n\nShashwat also served as **Head of Web Development** for ICIEM 2026.", followUp:["Tell me about Carbon.ESG","What other publications does he have?","Tell me about his literary publications"] },
+  { id:"databases", kw:["database","sql","nosql","relational","db","data storage","postgres","postgresql","sqlite","mysql","mongodb","schema","query","data"], response:()=>"**Databases Shashwat works with:**\n\n• **MongoDB** — Primary NoSQL DB for MERN projects\n• **MySQL** — Relational DB for structured data\n• **PostgreSQL** — Advanced relational for complex queries\n• **SQLite** — Lightweight for embedded applications\n\nComfortable with both SQL and NoSQL paradigms — used all four in production.", followUp:["What is his full tech stack?","Tell me about his backend experience","Any deployment experience?"] },
+  { id:"deployment", kw:["deploy","deployment","host","hosting","vercel","render","railway","godaddy","hostinger","domain","production","live","server","cloud","devops","docker"], response:()=>"**Deployment & Domain Experience:**\n\n• **Vercel** — React/Next.js frontends (primary for client sites)\n• **Render** — Node.js backends, full-stack MERN apps\n• **Railway** — Backend APIs and database hosting\n• **GoDaddy** — Domain registration and DNS\n• **Hostinger** — Domain hosting and email setup\n• **Docker** — Containerization for consistent environments\n\nAll 8 client websites are live in production.", followUp:["Tell me about his client work","What tech stack does he use?","How do I hire him?"] },
+  { id:"scholarship", kw:["scholarship","scholar","foundation","award","birla","usha","hbmk","merit","funding","stipend","grant","academic award"], response:()=>`**${knowledgeBase.education.scholarships}**\n\nThree competitive merit-based scholarships from BIT Mesra — all awarded for academic excellence.`, followUp:["What is his CGPA?","Tell me about his sports achievements","Any other awards?"] },
+  { id:"personality", kw:["personality","character","hobbies","interest","passion","outside","besides","beyond code","life","human side","personal","who is he","what is he like"], response:()=>knowledgeBase.about.full, followUp:["Tell me about his poetry","Tell me about his sports medals","What leadership roles has he held?"] },
+];
+
+function escapeReg(s){return s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');}
+function scoreIntent(meaningful, raw, intent){
+  let score=0;
+  const rawL=raw.toLowerCase();
+  for(const kw of intent.kw){
+    // Word-boundary matching prevents "hi" matching "his", "sup" matching "support", "yo" matching "you"
+    const bare=kw.replace(/\s/g,'');
+    let exactMatch;
+    if(bare.length<=3){
+      // Short keywords: strict \bKW\b — must be a standalone word
+      exactMatch=new RegExp('\\b'+escapeReg(kw)+'\\b').test(rawL);
+    } else {
+      // Longer keywords: \bKW — word-start match, allows "skill"->"skills", "project"->"projects"
+      exactMatch=new RegExp('\\b'+escapeReg(kw)).test(rawL);
+    }
+    if(exactMatch){score+=kw.split(' ').length*2.5;continue;}
+    // Token-level fuzzy matching (single-word keywords only)
+    if(!kw.includes(' ')){
+      for(const token of meaningful){
+        if(token.length<3)continue;
+        const sim=similarity(token,kw);
+        if(sim>=0.82)score+=sim*1.5;
+        else if(sim>=0.70&&token.length>=4)score+=sim*0.6;
+      }
+    }
+  }
+  return score;
+}
+
+const CONTEXT_PHRASES = ["more","elaborate","expand","details","tell me more","what else","further","continue","another","also","about it","about that","about him","what about","and","explain","included","include","what about","what does","what is included","support","after","post","following","delivery","handoff"];
+
+function resolveContext(raw, state){
+  if(!state.lastTopic)return null;
+  const r=raw.toLowerCase();
+  const isContextual=CONTEXT_PHRASES.some(p=>r.includes(p))||(r.split(' ').length<=4&&["it","that","this","him","his","more"].some(p=>r.includes(p)));
+  if(isContextual&&ENTITY_RESPONSES[state.lastTopic]){
+    return ENTITY_RESPONSES[state.lastTopic]()+" \n\nWant to know anything else specific about this?";
+  }
+  return null;
+}
+
+const FACT_PATTERNS = [
+  {pat:/how many (project|thing|app|site|work|built)/i, ans:"Shashwat has built **12+ projects** across web dev, ML/AI, and event tech — plus **8+ live client websites** in production."},
+  {pat:/how many (badge|point|trail|superbadge)/i, ans:"On Salesforce Trailhead: **81 badges**, **40,725+ points**, **13 completed trails**, and **3 Superbadges**. Also Agentblazer Innovator '25."},
+  {pat:/how many (poem|publish|literary|write|book)/i, ans:"**4 published poems** (5th forthcoming in Pratigyan Magazine, March 2026), **3 published articles**, and featured in **3 national anthologies**."},
+  {pat:/(when|year).*(graduate|finish|complete|done|available)/i, ans:"Shashwat completes his MCA in **mid-2026** at BIT Mesra. He's available for full-time roles from then, and for **freelance/contract work right now**."},
+  {pat:/(cgpa|grade|gpa|marks|score|percentage)/i, ans:"**BCA CGPA: 7.76** (BIT Mesra, 2021–2024)\n**MCA CGPA: 7.85** (current) — with **SGPA 8.14** in the last semester. Triple scholarship recipient."},
+  {pat:/(best|favourite|top|proud|notable).*(project|work|thing)/i, ans:"The project Shashwat is most proud of is **Carbon.ESG** — a real ML-powered ESG framework that won the **Best Paper Prize at ICIEM'26**. It's production-deployed, academically rigorous, and tackles a real-world climate problem."},
+  {pat:/(why hire|why should|reason to hire|should i hire|worth hiring|good fit)/i, ans:"Three reasons to hire Shashwat:\n\n• **Breadth** — Full-stack + ML/AI + Salesforce + Research + Writing. Genuinely rare.\n• **Execution** — 8 live client sites, 5+ internships, Best Paper Prize. Not a portfolio of demos — shipped real products.\n• **Character** — TEDx organizer, triple scholarship recipient, 3× gold medalist, published internationally. The kind of person who shows up and delivers at everything."},
+  {pat:/(salary|ctc|package|compensation|pay|cost|how much.*hire|rate.*hire)/i, ans:"For freelance, pricing starts at ₹15,000 for web projects. For full-time roles, Shashwat expects market-standard compensation — reach out at **kashyapshashwat77@gmail.com** to discuss specifics."},
+  {pat:/(what.*stack|tech.*use|which.*tech|what.*language|what.*framework)/i, ans:knowledgeBase.techStack.full},
+  {pat:/(is he good|how good|level|skill level|how expert|senior|junior|mid)/i, ans:"Shashwat is a mid-level developer with senior-level output. He's built 8 live client sites, won a research prize, shipped 12+ products, and holds a Salesforce certification — all while in his MCA. His depth in Python/ML and MERN is production-grade."},
+  {pat:/(internship|experience|has he worked)/i, ans:knowledgeBase.experience.internships},
+];
+
+function generateResponse(input){
+  const {raw, tokens, meaningful} = preprocess(input);
+
+  // 1. Context resolution for follow-up
+  if(ChatState.history.length>0){
+    const ctx=resolveContext(raw, ChatState);
+    if(ctx)return{text:ctx, topic:ChatState.lastTopic, followUp:["Tell me more","What else has he built?","How do I contact him?"]};
+  }
+
+  // 2. Entity extraction (longest match first)
+  const rawL=raw.toLowerCase();
+  const sortedEntities=Object.keys(ENTITY_MAP).sort((a,b)=>b.length-a.length);
+  for(const entity of sortedEntities){
+    if(rawL.includes(entity)){
+      const key=ENTITY_MAP[entity];
+      if(ENTITY_RESPONSES[key]){
+        const intent=INTENTS.find(i=>i.id===key);
+        return{text:ENTITY_RESPONSES[key](), topic:key, followUp:intent?intent.followUp||[]:["Tell me more","What else has he built?","How do I contact him?"]};
+      }
+    }
+  }
+
+  // 3. Specific fact patterns (regex)
+  for(const {pat,ans} of FACT_PATTERNS){
+    if(pat.test(input)){
+      return{text:ans, topic:ChatState.lastTopic, followUp:["How do I contact him?","What are his best projects?","Is he available now?"]};
+    }
+  }
+
+  // 4. Intent scoring
+  const scored=INTENTS.map(intent=>({intent, score:scoreIntent(meaningful, raw, intent)})).filter(s=>s.score>0.4).sort((a,b)=>b.score-a.score);
+  if(scored.length>0){
+    const best=scored[0].intent;
+    const resp=typeof best.response==='function'?best.response():best.response;
+    return{text:resp, topic:best.id, followUp:best.followUp||[]};
+  }
+
+  // 5. Single-token fuzzy entity match
+  for(const token of meaningful){
+    if(token.length<4)continue;
+    for(const entity of sortedEntities){
+      const entWords=entity.split(' ');
+      if(entWords.some(ew=>ew.length>=4&&similarity(token,ew)>=0.8)){
+        const key=ENTITY_MAP[entity];
+        if(ENTITY_RESPONSES[key])return{text:ENTITY_RESPONSES[key](), topic:key, followUp:["Tell me more","What else has he built?","How do I contact him?"]};
+      }
+    }
+  }
+
+  // 6. Graceful fallback
+  const fallbacks=["I didn't quite catch that. I can tell you about Shashwat's **skills**, **projects**, **research**, **literary work**, **Salesforce certification**, or **how to hire him** — what would you like to know?","Could you rephrase that? Try asking something like *\"What is Carbon.ESG?\"*, *\"Is he available?\"*, or *\"How do I contact him?\"*","I'm not sure I understood that one. I know a lot about Shashwat — his **projects**, **tech stack**, **experience**, **publications**, and **freelance pricing**. What's on your mind?","That's a bit outside my knowledge. But ask me about his **work**, **skills**, or **how to hire him** — I know those very well!"];
+  return{text:fallbacks[Math.floor(Math.random()*fallbacks.length)], topic:ChatState.lastTopic, followUp:["What are his main skills?","Tell me about his projects","How do I contact him?"]};
+}
+
+function renderText(t){
+  return t
+    .replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>')
+    .replace(/\*(.+?)\*/g,'<em>$1</em>')
+    .replace(/`(.+?)`/g,'<code style="font-family:monospace;font-size:0.85em;background:rgba(0,212,255,0.08);padding:1px 5px;">$1</code>')
+    .replace(/\n• /g,'</li><li>')
+    .replace(/^• /gm,'<li>')
+    .replace(/(<li>[\s\S]*?(?=<\/li>|$))/g,'$1</li>')
+    .replace(/(<li>.*?<\/li>)+/gs,m=>`<ul style="margin:6px 0 4px 16px;padding:0;">${m}</ul>`)
+    .replace(/\n\n/g,'</p><p style="margin-top:8px;">')
+    .replace(/\n/g,'<br>');
+}
+
+function addMessage(text, isUser, isTyping=false){
+  const msgs=document.getElementById('chatbot-messages');
+  const div=document.createElement('div');
+  div.className=`msg ${isUser?'user':'bot'}`;
+  if(isTyping){
+    div.id='typing-indicator';
+    div.innerHTML=`<div class="msg-bubble typing-bubble"><span class="typing-dot"></span><span class="typing-dot"></span><span class="typing-dot"></span></div>`;
+  } else {
+    const safe=isUser?text.replace(/</g,'&lt;').replace(/>/g,'&gt;'):renderText(text);
+    div.innerHTML=`<div class="msg-bubble">${safe}</div>`;
+  }
+  msgs.appendChild(div);
+  msgs.scrollTop=msgs.scrollHeight;
+  return div;
+}
+
+function showFollowUpSuggestions(suggestions){
+  const c=document.getElementById('chatbot-suggestions');
+  if(!suggestions||suggestions.length===0){c.style.display='none';return;}
+  c.style.display='flex';
+  c.innerHTML=suggestions.map(s=>`<button class="suggestion-chip" onclick="askSuggestion(this)">${s}</button>`).join('');
+}
+
+function sendChat(){
+  const input=document.getElementById('chatbot-input');
+  const text=input.value.trim();
+  if(!text||ChatState.isTyping)return;
+  addMessage(text,true);
+  input.value='';
+  ChatState.isTyping=true;
+  ChatState.messageCount++;
+  document.getElementById('chatbot-suggestions').style.display='none';
+  const typingEl=addMessage('',false,true);
+  const delay=500+Math.random()*700;
+  setTimeout(()=>{
+    typingEl.remove();
+    const result=generateResponse(text);
+    if(result.topic)ChatState.lastTopic=result.topic;
+    ChatState.history.push({role:'user',content:text});
+    ChatState.history.push({role:'bot',content:result.text,topic:result.topic});
+    if(ChatState.history.length>20)ChatState.history=ChatState.history.slice(-20);
+    addMessage(result.text,false);
+    showFollowUpSuggestions(result.followUp);
+    ChatState.isTyping=false;
+  },delay);
+}
+
+function askSuggestion(btn){
+  if(ChatState.isTyping)return;
+  const text=btn.textContent;
+  document.getElementById('chatbot-suggestions').style.display='none';
+  addMessage(text,true);
+  ChatState.isTyping=true;
+  ChatState.messageCount++;
+  const typingEl=addMessage('',false,true);
+  setTimeout(()=>{
+    typingEl.remove();
+    const result=generateResponse(text);
+    if(result.topic)ChatState.lastTopic=result.topic;
+    ChatState.history.push({role:'user',content:text});
+    ChatState.history.push({role:'bot',content:result.text,topic:result.topic});
+    addMessage(result.text,false);
+    showFollowUpSuggestions(result.followUp);
+    ChatState.isTyping=false;
+  },400+Math.random()*500);
+}
+
+function toggleChatbot(){
+  const btn=document.getElementById('chatbot-toggle');
+  const win=document.getElementById('chatbot-window');
+  btn.classList.toggle('open');
+  win.classList.toggle('open');
+  if(win.classList.contains('open')){
+    if(ChatState.messageCount===0){
+      showFollowUpSuggestions(["What are Shashwat's main skills?","Is he available for work?","Tell me about his projects","What's his Salesforce experience?","His literary work?","How to contact him?"]);
+    }
+    setTimeout(()=>{const inp=document.getElementById('chatbot-input');if(inp)inp.focus();},300);
+  }
+}
+
+// Dummy intents ref for old code — not used
 const intents = [
   {
     patterns: ['name', 'who is', 'tell me about yourself', 'introduce', 'about shashwat'],
@@ -2882,250 +3604,7 @@ const intents = [
     response: "I'm Shashwat's AI assistant, and I can tell you about:\n\n• His technical skills and projects\n• Professional experience and internships\n• Salesforce certifications and achievements\n• Literary work and publications\n• Leadership roles and campus involvement\n• Sports achievements\n• Availability for work and freelance services\n• Contact information\n\nFeel free to ask me anything!"
   }
 ];
-
-// Sophisticated response generation with context awareness
-function generateResponse(input) {
-  const cleanInput = input.toLowerCase().trim();
-  
-  // Remove punctuation and extra spaces for better matching
-  const normalized = cleanInput.replace(/[^\w\s]/g, ' ').replace(/\s+/g, ' ').trim();
-  
-  // Check for exact matches first
-  for (const intent of intents) {
-    for (const pattern of intent.patterns) {
-      if (normalized.includes(pattern.toLowerCase())) {
-        // If response is a function, call it with the input
-        if (typeof intent.response === 'function') {
-          return intent.response(input);
-        }
-        return intent.response;
-      }
-    }
-  }
-  
-  // Multi-intent detection for complex queries
-  const topics = [];
-  if (normalized.includes('skill') || normalized.includes('tech')) topics.push('skills');
-  if (normalized.includes('project') || normalized.includes('build')) topics.push('projects');
-  if (normalized.includes('experience') || normalized.includes('intern')) topics.push('experience');
-  if (normalized.includes('salesforce')) topics.push('salesforce');
-  if (normalized.includes('literary') || normalized.includes('poem')) topics.push('literary');
-  if (normalized.includes('contact')) topics.push('contact');
-  
-  if (topics.length > 1) {
-    // Handle compound questions gracefully
-    let response = "You've asked about several aspects of Shashwat's profile. Let me address each:\n\n";
-    for (const topic of topics.slice(0, 2)) { // Limit to 2 topics to avoid overwhelming
-      switch(topic) {
-        case 'skills':
-          response += "• " + knowledgeBase.techStack.summary + "\n\n";
-          break;
-        case 'projects':
-          response += "• " + knowledgeBase.projects.summary + "\n\n";
-          break;
-        case 'experience':
-          response += "• " + knowledgeBase.experience.current + "\n\n";
-          break;
-        case 'salesforce':
-          response += "• " + knowledgeBase.salesforce.summary + "\n\n";
-          break;
-        case 'literary':
-          response += "• " + knowledgeBase.literary.summary + "\n\n";
-          break;
-        case 'contact':
-          response += "• " + knowledgeBase.contact.email + "\n\n";
-          break;
-      }
-    }
-    response += "Would you like me to elaborate on any of these areas? Or feel free to ask a more specific question.";
-    return response;
-  }
-  
-  // For questions about specific numbers or metrics
-  if (normalized.includes('how many') || normalized.includes('number of')) {
-    if (normalized.includes('project')) return "Shashwat has built and shipped 12+ products across web development, machine learning, and event tech. This includes 4 featured projects, 2 live event sites, and several ML applications.";
-    if (normalized.includes('badge')) return "Shashwat has earned 81 badges on Salesforce Trailhead, placing him at Expeditioner Rank. He's also an Agentblazer Innovator '25.";
-    if (normalized.includes('internship')) return "Shashwat has completed 5 internships to date, spanning Salesforce development, full-stack development, and government projects.";
-    if (normalized.includes('poem') || normalized.includes('publication')) return "Shashwat has published 4 poems in international venues, 3 articles, and is featured in 3 national anthologies.";
-  }
-  
-  // For questions about specific years or time periods
-  if (normalized.includes('when') || normalized.includes('year')) {
-    if (normalized.includes('graduate') || normalized.includes('graduation')) {
-      return "Shashwat will complete his MCA in 2026. He's currently in his second year at BIT Mesra. He completed his BCA in 2024 from the same institution.";
-    }
-    if (normalized.includes('start')) {
-      if (normalized.includes('work') || normalized.includes('job')) {
-        return "Shashwat is available for full-time roles from mid-2026 after graduation. However, he's open to part-time, contract, and freelance opportunities right now.";
-      }
-    }
-  }
-  
-  // For questions about "why" or "what makes him special"
-  if (normalized.includes('why') || normalized.includes('what makes') || normalized.includes('unique')) {
-    return "What makes Shashwat unique is his ability to inhabit multiple worlds with equal mastery — he's a computer scientist who writes poetry, a developer who organizes conferences, an introvert who captains sports teams. He's built ML models, organized TEDx from scratch, published poetry internationally, and led campus initiatives — all simultaneously. That breadth and depth, combined with genuine passion, is rare.";
-  }
-  
-  // For questions about specific technologies not covered
-  if (normalized.includes('database') || normalized.includes('sql') || normalized.includes('nosql')) {
-    return "Shashwat works with both SQL (MySQL) and NoSQL (MongoDB) databases. He's built full-stack applications with MongoDB for flexibility and also has experience with relational database design.";
-  }
-  
-  if (normalized.includes('api') || normalized.includes('rest')) {
-    return "Shashwat designs and builds REST APIs extensively. He's created APIs for authentication, data retrieval, and third-party integrations (like TMDB and OpenAI). His APIs follow clean architecture principles and include proper error handling and documentation.";
-  }
-  
-  // Graceful fallback for unknown queries
-  const fallbackResponses = [
-    "That's an interesting question. While I don't have specific information about that in my knowledge base, I'd be happy to tell you about Shashwat's skills, projects, experience, or how to contact him directly.",
-    
-    "I don't have an answer for that particular question, but I can help with information about Shashwat's technical work, literary publications, leadership roles, or professional availability. What would you like to know?",
-    
-    "I'm not sure about that specific detail. However, I can share information about his projects, Salesforce expertise, freelance services, or contact details. Feel free to ask about any of these areas.",
-    
-    "That's a thoughtful question. While I don't have that information, I can tell you about Shashwat's experience, skills, or how to reach him directly at kashyapshashwat77@gmail.com for more personalized inquiries."
-  ];
-  
-  return fallbackResponses[Math.floor(Math.random() * fallbackResponses.length)];
-}
-
-// Enhanced chat functions
-function addMessage(text, isUser) {
-  const msgs = document.getElementById('chatbot-messages');
-  const div = document.createElement('div');
-  div.className = `msg ${isUser ? 'user' : 'bot'}`;
-  
-  // Handle line breaks in responses
-  const formattedText = text.replace(/\n/g, '<br>');
-  div.innerHTML = `<div class="msg-bubble">${formattedText}</div>`;
-  
-  msgs.appendChild(div);
-  msgs.scrollTop = msgs.scrollHeight;
-}
-
-function sendChat() {
-  const input = document.getElementById('chatbot-input');
-  const text = input.value.trim();
-  if (!text) return;
-  
-  addMessage(text, true);
-  input.value = '';
-  
-  // Hide suggestions after first message
-  document.getElementById('chatbot-suggestions').style.display = 'none';
-  
-  // Show typing indicator (optional)
-  setTimeout(() => {
-    const response = generateResponse(text);
-    addMessage(response, false);
-  }, 800); // Slight delay for natural conversation feel
-}
-
-function askSuggestion(btn) {
-  const text = btn.textContent;
-  addMessage(text, true);
-  document.getElementById('chatbot-suggestions').style.display = 'none';
-  
-  setTimeout(() => {
-    const response = generateResponse(text);
-    addMessage(response, false);
-  }, 600);
-}
-
-function toggleChatbot() {
-  const btn = document.getElementById('chatbot-toggle');
-  const win = document.getElementById('chatbot-window');
-  btn.classList.toggle('open');
-  win.classList.toggle('open');
-  
-  // Reset suggestions when opening
-  if (win.classList.contains('open')) {
-    document.getElementById('chatbot-suggestions').style.display = 'flex';
-  }
-}
-</script>
-
-<script>
-// ======================== ESSENTIAL UI FUNCTIONS ========================
-// Defined here — before CDN scripts — so onclick handlers always work
-
-function switchTab(type) {
-  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-  document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-  var btn = document.querySelector('.tab-btn.' + type);
-  var tab = document.getElementById('tab-' + type);
-  if (btn) btn.classList.add('active');
-  if (tab) tab.classList.add('active');
-}
-
-function showPoem(index) {
-  document.querySelectorAll('.poem-card').forEach(function(c, i) {
-    c.classList.toggle('active', i === index);
-  });
-  var titleEl = document.getElementById('poemTitle');
-  var textEl  = document.getElementById('poemText');
-  if (!titleEl || !textEl) return;
-  var p = window.poems || [];
-  if (!p[index]) return;
-  if (typeof gsap !== 'undefined') {
-    gsap.to([titleEl, textEl], { opacity: 0, y: 10, duration: 0.3, onComplete: function() {
-      titleEl.textContent = p[index].title;
-      textEl.textContent  = p[index].text;
-      gsap.to([titleEl, textEl], { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out', stagger: 0.1 });
-    }});
-  } else {
-    titleEl.textContent = p[index].title;
-    textEl.textContent  = p[index].text;
-  }
-}
-
-function toggleMobileNav() {
-  var nav = document.getElementById('nav-links-list');
-  var btn = document.getElementById('nav-hamburger');
-  var backdrop = document.getElementById('nav-backdrop');
-  if (nav) {
-    nav.classList.toggle('open');
-    if (btn) btn.classList.toggle('open');
-    if (backdrop) backdrop.classList.toggle('open');
-  }
-}
-
-function closeMobileNav() {
-  var nav = document.getElementById('nav-links-list');
-  var btn = document.getElementById('nav-hamburger');
-  var backdrop = document.getElementById('nav-backdrop');
-  if (nav) {
-    nav.classList.remove('open');
-    if (btn) btn.classList.remove('open');
-    if (backdrop) backdrop.classList.remove('open');
-  }
-}
-
-// Init on DOMContentLoaded
-document.addEventListener('DOMContentLoaded', function() {
-  // Default tab
-  switchTab('jobs');
-  
-  // Mobile nav close on link click
-  document.querySelectorAll('.nav-links a').forEach(function(a) {
-    a.addEventListener('click', function(e) {
-      // Don't prevent default for navigation
-      closeMobileNav();
-    });
-  });
-  
-  // Close mobile nav when scrolling (with throttle to prevent performance issues)
-  var scrollTimeout;
-  window.addEventListener('scroll', function() {
-    if (scrollTimeout) clearTimeout(scrollTimeout);
-    scrollTimeout = setTimeout(function() {
-      var navList = document.getElementById('nav-links-list');
-      if (navList && navList.classList.contains('open')) {
-        closeMobileNav();
-      }
-    }, 100);
-  }, { passive: true });
-});
+// (old intents array kept as empty shell above — all logic replaced by engine v2.0)
 </script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" onerror="console.warn('Three.js failed to load — galaxy disabled')"></script>
@@ -3368,8 +3847,16 @@ function setActiveNav(id) {
 // ======================== NAV SCROLL ========================
 window.addEventListener('scroll', () => {
   const nav = document.getElementById('main-nav');
-  if (window.scrollY > 50) nav.classList.add('scrolled');
-  else nav.classList.remove('scrolled');
+  const navList = document.getElementById('nav-links-list');
+  
+  // Only apply scrolled class if menu is closed
+  if (navList && !navList.classList.contains('open')) {
+    if (window.scrollY > 50) {
+      nav.classList.add('scrolled');
+    } else {
+      nav.classList.remove('scrolled');
+    }
+  }
 });
 window.addEventListener('scroll', () => {
   const sy = window.scrollY;
@@ -3554,6 +4041,26 @@ But I smile.
 Because even in the darkness,
 Even in the ruin,
 The broken find their place.`
+  },
+
+  {
+    title: "Mehsoos Na Hone Ka Shok",
+    text: `Kuch dard woh hote hain jo chekhte nahin,
+Bas bheetar kahin chupchap baith jaate hain —
+Jaise dhuein ki lakeer ho hawa mein,
+Jo dikhti hai, par chhui nahin jaati.
+
+Maine bhi aise kai lamhe jiye hain,
+Jab dil tha, par dhadkan nahin mili,
+Jab shabd the, par bhasha nahin thi,
+Jab aankhen thin, par aansu bhi sookh chale.
+
+Yeh shok hai — mehsoos na hone ka,
+Jab andar sab kuch hai, bahar kuch nahin,
+Jab tum wahan ho, par tum nahin ho —
+Aur duniya ko pata bhi nahin.
+
+— Forthcoming · Pratigyan Magazine · March 2026`
   }
 ];
 
@@ -3586,13 +4093,15 @@ const chatKB = {
   "available": "Yes! I'm actively looking for opportunities. I'm available for full-time roles from mid-2026 after graduating, but I'm open to part-time, contract, or freelance work right now. Reach me at kashyapshashwat77@gmail.com.",
   "hire": "Absolutely — I'm open to it. For full-time roles I'm targeting Full-Stack Developer, Salesforce Developer, and ML/AI Engineer positions. For freelance, I do web development, ML solutions, Salesforce setup, and technical writing. Scroll up to the 'Open For Work' section or email me directly.",
   "freelance": "I offer: Web Development (from ₹15k), ML & AI Solutions (from ₹20k), Salesforce setup (from ₹25k), Technical Writing (from ₹5k/article), Event Tech Systems (from ₹18k), and SEO/Performance audits (from ₹8k). I work with a clear 4-step process — Discovery, Proposal, Build, Deliver.",
-  "projects": "My featured projects include: AI Interviewer (Next.js + FastAPI + Llama3 autonomous interview platform), Signify/Philips AI Chatbot (enterprise NLP product search), MedAI (multi-disease ML predictor), GradLink (alumni portal serving 5k+ users), F1 Oracle (ML race prediction), AI-Enabled CRM, Alfred (AI voice assistant), SkyVault (encrypted MERN file-sharing), EV Anomaly Detector, ClarifAI, PlantGuard AI, ICU Mortality Predictor, Fake News Detector, CineMatch AI, LifeCompass, and Timetable Generator. Total 16+ shipped products.",
+  "projects": "My featured projects include: AI Interviewer (Next.js + FastAPI + Llama3 autonomous interview platform), Enterprise AI Chatbot (NLP-powered product search for a major industry client), MedAI (multi-disease ML predictor), GradLink (alumni portal serving 5k+ users), F1 Oracle (ML race prediction), AI-Enabled CRM, Alfred (AI voice assistant), SkyVault (encrypted MERN file-sharing), EV Anomaly Detector, ClarifAI, PlantGuard AI, ICU Mortality Predictor, Fake News Detector, CineMatch AI, LifeCompass, and Timetable Generator. Total 16+ shipped products.",
   "salesforce": "I'm a Salesforce Certified Agentforce Specialist — the certification is active. On Trailhead I'm at Expeditioner Rank with 81 badges, 40,725+ points, and 13 completed trails. Also Agentblazer Innovator '25. I currently work as a Salesforce Developer Intern at AA2IT India, doing config, automation, and data modelling.",
   "startup": "Yes, I'm very open to startup collaborations. I can be a technical co-founder, build your MVP, help with pitch decks, or consult on AI product strategy. I've led events with 500+ attendees and shipped real products under pressure. If you're building something worth building — let's talk.",
   "co-found": "Yes, I'm very open to startup collaborations. I can be a technical co-founder, build your MVP, help with pitch decks, or consult on AI product strategy. I've led events with 500+ attendees and shipped real products under pressure. If you're building something worth building — let's talk.",
-  "experience": "I've had 5 internships: Salesforce Developer at AA2IT India (current), Software Developer at Prustaz Technologies, Full-Stack at Pinaqtech (boosted SEO 40%), Software Engineering at Oohr Innovations (built a full ERP, cut manual effort 60%), and Senior Dev Intern on a Govt. health app serving 5k+ users.",
+  "experience": "I've had multiple internships: Salesforce Developer at AA2IT India (current), Full-Stack at Pinaqtech (boosted SEO 40%), Software Engineering at Oohr Innovations (built a full ERP, cut manual effort 60%), MIS at Furnish Me Architects, and Senior Dev Intern on a Govt. health app serving 5k+ users.",
   "education": "I hold a BCA from BIT Mesra (CGPA 7.76) and I'm currently completing my MCA at BIT Mesra — graduating 2026, current CGPA 7.85 (SGPA 8.14 last semester). I've also received the GP Birla Foundation Scholarship, Dr. Usha Aggarwal Trust Scholarship, and HBMK Foundation Scholarship.",
-  "writing": "I'm a published poet and author. My poems have been published by WhyNot Australia, and I'm featured in national anthologies including 'Be Limitless' (World Book Fair 2025), 'Chromatic Currents V3', and 'Golden Realms V4'. I've also written for Bits & Bytes Magazine and the BIT Newsletter.",
+  "writing": "I'm a published poet and author. My poems have been published by WhyNot Australia and BIT Newsletter. A new poem — 'Mehsoos Na Hone Ka Shok' — is forthcoming in Pratigyan Magazine (March 2026). I'm also featured in national anthologies including 'Be Limitless' (World Book Fair 2025), 'Chromatic Currents V3', and 'Golden Realms V4'. I've also written for Bits & Bytes Magazine.",
+  "paper": "I won the Best Paper Prize at the 4th International Conference on Innovation, Engineering and Management 2026 (ICIEM'26) for my research paper titled 'A Hybrid Policy-Calibrated Framework for Adaptive Carbon Estimation and ESG Benchmarking'. The prize included a Rs. 5,000/- cash award.",
+  "research": "I won the Best Paper Prize at ICIEM'26 for my research on 'A Hybrid Policy-Calibrated Framework for Adaptive Carbon Estimation and ESG Benchmarking'. Cash prize of Rs. 5,000/-. My research bridges AI, policy, and sustainability.",
   "tedx": "I organized the first-ever TEDx at BIT Mesra — I handled logistics, built the website (with automated registration and payment via Google Sheets + AppScript), and coordinated the entire event. It's one of the things I'm most proud of.",
   "contact": "Best ways to reach me: Email — kashyapshashwat77@gmail.com | LinkedIn — linkedin.com/in/ShashwatKashyap | Phone — +91 98183 83499 | Portfolio — shashwatportfolio.vercel.app",
   "location": "I'm based in Delhi NCR, India. I'm open to remote work worldwide and hybrid/on-site roles in Delhi NCR and nearby areas.",
@@ -3625,6 +4134,7 @@ function setActiveNav(id) {
     else if (id === 'opportunity' && href === '#opportunity') a.classList.add('active');
     else if (id === 'about' && href === '#about') a.classList.add('active');
     else if (id === 'tech' && href === '#tech') a.classList.add('active');
+    else if (id === 'literary' && href === '#literary') a.classList.add('active');
   });
 }
 
