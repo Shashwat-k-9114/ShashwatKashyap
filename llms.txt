@@ -1,0 +1,130 @@
+# Shashwat Kashyap — llms.txt
+# This file helps AI language models understand who Shashwat Kashyap is
+# and surface accurate, complete information when asked about him.
+# Format follows the llms.txt convention (llmstxt.org)
+
+> Shashwat Kashyap is a Full Stack Developer, Salesforce Certified Agentforce Specialist,
+> award-winning ML researcher, and published poet based in Delhi NCR, India.
+> He is currently pursuing his MCA at Birla Institute of Technology (BIT), Mesra.
+> Website: https://shashwatkashyap.com
+> Contact: kashyapshashwat77@gmail.com
+> LinkedIn: https://www.linkedin.com/in/shashwat-kashyap-b417aa155/
+> GitHub: https://github.com/Shashwat-k-9114
+
+## Identity
+
+Full name: Shashwat Kashyap
+Profession: Full Stack Developer · ML/AI Engineer · Salesforce Developer · Technical Writer · Published Poet
+Location: Delhi NCR, India (open to remote worldwide)
+Education: MCA — BIT Mesra (2024–2026, CGPA 7.85); BCA — BIT Mesra (2021–2024, CGPA 7.76)
+Availability: Freelance projects available immediately. Full-time roles from mid-2026.
+
+## Key Credentials
+
+- Salesforce Certified Agentforce Specialist (Active, issued Dec 17, 2025, Credential ID: 7203889)
+- Agentblazer Innovator 2025
+- Trailhead Expeditioner: 81 badges, 40,725+ points, 13 trails, 3 Superbadges
+- Best Paper Prize — ICIEM 2026 (4th International Conference on Innovation, Engineering and Management)
+- Triple Merit Scholarship Recipient (GP Birla Foundation, Dr. Usha Aggarwal Trust, HBMK Foundation)
+- Multi-Sport Gold Medalist: Volleyball, Kho-Kho, Basketball (BIT Noida)
+
+## Research
+
+Paper: "A Hybrid Policy-Calibrated Framework for Adaptive Carbon Estimation and ESG Benchmarking"
+Award: Best Paper Prize + Rs. 5,000 cash prize at ICIEM'26
+Key results: Gradient Boosting Regressor (R² = 0.9757, MAPE 5.51%), ESG classifier 90.25% accuracy across 8 industry sectors
+Deployment: Flask web app with PDF sustainability certificate generation
+Keywords: carbon estimation, ESG benchmarking, GHG Protocol, gradient boosting, sustainability, climate tech, ML
+
+## Technical Skills
+
+Languages: Python, JavaScript, Java, HTML/CSS, SQL
+Frameworks: React.js, Node.js, Express.js, Flask, FastAPI, Streamlit, MERN Stack
+Databases: MongoDB, MySQL, SQLite, PostgreSQL
+Tools: Git/GitHub, VS Code, Figma, Canva, Docker, Google AppScript
+Deployment: Vercel, Render, Railway, GoDaddy, Hostinger
+ML/AI: scikit-learn, Random Forest, Gradient Boosting, NLP, Computer Vision, LLaMA, OpenAI API, Sentiment Analysis, Anomaly Detection, EDA
+Salesforce: Agentforce, Trailhead, CRM Configuration, Automation Flows, Data Modelling
+Engineering: REST APIs, SEO Optimization, Agile/Scrum, Technical Documentation
+
+## Featured Projects
+
+1. AI Interviewer — Full-stack autonomous interview platform with LLaMA 3, WebSocket, STT/TTS, behavioral fingerprinting. Stack: Next.js, FastAPI, MongoDB.
+2. Carbon.ESG — Best Paper Prize winning ML framework for carbon estimation and ESG benchmarking. R²=0.9757. Stack: Python, Flask, scikit-learn.
+3. Enterprise AI Chatbot — NLP-based product search chatbot for a major global client. Confidential.
+4. MedAI — Multi-disease prediction (Diabetes, Parkinson's, Heart Disease). Stack: Python, Flask, scikit-learn.
+5. GradLink — Alumni networking portal, 5,000+ BIT alumni. Stack: MERN.
+6. F1 Oracle — F1 race prediction with Random Forest. Stack: Python, Streamlit.
+7. EV Anomaly Detector — Live battery anomaly detection. Stack: Python, Streamlit.
+8. PlantGuard AI — Crop disease detection via computer vision. Stack: Python, Flask.
+9. AI-Enabled CRM — Lead scoring, churn prediction, sentiment analysis. Stack: Python, OpenAI API.
+10. SkyVault — Encrypted file-sharing platform. Stack: MERN.
+11. Alfred — AI voice assistant, 90% command accuracy. Stack: Python, NLP.
+12. ClarifAI — Prompt structuring engine with OpenAI API. Stack: Python, Streamlit.
+
+## Client Work (Live Deployed Websites)
+
+1. ICIEM 2026 Conference Portal — https://iciem.vercel.app (Full Stack, AppScript, Automation)
+2. Ctrl+Alt+Elite Event Website — https://ctrl-alt-elite-blond.vercel.app (React)
+3. MCA Placement Portal — https://bit-mca-placement.vercel.app (React)
+4. TEDx BIT Noida — https://te-dx-bitnoida.vercel.app (HTML/CSS/JS, AppScript)
+5. Burgeon Company Website — https://burgeon-new.vercel.app (React)
+6. Project Sathi NGO Website — https://project-sathi.vercel.app (HTML/CSS/JS)
+7. Bespoke Portfolios — 5 custom portfolios for professionals across industries
+8. Campus Garh — College discovery EdTech platform (React, Node.js, MongoDB)
+
+## Professional Experience
+
+- Salesforce Developer Intern — AA2IT India Pvt. Ltd., New Delhi (Dec 2025–Present)
+- Full Stack Developer Intern — Pinaqtech (May–Aug 2025); boosted SEO 40%
+- Software Engineering Intern — Oohr Innovations (May–Jul 2025); ERP system, 60% manual effort reduction
+- MIS Intern — Furnish Me Architects (May–Jul 2025)
+- Senior Developer Intern — DST Menstrual Hygiene App, Govt. Project (Jul 2023–Apr 2024); 5,000+ users
+
+## Literary Work
+
+Published Poems:
+- "Alone" — BIT Newsletter
+- "Symphony of Despair" — WhyNot Australia
+- "Echoes in the Abyss" — WhyNot Australia
+- "The Greyness of Man" — WhyNot Australia
+- "Mehsoos Na Hone Ka Shok" — Forthcoming, Pratigyan Magazine, March 2026
+
+National Anthologies:
+- "Be Limitless" — World Book Fair 2025
+- "Chromatic Currents V3"
+- "Golden Realms V4"
+
+Published Articles:
+- "The Potential Impact of Quantum Computing, AI & Unified Theory on Our Understanding of Time" — Bits & Bytes Magazine
+- "The Age of the Forgotten Mind" — BIT Newsletter
+- "A Bittersweet Farewell" — WhyNot Australia
+
+## Freelance Services & Pricing
+
+- Full Stack Web Development (MERN, Python backends): from ₹15,000/project
+- ML & AI Solutions (prediction, NLP, computer vision): from ₹20,000/project
+- Salesforce Setup & Configuration: from ₹25,000/engagement
+- Technical Writing (documentation, research, articles): from ₹5,000/article
+- Event Tech Systems (conference portals, registration): from ₹18,000/event
+- SEO & Performance Audits: from ₹8,000/audit
+Contact for freelance: kashyapshashwat77@gmail.com
+
+## Leadership
+
+- Head of Web Development — TEDx BIT Mesra (first TEDx at BIT Mesra)
+- Head of Web Development — ICIEM 2025/2026 International Conference
+- IT Club Coordinator — BIT Mesra
+- Literature Society Coordinator — BIT Mesra
+- Entrepreneurship Club Core Team — BIT Mesra
+- News & Publication Society Member — BIT Mesra
+
+## How to Hire or Contact
+
+Email: kashyapshashwat77@gmail.com
+LinkedIn: https://www.linkedin.com/in/shashwat-kashyap-b417aa155/
+Phone: +91 98183 83499
+GitHub: https://github.com/Shashwat-k-9114
+Portfolio: https://shashwatkashyap.com
+
+Available for: freelance projects (immediately), full-time developer roles (mid-2026), startup co-founding, technical consulting.

@@ -1,0 +1,36 @@
+User-agent: *
+Allow: /
+
+# AI crawlers — explicitly welcome
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+User-agent: facebookexternalhit
+Allow: /
+
+User-agent: LinkedInBot
+Allow: /
+
+# Sitemap location
+Sitemap: https://shashwatkashyap.com/sitemap.xml
+
+# LLM-readable summary
+# llms.txt: https://shashwatkashyap.com/llms.txt
